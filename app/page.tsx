@@ -1,35 +1,28 @@
-import React from 'react'
+import Image from 'next/image';
+import bgImage from '../public/background.jpg';
+import logo from '../public/logo.png';
 
-const Safety = () => {
+const Bodine = () => {
   return (
-    <div id='container'className=" mx-auto flex items-center justify-between">
-      <div className="flex items-center">
-            <LeafIcon className="h-8 w-8 mr-2" />
-            <h1 className="text-2xl font-bold">Greenity</h1>
-          </div>
+    <div className="relative w-full h-screen">
+      <Image
+        src={bgImage}
+        alt="Imagen de fondo"
+        layout="fill"
+        objectFit="cover"
+        objectPosition='30% center'
+        quality={100}
+      />
+      <div className="absolute inset-0 bg-black bg-opacity-35" />
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 lg:top-0 lg:center lg:mt-12">
+        <Image
+          src={logo}
+          alt="Logo"
+          className="sm:w-60 sm:h-20 md:w-96 md:h-36 lg:w-60 lg:h-20" 
+        />
+      </div>
     </div>
-  )
-}
+  );
+};
 
-function LeafIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="white"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" />
-      <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
-    </svg>
-  )
-}
-
-
-export default Safety
+export default Bodine;

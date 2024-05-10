@@ -2,12 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-#container{
-  padding-top: 5px;
-  padding-bottom: 5px;
-  background-color: #8bc34a;
+#next-image-container {
+ background-position: 10% center;
+
 }
-h1{
-  color: #fff;
-  font-size: 2em;
-}
+
