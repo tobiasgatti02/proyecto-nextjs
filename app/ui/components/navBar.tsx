@@ -6,12 +6,11 @@ function NavBar() {
   return (
     <>
       <nav className="flex items-center justify-end flex-wrap bg-transparent z-50 p-6">
-        <div className="w-full flex-grow sm:flex lg:items-center lg:w-auto text-lg md:text-xl lg:flex-grow justify-between place-content-center">
-          <div>
+        <div className="hidden w-full flex-grow sm:flex lg:items-center lg:w-auto text-lg md:text-xl lg:flex-grow justify-between place-content-center">
           <Link href="/compras" className="block lg:inline-block lg:mt-0 hover:text-2xl transform duration-500 text-white">
             Compras
           </Link>
-          </div>
+          
           <Link href="/nosotros" className="block lg:inline-block lg:mt-0 text-white hover:text-2xl transform duration-500">
             Nosotros
           </Link>

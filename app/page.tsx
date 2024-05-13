@@ -25,11 +25,11 @@ const Bodine = () => {
             className="sm:w-40 sm:h-15 lg:w-60 lg:h-20 transition-all duration-500 ease-in-out transform hover:scale-110"
           />
       </div>
-      <div className="border-b border-black mx-96"></div>
+      <div className="border-b border-black sm:min-w-[300px] sm:max-w-[600px] sm:mx-auto "></div>
       <div>
         <h2 className={`${maven_Pro.className} font-semibold text-4xl text-center my-5`}>Vinos Destacados</h2>
       </div>
-      <div className="border-b border-black mx-96"></div>
+      <div className="border-b border-black sm:min-w-[300px] sm:max-w-[600px] sm:mx-auto "></div>
       <div className='h-40 text-center py-20'>Componente slider</div>
     </>
   );
