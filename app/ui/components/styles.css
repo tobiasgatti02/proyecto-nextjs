@@ -1,0 +1,27 @@
+/* styles.css */
+.navbar {
+    position: relative;
+  }
+  
+  .nav-links {
+    transition: max-height 0.3s ease-in-out;
+    overflow: hidden;
+  }
+  
+  button svg {
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .rotate-45 {
+    transform: rotate(90deg);
+  }
+  
+  .transition-max-height {
+    transition: max-height 0.5s ease-in-out;
+    max-height: 0;
+  }
+  
+  .menu-open {
+    max-height: 500px; /* Puedes ajustar esto según la altura máxima del contenido */
+  }
+  
