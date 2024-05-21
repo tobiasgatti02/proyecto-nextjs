@@ -7,6 +7,7 @@ import Divider from '@mui/joy/Divider';
 import Typography from '@mui/joy/Typography';
 import Image from 'next/image';
 import logo from '../../../public/logo.png';
+import vino from '../../../public/vino.png'
 
 export default function OverflowCard() {
   return (
@@ -14,7 +15,7 @@ export default function OverflowCard() {
     <CardOverflow>
         <AspectRatio ratio="2">
             <Image
-                src={logo}
+                src={vino}
                 alt="vino"
                 className=" w-auto h-full object-cover"
             />

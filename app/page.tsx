@@ -8,6 +8,9 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
 import fotoVino from '../public/vino.png';
+import bodega from '../public/bodega.jpg'
+import suscripciones from '../public/suscripciones.jpg'
+import Footer from '../app/ui/components/footer';
 
 const vinos = [
   { id: 1, name: 'Sweet Grapes', image: fotoVino },
@@ -54,12 +57,45 @@ const Bodine = () => {
           ))}
         </Slider>
       </div>
-      <h1 className="text-white text-center sm:text-2xl lg:text-3xl text-lg">A UN PASO DE DESCUBRIR LOS <strong>MEJORES VINOS</strong></h1>
-
-      <h1 className="text-white text-center sm:text-2xl lg:text-3xl text-lg">A UN PASO DE DESCUBRIR LOS <strong>MEJORES VINOS</strong></h1>
+      <div className="relative w-full min-h-96 h-screen max-h-max overflow-hidden" style={{ maxHeight: '800px' }}>
+        <Image src={bodega} alt="Imagen de fondo" layout="fill" objectFit="cover" objectPosition='30% center' quality={100} />
+      </div>
+      <div className="py-10 border-b border-black sm:min-w-[300px] sm:max-w-[600px] sm:mx-auto"></div>
+      <div>
+        <h2 className={`${maven_Pro.className} font-semibold text-4xl text-center my-5`}>Bodegas Populares</h2>
+      </div>
+      <div className="border-b border-black sm:min-w-[300px] sm:max-w-[600px] sm:mx-auto"></div>
+      <div className="py-10 overflow-hidden">
+        <Slider {...settings}>
+          {vinos.map(vino => (
+            <div key={vino.id} className="text-center">
+              <Image src={vino.image} alt={vino.name} width={60} height={120} className="mx-auto" />
+              <h3 className={`${maven_Pro.className} text-2xl mt-2`}>{vino.name}</h3>
+            </div>
+          ))}
+        </Slider>
+      </div>
+      <div className="relative w-full min-h-96 h-screen max-h-max overflow-hidden" style={{ maxHeight: '800px' }}>
+        <Image src={suscripciones} alt="Imagen de fondo" layout="fill" objectFit="cover" objectPosition='30% center' quality={100} />
+      </div>
+      <div className="py-10 border-b border-black sm:min-w-[300px] sm:max-w-[600px] sm:mx-auto"></div>
+      <div>
+        <h2 className={`${maven_Pro.className} font-semibold text-4xl text-center my-5`}>Suscripciones sugeridas</h2>
+      </div>
+      <div className="border-b border-black sm:min-w-[300px] sm:max-w-[600px] sm:mx-auto"></div>
+      <div className="py-10 overflow-hidden">
+        <Slider {...settings}>
+          {vinos.map(vino => (
+            <div key={vino.id} className="text-center">
+              <Image src={vino.image} alt={vino.name} width={60} height={120} className="mx-auto" />
+              <h3 className={`${maven_Pro.className} text-2xl mt-2`}>{vino.name}</h3>
+            </div>
+          ))}
+        </Slider>
+      </div>
+      <Footer />
 
     </>
   );
 };
-
 export default Bodine;

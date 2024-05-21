@@ -27,8 +27,6 @@ export default function SimpleBottomNavigation() {
           <OverflowCard/>
           <OverflowCard/>
           <OverflowCard/>
-
-          panel de <b>Vinos Tintos. recuperar los datos de la bdd para generar las cards</b>
         </TabPanel>
         <TabPanel value={1}>
           panel de <b>Vinos Blancos</b>
