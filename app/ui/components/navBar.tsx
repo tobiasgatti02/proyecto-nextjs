@@ -31,7 +31,7 @@ function NavBar() {
             className="w-40 h-15 rounded transform transition-transform hover:scale-110"
           />
         </div>
-        <div className={`hidden w-full flex-grow sm:flex lg:items-center lg:w-auto text-lg md:text-xl lg:flex-grow justify-between place-content-center sm:block transition-all duration-500 ease-in-out`}>
+        <div className={`hidden w-full flex-grow sm:flex lg:items-center lg:w-auto text-lg md:text-xl lg:flex-grow justify-between place-content-center transition-all duration-500 ease-in-out`}>
           <Link href="/compras" className="block lg:inline-block lg:mt-0 hover:text-2xl transform duration-500 text-white">
             Compras
           </Link>
