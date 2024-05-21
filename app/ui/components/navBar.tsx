@@ -1,6 +1,6 @@
 "use client";
 import './styles.css';
-import { useState, useRef, useEffect, MutableRefObject } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import logo from '../../../public/logo.png';
 import Link from 'next/link';
@@ -9,7 +9,9 @@ function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAtTop, setIsAtTop] = useState(true);
   const [isScrolledUp, setIsScrolledUp] = useState(true);
+  const [navHeight, setNavHeight] = useState(0);
   const menuRef = useRef<HTMLDivElement | null>(null);
+  const navRef = useRef<HTMLDivElement | null>(null);
   const prevScrollY = useRef(0);
 
   const toggleMenu = () => {
@@ -18,10 +20,26 @@ function NavBar() {
 
   const handleScroll = () => {
     const currentScrollY = window.scrollY;
-    setIsAtTop(currentScrollY === 0);
-    setIsScrolledUp(prevScrollY.current > currentScrollY && currentScrollY > 0);
+    if (currentScrollY === 0) {
+      setIsAtTop(true);
+    } else {
+      setIsAtTop(false);
+      if (currentScrollY > navHeight) {
+        if (prevScrollY.current > currentScrollY + 10) {
+          setIsScrolledUp(true);
+        } else if (prevScrollY.current < currentScrollY - 10) {
+          setIsScrolledUp(false);
+        }
+      }
+    }
     prevScrollY.current = currentScrollY;
   };
+
+  useEffect(() => {
+    if (navRef.current) {
+      setNavHeight(navRef.current.offsetHeight);
+    }
+  }, []);
 
   useEffect(() => {
     if (menuRef.current) {
@@ -38,11 +56,11 @@ function NavBar() {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [navHeight]);
 
   return (
     <>
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-transform duration-700 ${isAtTop ? 'bg-transparent' : (isScrolledUp ? 'bg-black translate-y-0' : 'bg-black -translate-y-full')} p-3`}>
+      <nav ref={navRef} className={`transition-transform duration-700 ${isAtTop ? 'fixed top-0 left-0 right-0 bg-transparent p-3' : (isScrolledUp ? 'fixed top-0 left-0 right-0 bg-[#3B0613] p-3' : 'fixed top-0 left-0 right-0 -translate-y-full bg-[#3B0613] p-3')} z-50`}>
         <div className="flex flex-col sm:flex-row items-center justify-between flex-wrap mx-7">
           <div className="absolute left-4 top-3 sm:hidden w-full flex justify-start items-center">
             <Image
