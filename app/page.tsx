@@ -1,7 +1,30 @@
+"use client";
 import Image from 'next/image';
 import bgImage from '../public/background.jpg';
 import NavBar from '../app/ui/components/navBar';
 import { maven_Pro } from '../app/fonts';
+import React from "react";
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import Slider from 'react-slick';
+import fotoVino from '../public/vino.png';
+
+const vinos = [
+  { id: 1, name: 'Sweet Grapes', image: fotoVino },
+  { id: 2, name: 'Canadian Beauty', image: fotoVino },
+  { id: 3, name: 'Alpine Tastes', image: fotoVino }
+];
+
+
+const settings = {
+  dots: true,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  autoplay: true,
+  autoplaySpeed: 3000,
+};
 
 const Bodine = () => {
   return (
@@ -17,12 +40,21 @@ const Bodine = () => {
       <div className="absolute top-0 left-0 w-full">
         <NavBar />
       </div>
-      <div className="border-b border-black sm:min-w-[300px] sm:max-w-[600px] sm:mx-auto"></div>
+      <div className=" py-10 border-b border-black sm:min-w-[300px] sm:max-w-[600px] sm:mx-auto"></div>
       <div>
         <h2 className={`${maven_Pro.className} font-semibold text-4xl text-center my-5`}>Vinos Destacados</h2>
       </div>
       <div className="border-b border-black sm:min-w-[300px] sm:max-w-[600px] sm:mx-auto"></div>
-      <div className='h-40 text-center py-20'>Componente slider</div>
+      <div className="py-10">
+        <Slider {...settings}>
+          {vinos.map(vino => (
+            <div key={vino.id} className="text-center">
+              <Image src={vino.image} alt={vino.name} width={60} height={120} className="mx-auto" />
+              <h3 className={`${maven_Pro.className}  text-2xl mt-2`}>{vino.name}</h3>
+            </div>
+          ))}
+        </Slider>
+      </div>
     </>
   );
 };

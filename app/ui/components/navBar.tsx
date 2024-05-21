@@ -24,11 +24,11 @@ function NavBar() {
   return (
     <>
       <nav className="flex flex-col sm:flex-row items-center justify-between flex-wrap bg-transparent z-50 p-3 mx-7">
-        <div className="sm:hidden w-full flex justify-start items-center mb-4">
+        <div className="absolute left-4 top-3 sm:hidden w-full flex justify-start items-center">
           <Image
             src={logo}
             alt="Logo"
-            className="w-40 h-15 transition-all duration-500 ease-in-out transform hover:scale-110"
+            className="w-40 h-15 rounded transform transition-transform hover:scale-110"
           />
         </div>
         <div className={`hidden w-full flex-grow sm:flex lg:items-center lg:w-auto text-lg md:text-xl lg:flex-grow justify-between place-content-center sm:block transition-all duration-500 ease-in-out`}>
@@ -67,11 +67,13 @@ function NavBar() {
           </button>
         </div>
       </nav>
-      <div ref={menuRef} className={`sm:hidden  w-full overflow-hidden transition-max-height duration-500 ease-in-out`}>
-        <Link href="/compras" className="block py-2 text-center text-white">Compras</Link>
-        <Link href="/nosotros" className="block py-2 text-center text-white">Nosotros</Link>
-        <Link href="/suscripciones" className="block py-2 text-center text-white">Suscripciones</Link>
-        <Link href="/login" className="block py-2 text-center text-white">Log In</Link>
+      <div ref={menuRef} className="sm:hidden w-full overflow-hidden transition-max-height duration-500 ease-in-out max-h-0">
+        <div className="py-10">
+          <Link href="/compras" className="block py-2 text-center text-white">Compras</Link>
+          <Link href="/nosotros" className="block py-2 text-center text-white">Nosotros</Link>
+          <Link href="/suscripciones" className="block py-2 text-center text-white">Suscripciones</Link>
+          <Link href="/login" className="block py-2 text-center text-white">Log In</Link>
+        </div>
       </div>
     </>
   );

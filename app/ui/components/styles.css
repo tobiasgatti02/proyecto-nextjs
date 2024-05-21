@@ -9,7 +9,7 @@
   }
   
   button svg {
-    transition: transform 0.3s ease-in-out;
+    transition: transform 0.7s ease-in-out;
   }
   
   .rotate-45 {
@@ -17,7 +17,7 @@
   }
   
   .transition-max-height {
-    transition: max-height 0.5s ease-in-out;
+    transition: max-height 0.6s ease-in-out;
     max-height: 0;
   }
   
