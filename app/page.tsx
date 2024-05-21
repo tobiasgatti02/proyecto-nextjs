@@ -36,9 +36,9 @@ const Bodine = () => {
           <h1 className="text-white text-center sm:text-2xl lg:text-3xl text-lg">A UN PASO DE DESCUBRIR LOS <strong>MEJORES VINOS</strong></h1>
         </div>
       </div>
-      
+      <div className="absolute top-0 left-0 w-full">
         <NavBar />
-      
+      </div>
       <div className="py-10 border-b border-black sm:min-w-[300px] sm:max-w-[600px] sm:mx-auto"></div>
       <div>
         <h2 className={`${maven_Pro.className} font-semibold text-4xl text-center my-5`}>Vinos Destacados</h2>
@@ -54,6 +54,10 @@ const Bodine = () => {
           ))}
         </Slider>
       </div>
+      <h1 className="text-white text-center sm:text-2xl lg:text-3xl text-lg">A UN PASO DE DESCUBRIR LOS <strong>MEJORES VINOS</strong></h1>
+
+      <h1 className="text-white text-center sm:text-2xl lg:text-3xl text-lg">A UN PASO DE DESCUBRIR LOS <strong>MEJORES VINOS</strong></h1>
+
     </>
   );
 };
