@@ -44,45 +44,48 @@ async function seedUsers(client) {
     throw error;
   }
 }
-
 async function seedVinos(client) {
     try {
       // Create the "vinos" table if it doesn't exist
       const createTable = await client.sql`
         CREATE TABLE IF NOT EXISTS vinos (
-          id INTEGER PRIMARY KEY,
+          id SERIAL PRIMARY KEY,
           winery VARCHAR(255) NOT NULL,
           wine VARCHAR(255) NOT NULL,
-          rating_average DECIMAL(4,2),
-          rating_reviews VARCHAR(50),
-          location TEXT,
-          image VARCHAR(255),
-          type VARCHAR(10)
+          average_rating DECIMAL(3, 2) NOT NULL,
+          reviews VARCHAR(255) NOT NULL,
+          location VARCHAR(255) NOT NULL,
+          image TEXT NOT NULL,
+          type VARCHAR(50) NOT NULL
         );
       `;
   
       console.log(`Created "vinos" table`);
-  
+    console.log(vinos.flat());
       // Insert data into the "vinos" table
-      const insertedVinos = await Promise.all([
-        client.sql`
-          INSERT INTO vinos (id, winery, wine, rating_average, rating_reviews, location, image, type)
-          VALUES (3, 'Cartuxa', 'Pêra-Manca Tinto 1990', 4.9, '72 ratings', 'Portugal·Alentejo', 'https://images.vivino.com/thumbs/L33jsYUuTMWTMy3KoqQyXg_pb_x300.png', 'red')
-          ON CONFLICT (id) DO NOTHING;
-        `,
-      ]);
+      const insertedWines = await Promise.all(
+        vinos.flat().map(async (wine) => {
+          return client.sql`
+            INSERT INTO vinos (winery, wine, average_rating, reviews, location, image, type)
+            VALUES (${wine.winery}, ${wine.wine}, ${wine.rating.average}, ${wine.rating.reviews}, ${wine.location}, ${wine.image}, ${wine.type})
+            ON CONFLICT (id) DO NOTHING;
+          `;
+        }),
+      );
   
-      console.log(`Seeded 1 vino`);
+      console.log(`Seeded ${insertedWines.length} wines`);
   
       return {
         createTable,
-        vinos: insertedVinos,
+        vinos: insertedWines,
       };
     } catch (error) {
       console.error('Error seeding vinos:', error);
       throw error;
     }
   }
+  
+  
 
 async function main() {
   const client = await db.connect();
