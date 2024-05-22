@@ -9,7 +9,12 @@ import { fetchVinos } from '@/app/lib/data';
 
 export async function SimpleBottomNavigation() {
   const vinos = await fetchVinos();
-  console.log(vinos);
+  //const vinosTintos = await fetchVinosTintos();
+  //const vinosBlancos = await fetchVinosBlancos();
+  //const vinosRosados = await fetchVinosRosados();
+  //const vinosEspumantes = await fetchVinosEspumantes();
+  //TODO agregar atributo type al objeto vino en la base de datos
+
   return (
     <Tabs aria-label="Basic tabs" defaultValue={0} className={`${maven_Pro.className} w-full bg-transparent`}>
       <TabList className="sm:flex-row flex-col mx-auto border border-solid border-black rounded-md">
@@ -24,14 +29,20 @@ export async function SimpleBottomNavigation() {
             <OverflowCard key={index} wine={vino.wine} id={vino.id} image={vino.image} />
           ))}
           </TabPanel>
-        <TabPanel value={1}>
-          panel de <b>Vinos Blancos</b>
+        <TabPanel className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-5 sm:gap-y-20' value={1}>
+        {vinos.map((vino, index) => (
+          <OverflowCard key={index} wine={vino.wine} id={vino.id} image={vino.image} />
+        ))}
         </TabPanel>
-        <TabPanel value={2}>
-          panel de <b>Vinos Rosados</b>
+        <TabPanel className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-5 sm:gap-y-20' value={2}>
+          {vinos.map((vino, index) => (
+            <OverflowCard key={index} wine={vino.wine} id={vino.id} image={vino.image} />
+          ))}
         </TabPanel>
-        <TabPanel value={3}>
-          panel de <b>Vinos Espumantes</b>
+        <TabPanel className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-5 sm:gap-y-20' value={3}>
+          {vinos.map((vino, index) => (
+            <OverflowCard key={index} wine={vino.wine} id={vino.id} image={vino.image} />
+          ))}
         </TabPanel>
       </div>
     </Tabs>

@@ -16,13 +16,13 @@ interface OverflowCardProps {
 
 export async function OverflowCard({ wine, id, image }: OverflowCardProps) {
   return (
-    <Card variant="outlined" className=" mx-auto w-80 sm:w-72 md:max-w-80 ">
+    <Card variant="outlined" className=" w-auto sm:w-72 md:max-w-80 ">
     <CardOverflow>
         <AspectRatio ratio="2">
             <Image
                 src={vino}
                 alt={wine + ' image'}
-                className=" w-auto h-full object-cover"
+                className=" w-auto h-full "
             />
         </AspectRatio>
     </CardOverflow>

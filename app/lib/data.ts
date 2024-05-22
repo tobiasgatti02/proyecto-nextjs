@@ -18,6 +18,51 @@ export async function fetchVinos() {
     throw new Error('Failed to fetch vinos.');
   }
 }
+
+export async function fetchVinosTintos() {
+  try {
+    noStore();
+    const vinos = await sql<Vino>`SELECT wine, id, image FROM vinos WHERE type='tinto'`;
+    return vinos.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch vinos.');
+  }
+}
+
+export async function fetchVinosBlancos() {
+  try {
+    noStore();
+    const vinos = await sql<Vino>`SELECT wine, id, image FROM vinos WHERE type='blanco'`;
+    return vinos.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch vinos.');
+  }
+}
+
+export async function fetchVinosRosados() {
+  try {
+    noStore();
+    const vinos = await sql<Vino>`SELECT wine, id, image FROM vinos WHERE type='rosado'`;
+    return vinos.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch vinos.');
+  }
+}
+
+export async function fetchVinosEspumantes() {
+  try {
+    noStore();
+    const vinos = await sql<Vino>`SELECT wine, id, image FROM vinos WHERE type='espumante'`;
+    return vinos.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch vinos.');
+  }
+}
+
 export async function getUser(email: string) {
   try {
   noStore();
