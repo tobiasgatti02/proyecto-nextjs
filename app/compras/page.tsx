@@ -1,11 +1,20 @@
 import React from 'react';
+import { maven_Pro } from '../fonts';
+import NavBar from '../ui/components/navBar';
+import SimpleBottomNavigation from '../ui/components/opcionesVinos';
+
 
 
 const Compras = () => {
   return (
-    <div>
-      <h1>Compras</h1>
-    </div>
+      <div>
+        <div>
+          <NavBar/>
+        </div>
+        <div className=' flex pt-80 sm:px-0 px-6'>
+            <SimpleBottomNavigation/>          
+        </div>
+      </div>
   );
 }
 
