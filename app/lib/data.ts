@@ -11,7 +11,7 @@ import {
 export async function fetchVinos() {
   try {
     noStore();
-    const vinos = await sql<Vino>`SELECT wine FROM vinos`;
+    const vinos = await sql<Vino>`SELECT wine, id, image FROM vinos`;
     return vinos.rows;
   } catch (error) {
     console.error('Database Error:', error);

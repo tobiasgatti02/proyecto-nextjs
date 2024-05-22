@@ -6,24 +6,29 @@ import CardOverflow from '@mui/joy/CardOverflow';
 import Divider from '@mui/joy/Divider';
 import Typography from '@mui/joy/Typography';
 import Image from 'next/image';
-import logo from '../../../public/logo.png';
-import vino from '../../../public/vino.png'
+import vino from '../../../public/vino.png';
 
-export default function OverflowCard() {
+interface OverflowCardProps {
+  wine: string;
+  id: number;
+  image: string;
+}
+
+export async function OverflowCard({ wine, id, image }: OverflowCardProps) {
   return (
     <Card variant="outlined" className=" mx-auto w-80 sm:w-72 md:max-w-80 ">
     <CardOverflow>
         <AspectRatio ratio="2">
             <Image
                 src={vino}
-                alt="vino"
+                alt={wine + ' image'}
                 className=" w-auto h-full object-cover"
             />
         </AspectRatio>
     </CardOverflow>
       <CardContent className="mx-auto text-center">
-        <Typography level="title-md">Del Colorado Wine</Typography>
-        <Typography level="body-sm" className=""><strong>$5.000</strong></Typography>
+        <Typography level="title-md">{wine}</Typography>
+        <Typography level="body-sm" className=""><strong>{id}</strong></Typography>
       </CardContent>
       <CardOverflow variant="soft" sx={{ bgcolor: 'background.level1' }}>
         <Divider inset="context" />

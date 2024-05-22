@@ -3,10 +3,13 @@ import Tabs from '@mui/joy/Tabs';
 import TabList from '@mui/joy/TabList';
 import Tab from '@mui/joy/Tab';
 import TabPanel from '@mui/joy/TabPanel';
-import OverflowCard from './cards';
+import { OverflowCard } from './cards';
 import { maven_Pro } from '../../fonts';
+import { fetchVinos } from '@/app/lib/data';
 
-export default function SimpleBottomNavigation() {
+export async function SimpleBottomNavigation() {
+  const vinos = await fetchVinos();
+  console.log(vinos);
   return (
     <Tabs aria-label="Basic tabs" defaultValue={0} className={`${maven_Pro.className} w-full bg-transparent`}>
       <TabList className="sm:flex-row flex-col mx-auto border border-solid border-black rounded-md">
@@ -16,18 +19,11 @@ export default function SimpleBottomNavigation() {
         <Tab className="rounded-md">Espumantes</Tab>
       </TabList>
       <div className='max-w-screen py-10 '>
-        <TabPanel className=' grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-5 sm:gap-y-20' value={0}>
-          <OverflowCard/>
-          <OverflowCard/>
-          <OverflowCard/>
-          <OverflowCard/>
-          <OverflowCard/>
-          <OverflowCard/>
-          <OverflowCard/>
-          <OverflowCard/>
-          <OverflowCard/>
-          <OverflowCard/>
-        </TabPanel>
+        <TabPanel className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-5 sm:gap-y-20' value={0}>
+          {vinos.map((vino, index) => (
+            <OverflowCard key={index} wine={vino.wine} id={vino.id} image={vino.image} />
+          ))}
+          </TabPanel>
         <TabPanel value={1}>
           panel de <b>Vinos Blancos</b>
         </TabPanel>

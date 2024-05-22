@@ -1,7 +1,7 @@
 import React from 'react';
 import { maven_Pro } from '../fonts';
 import NavBar from '../ui/components/navBar';
-import SimpleBottomNavigation from '../ui/components/opcionesVinos';
+import { SimpleBottomNavigation } from '../ui/components/opcionesVinos';
 
 
 
