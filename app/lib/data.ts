@@ -1,3 +1,4 @@
+"use server"
 import { sql } from '@vercel/postgres';
 import { unstable_noStore as noStore } from 'next/cache';
 
@@ -11,7 +12,7 @@ import {
 export async function fetchVinos() {
   try {
     noStore();
-    const vinos = await sql<Vino>`SELECT wine, id, image FROM vinos`;
+    const vinos = await sql<Vino>`SELECT * FROM vinos`;
     return vinos.rows;
   } catch (error) {
     console.error('Database Error:', error);
@@ -22,7 +23,7 @@ export async function fetchVinos() {
 export async function fetchVinosTintos() {
   try {
     noStore();
-    const vinos = await sql<Vino>`SELECT wine, id, image FROM vinos WHERE type='tinto'`;
+    const vinos = await sql<Vino>`SELECT wine, id, image FROM vinos WHERE type='red'`;
     return vinos.rows;
   } catch (error) {
     console.error('Database Error:', error);
@@ -33,7 +34,7 @@ export async function fetchVinosTintos() {
 export async function fetchVinosBlancos() {
   try {
     noStore();
-    const vinos = await sql<Vino>`SELECT wine, id, image FROM vinos WHERE type='blanco'`;
+    const vinos = await sql<Vino>`SELECT wine, id, image FROM vinos WHERE type='white'`;
     return vinos.rows;
   } catch (error) {
     console.error('Database Error:', error);
@@ -44,14 +45,14 @@ export async function fetchVinosBlancos() {
 export async function fetchVinosRosados() {
   try {
     noStore();
-    const vinos = await sql<Vino>`SELECT wine, id, image FROM vinos WHERE type='rosado'`;
+    const vinos = await sql<Vino>`SELECT wine, id, image FROM vinos WHERE type='rose'`;
     return vinos.rows;
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch vinos.');
   }
 }
-
+/*
 export async function fetchVinosEspumantes() {
   try {
     noStore();
@@ -61,7 +62,7 @@ export async function fetchVinosEspumantes() {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch vinos.');
   }
-}
+}*/
 
 export async function getUser(email: string) {
   try {

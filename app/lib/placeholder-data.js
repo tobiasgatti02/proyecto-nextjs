@@ -24,7 +24,7 @@ const vinos = [
           "location": "Italy\n·\nAmarone della Valpolicella",
           "image": "https://images.vivino.com/thumbs/nC9V6L2mQQSq0s-wZLcaxw_pb_x300.png",
           "id": 2,
-          "type": "red"
+          "type": "white"
         },
         {
           "winery": "Cartuxa",
@@ -36,7 +36,7 @@ const vinos = [
           "location": "Portugal\n·\nAlentejo",
           "image": "https://images.vivino.com/thumbs/L33jsYUuTMWTMy3KoqQyXg_pb_x300.png",
           "id": 3,
-          "type": "red"
+          "type": "rose"
         }
       ]
       

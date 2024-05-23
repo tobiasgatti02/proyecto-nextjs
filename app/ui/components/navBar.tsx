@@ -65,8 +65,8 @@ function NavBar() {
       <nav ref={navRef} className={`fixed top-0 left-0 right-0 z-50 transition-transform duration-700 ${isAtTop ? 'bg-transparent' : (isScrolledUp ? 'bg-[#3B0613] translate-y-0' : 'bg-transparent -translate-y-full')} p-3`}>
         <div className="flex flex-col sm:flex-row items-center justify-between flex-wrap mx-7">
           <div className=' sm:hidden'>
-            @TODO
-          <div className="bg-[#3B0613] absolute left-0 top-3 w-full flex justify-start items-center">
+            //TODO
+          <div className="bg-[#3B0613] absolute left-0 top-3 w-screen flex justify-start items-center">
             <Image
               src={logo}
               alt="Logo"
@@ -75,7 +75,7 @@ function NavBar() {
           </div>
           </div>
           
-          <div className={`hidden w-full flex-grow sm:flex lg:items-center lg:w-auto text-lg md:text-xl lg:flex-grow justify-between place-content-center sm:block transition-all duration-500 ease-in-out ${isAtTop ? 'text-white' : 'text-white'}`}>
+          <div className={`hidden w-screen flex-grow sm:flex lg:items-center lg:w-auto text-lg md:text-xl lg:flex-grow justify-between place-content-center sm:block transition-all duration-500 ease-in-out ${isAtTop ? 'text-white' : 'text-white'}`}>
             <Link href="/compras" className="block lg:inline-block lg:mt-0 hover:text-2xl transform duration-500">
               Compras
             </Link>
@@ -112,7 +112,7 @@ function NavBar() {
         </div>
       </nav>
       
-      <div ref={menuRef} className="sm:hidden fixed bg-[#3B0613] w-full overflow-hidden transition-max-height duration-500 ease-in-out max-h-0">
+      <div ref={menuRef} className="sm:hidden fixed bg-[#3B0613] w-screen overflow-hidden transition-max-height duration-500 ease-in-out max-h-0">
         <div className="py-10">
           <Link href="/compras" className="block py-2 text-center text-white">Compras</Link>
           <Link href="/nosotros" className="block py-2 text-center text-white">Nosotros</Link>
