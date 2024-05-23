@@ -14,7 +14,7 @@ const VinoCardList: React.FC<VinoCardListProps> = ({ vinos, currentPage, itemsPe
   const visibleVinos = vinos.slice(startIndex, endIndex);
 
   return (
-    <div className=" mt-16 gap-3 grid grid-cols-2 sm:grid-cols-4 p-4 bg-white  shadow-md">
+    <div className=" mt-12 gap-3 grid grid-cols-2 sm:grid-cols-4 p-4 bg-white  shadow-md">
       {visibleVinos.map((vino, index) => (
         <Card key={index} isPressable onPress={() => console.log(vino.wine)} style={{ backgroundColor: 'transparent' }}>
           <CardBody className="justify-center items-center " >

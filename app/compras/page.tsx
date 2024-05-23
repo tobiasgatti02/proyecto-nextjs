@@ -60,15 +60,15 @@ const Compras = () => {
         <NavBar />
       </div>
 
-      <div className='z-0 pt-60'>
+      <div className='z-0 pt-32'>
         <div className='mx-20'>
           <Search placeholder="Search vinos..." handleSearch={handleSearch} />
         </div>
-        <div className="flex justify-center mt-16">
+        <div className="flex justify-center mt-10">
           <GrupoBotones filter={filter} setFilter={setFilter} />
         </div>
         {loading ? (
-          <div className="gap-2 grid grid-cols-2 sm:grid-cols-4 p-4 ">
+          <div className="gap-2 grid grid-cols-2 sm:grid-cols-4 ">
             <CardSkeleton cardWidth="full" />
             <CardSkeleton cardWidth="full" />
             <CardSkeleton cardWidth="full" />
