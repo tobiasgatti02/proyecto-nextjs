@@ -62,7 +62,7 @@ const Compras = () => {
 
       <div className='z-0 pt-32'>
         <div className='mx-20'>
-          <Search placeholder="Search vinos..." handleSearch={handleSearch} />
+          <Search placeholder="Buscar vinos..." handleSearch={handleSearch} />
         </div>
         <div className="flex justify-center mt-10">
           <GrupoBotones filter={filter} setFilter={setFilter} />
