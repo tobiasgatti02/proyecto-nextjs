@@ -14,15 +14,14 @@ const VinoCardList: React.FC<VinoCardListProps> = ({ vinos, currentPage, itemsPe
   const visibleVinos = vinos.slice(startIndex, endIndex);
 
   return (
-    <div className=" mt-12 gap-3 grid grid-cols-2 sm:grid-cols-4 p-4 bg-white  shadow-md">
+    <div className="mt-12 gap-3 grid grid-cols-2 sm:grid-cols-4 p-4 bg-white rounded-lg">
       {visibleVinos.map((vino, index) => (
-        <Card key={index} isPressable onPress={() => console.log(vino.wine)} style={{ backgroundColor: 'transparent' }}>
-          <CardBody className="justify-center items-center " >
+        <Card key={index} isPressable onPress={() => console.log(vino.wine)} style={{ backgroundColor: 'transparent', boxShadow: 'none', border: '1px solid #000' }}>
+          <CardBody className="justify-center items-center" >
             <Image 
               alt={vino.wine} 
-              className="w-full h-full " 
+              className="w-full h-full rounded-lg" 
               src={vino.image} 
-               
             />
           </CardBody>
           <CardFooter className="text-small block">

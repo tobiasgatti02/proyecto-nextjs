@@ -11,12 +11,12 @@ export function CardSkeleton({ cardWidth }: { cardWidth: string }) {
         className={`${shimmer} relative overflow-hidden rounded-xl bg-gray-100 p-2 shadow-sm`}
         style={{ width: cardWidth, height: 'auto' }} // Utiliza el mismo ancho que las tarjetas reales
       >
-        <div className="flex p-4">
+        <div className="flex p-4 mb-10">
           <div className="h-5 w-5 rounded-md bg-gray-200" />
           <div className="ml-2 h-6 w-16 rounded-md bg-gray-200 text-sm font-medium" />
         </div>
-        <div className="flex items-center justify-center truncate rounded-xl bg-white px-4 py-8">
-          <div className="h-60 w-40 rounded-md bg-gray-200" />
+        <div className="flex items-center justify-center truncate rounded-xl bg-white px-10 py-10">
+          <div className="h-60 w-60 rounded-md bg-gray-200" />
         </div>
       </div>
     </div>

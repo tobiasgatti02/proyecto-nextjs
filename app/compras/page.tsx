@@ -68,7 +68,11 @@ const Compras = () => {
           <GrupoBotones filter={filter} setFilter={setFilter} />
         </div>
         {loading ? (
-          <div className="gap-2 grid grid-cols-2 sm:grid-cols-4 ">
+          <div className="mt-12 gap-2 grid grid-cols-2 sm:grid-cols-4 ">
+            <CardSkeleton cardWidth="full" />
+            <CardSkeleton cardWidth="full" />
+            <CardSkeleton cardWidth="full" />
+            <CardSkeleton cardWidth="full" /> 
             <CardSkeleton cardWidth="full" />
             <CardSkeleton cardWidth="full" />
             <CardSkeleton cardWidth="full" />
