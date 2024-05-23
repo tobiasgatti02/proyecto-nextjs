@@ -43,10 +43,10 @@ const Bodine = () => {
       </div>
       <div className="py-10 border-b border-black sm:min-w-[300px] sm:max-w-[600px] sm:mx-auto"></div>
       <div>
-        <h2 className={`${maven_Pro.className} font-semibold text-4xl text-center my-5`}>Vinos Destacados</h2>
+        <h2 className={`${maven_Pro.className} font-semibold w-screen text-center my-5`}>Vinos Destacados</h2>
       </div>
       <div className="border-b border-black sm:min-w-[300px] sm:max-w-[600px] sm:mx-auto"></div>
-      <div className="py-10 overflow-hidden">
+      <div className="py-10 overflow-hidden ">
         <Slider {...settings}>
           {vinos.map(vino => (
             <div key={vino.id} className="text-center">
@@ -71,7 +71,7 @@ const Bodine = () => {
       </div>
       <div className="py-10 border-b border-black sm:min-w-[300px] sm:max-w-[600px] sm:mx-auto"></div>
       <div>
-        <h2 className={`${maven_Pro.className} font-semibold text-4xl text-center my-5`}>Bodegas Populares</h2>
+        <h2 className={`${maven_Pro.className} font-semibold w-screen text-center my-5`}>Bodegas Populares</h2>
       </div>
       <div className="border-b border-black sm:min-w-[300px] sm:max-w-[600px] sm:mx-auto"></div>
       <div className="py-10 overflow-hidden">
@@ -99,7 +99,7 @@ const Bodine = () => {
 
       <div className="py-10 border-b border-black sm:min-w-[300px] sm:max-w-[600px] sm:mx-auto"></div>
       <div>
-        <h2 className={`${maven_Pro.className} font-semibold text-4xl text-center my-5`}>Suscripciones sugeridas</h2>
+        <h2 className={`${maven_Pro.className} font-semibold w-screen text-center my-5`}>Suscripciones sugeridas</h2>
       </div>
       <div className="border-b border-black sm:min-w-[300px] sm:max-w-[600px] sm:mx-auto"></div>
       <div className="py-10 overflow-hidden">

@@ -1,0 +1,28 @@
+#botonFiltro {
+    color: #fff;
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+  }
+  
+  #botonFiltro::after {
+    width: 0;
+    background: #fff;
+    height: 3px;
+    transition: all 0.5s ease-in-out;
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    right: 0;
+  }
+  
+  #botonFiltro.underlineBoton::after {
+    width: 100%;
+    left: 0;
+  }
+  
+  #botonFiltro:hover::after {
+    width: 100%;
+    left: 0;
+  }
+  

@@ -62,18 +62,9 @@ function NavBar() {
 
   return (
     <>
-      <nav ref={navRef} className={`fixed top-0 left-0 right-0 z-50 transition-transform duration-700 ${isAtTop ? 'bg-transparent' : (isScrolledUp ? 'bg-[#3B0613] translate-y-0' : 'bg-transparent -translate-y-full')} p-3`}>
-        <div className="flex flex-col sm:flex-row items-center justify-between flex-wrap mx-7">
-          <div className=' sm:hidden'>
-            //TODO
-          <div className="bg-[#3B0613] absolute left-0 top-3 w-screen flex justify-start items-center">
-            <Image
-              src={logo}
-              alt="Logo"
-              className="w-1/3 h-auto rounded transform transition-transform hover:scale-110"
-            />
-          </div>
-          </div>
+      <nav ref={navRef} className={`fixed top-0 left-0 right-0 z-50 transition-transform duration-700 ${isAtTop ? 'bg-transparent' : (isScrolledUp ? 'bg-[#3B0613] translate-y-0' : 'bg-transparent -translate-y-full')} sm:p-3`}>
+        <div className="flex flex-col sm:flex-row items-center justify-between flex-wrap sm:mx-7">
+          
           
           <div className={`hidden w-screen flex-grow sm:flex lg:items-center lg:w-auto text-lg md:text-xl lg:flex-grow justify-between place-content-center sm:block transition-all duration-500 ease-in-out ${isAtTop ? 'text-white' : 'text-white'}`}>
             <Link href="/compras" className="block lg:inline-block lg:mt-0 hover:text-2xl transform duration-500">
@@ -96,30 +87,44 @@ function NavBar() {
               Log In
             </Link>
           </div>
-          <div className="absolute right-0 top-3 h-16 w-16 sm:hidden pr-0 pt-0 text-sm text-gray-500 rounded-lg focus:outline-none focus:ring-2">
-            <button onClick={toggleMenu} aria-controls="navbar-cta" aria-expanded={isMenuOpen}>
-              <svg className={`w-10 h-10 transition-transform duration-500 ${isMenuOpen ? 'rotate-45' : ''}`} aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <path
-                  stroke="white"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d={isMenuOpen ? "M6 6L18 18M6 18L18 6" : "M4 6h16M4 18h16"}
-                />
-              </svg>
-            </button>
-          </div>
+
+
+
+        
+           
+            <div className="z-50 bg-[#3B0613] flex sm:hidden w-screen justify-between">
+              <Image
+                src={logo}
+                alt="Logo"
+                className="w-auto h-auto mx-3"
+              />
+              <div className="pt-1 ">
+                <button onClick={toggleMenu} aria-controls="navbar-cta" aria-expanded={isMenuOpen}>
+                  <svg className={`w-10 h-12 mx-3 transition-transform duration-500 ${isMenuOpen ? 'rotate-45' : ''}`} aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <path
+                      stroke="white"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d={isMenuOpen ? "M6 6L18 18M6 18L18 6" : "M4 6h16M4 18h16"}
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div ref={menuRef} className="sm:hidden fixed bg-[#3B0613] w-screen overflow-hidden transition-max-height duration-500 ease-in-out ">
+        <div className="mt-16 pb-2 z-50">
+          <Link href="/compras" className="block py-2 text-center text-white mx-40">Compras</Link>
+          <Link href="/nosotros" className="block py-2 text-center text-white mx-40">Nosotros</Link>
+          <Link href="/suscripciones" className="block py-2 text-center text-white mx-40">Suscripciones</Link>
+          <Link href="/login" className="block py-2 text-center text-white mx-40">Log In</Link>
+        </div>
+      </div>
+        
         </div>
       </nav>
       
-      <div ref={menuRef} className="sm:hidden fixed bg-[#3B0613] w-screen overflow-hidden transition-max-height duration-500 ease-in-out max-h-0">
-        <div className="py-10">
-          <Link href="/compras" className="block py-2 text-center text-white">Compras</Link>
-          <Link href="/nosotros" className="block py-2 text-center text-white">Nosotros</Link>
-          <Link href="/suscripciones" className="block py-2 text-center text-white">Suscripciones</Link>
-          <Link href="/login" className="block py-2 text-center text-white">Log In</Link>
-        </div>
-      </div>
+   
       
       
     </>
