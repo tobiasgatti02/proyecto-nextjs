@@ -68,23 +68,23 @@ const Compras = () => {
           <GrupoBotones filter={filter} setFilter={setFilter} />
         </div>
         {loading ? (
-          <div className=" grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
+          <div className="gap-2 grid grid-cols-2 sm:grid-cols-4 p-4">
             <CardSkeleton cardWidth="full" />
             <CardSkeleton cardWidth="full" />
             <CardSkeleton cardWidth="full" />
-            <CardSkeleton cardWidth="full" /> {/* Renderiza el CardSkeleton mientras se están cargando los datos */}
+            <CardSkeleton cardWidth="full" /> 
+              </div>
+            ) : (
+                <Suspense fallback={null}>
+                <VinoCardList vinos={filteredVinos} currentPage={currentPage} itemsPerPage={ITEMS_PER_PAGE} />
+                <PaginationSlider
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={handlePageChange}
+                />
+              </Suspense>
+            )}
           </div>
-        ) : (
-            <Suspense fallback={<CardSkeleton cardWidth="full" />}>
-            <VinoCardList vinos={filteredVinos} currentPage={currentPage} />
-            <PaginationSlider
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={handlePageChange}
-            />
-          </Suspense>
-        )}
-      </div>
    
       </>
     );

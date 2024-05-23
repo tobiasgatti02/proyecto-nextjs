@@ -20,7 +20,7 @@ const PaginationSlider: React.FC<PaginationSliderProps> = ({ currentPage, totalP
     <>
      <div className="flex justify-center items-center space-x-4">
         <button
-            className="px-4 py-2 rounded bg-gray-200 text-gray-600"
+            className="px-4 py-2 rounded bg-white text-gray-600"
             onClick={handlePrevPage}
             disabled={currentPage === 1}
         >
@@ -30,7 +30,7 @@ const PaginationSlider: React.FC<PaginationSliderProps> = ({ currentPage, totalP
         <span className="text-gray-600">Page</span>
         <input
           type="number"
-          className="w-12 px-2 py-1 rounded border border-gray-300 text-center"
+          className="w-12 px-2 py-1 rounded border border-white text-center"
           value={currentPage}
           onChange={(e) => onPageChange(parseInt(e.target.value))}
           min={1}
@@ -39,7 +39,7 @@ const PaginationSlider: React.FC<PaginationSliderProps> = ({ currentPage, totalP
         <span className="text-gray-600">of {totalPages}</span>
       </div>
       <button
-        className="px-4 py-2 rounded bg-gray-200 text-gray-600"
+        className="px-4 py-2 rounded bg-white text-gray-600"
         onClick={handleNextPage}
         disabled={currentPage === totalPages}
       >
