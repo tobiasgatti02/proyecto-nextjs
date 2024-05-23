@@ -5,7 +5,7 @@ import { CardSkeleton } from '../ui/components/skeletons';
 const LoadingSpinner = () => {
   return (
     <div className="loading-spinner">
-      <CardSkeleton/>
+            <CardSkeleton cardWidth="full" /> 
     </div>
   );
 };
