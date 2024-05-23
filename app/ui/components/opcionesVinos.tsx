@@ -23,27 +23,35 @@ export async function SimpleBottomNavigation() {
         <Tab className="rounded-md">Rosados</Tab>
         <Tab className="rounded-md">Espumantes</Tab>
       </TabList>
-      <div className='max-w-screen py-10 '>
-        <TabPanel className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-5 sm:gap-y-20' value={0}>
+      <div className='max-w-screen py-5 '>
+      <TabPanel className='flex justify-center' value={0}>
+        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-20 w-full max-w-screen-lg'>
           {vinos.map((vino, index) => (
             <OverflowCard key={index} wine={vino.wine} id={vino.id} image={vino.image} />
           ))}
-          </TabPanel>
-        <TabPanel className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-5 sm:gap-y-20' value={1}>
-        {vinos.map((vino, index) => (
-          <OverflowCard key={index} wine={vino.wine} id={vino.id} image={vino.image} />
-        ))}
-        </TabPanel>
-        <TabPanel className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-5 sm:gap-y-20' value={2}>
+        </div>
+      </TabPanel>
+      <TabPanel className='flex justify-center' value={1}>
+        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-20 w-full max-w-screen-lg'>
           {vinos.map((vino, index) => (
             <OverflowCard key={index} wine={vino.wine} id={vino.id} image={vino.image} />
           ))}
-        </TabPanel>
-        <TabPanel className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-5 sm:gap-y-20' value={3}>
+        </div>
+      </TabPanel>
+      <TabPanel className='flex justify-center' value={2}>
+        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-20 w-full max-w-screen-lg'>
           {vinos.map((vino, index) => (
             <OverflowCard key={index} wine={vino.wine} id={vino.id} image={vino.image} />
           ))}
-        </TabPanel>
+        </div>
+      </TabPanel>
+      <TabPanel className='flex justify-center' value={3}>
+        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-20 w-full max-w-screen-lg'>
+          {vinos.map((vino, index) => (
+            <OverflowCard key={index} wine={vino.wine} id={vino.id} image={vino.image} />
+          ))}
+        </div>
+      </TabPanel>
       </div>
     </Tabs>
   );
