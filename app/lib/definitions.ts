@@ -14,4 +14,5 @@ export type User = {
     location: string;
     image: string;
     type: string;
+    price: string;
   };

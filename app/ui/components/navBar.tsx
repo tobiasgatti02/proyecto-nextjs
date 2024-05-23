@@ -96,9 +96,9 @@ function NavBar() {
               <Image
                 src={logo}
                 alt="Logo"
-                className="w-auto h-auto mx-3"
+                className="z-50 w-auto h-auto mx-3"
               />
-              <div className="pt-1 ">
+              <div className="pt-1 z-50">
                 <button onClick={toggleMenu} aria-controls="navbar-cta" aria-expanded={isMenuOpen}>
                   <svg className={`w-10 h-12 mx-3 transition-transform duration-500 ${isMenuOpen ? 'rotate-45' : ''}`} aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <path
@@ -111,20 +111,21 @@ function NavBar() {
                   </svg>
                 </button>
               </div>
+              <div ref={menuRef} className="sm:hidden z-40 fixed bg-[#3B0613] w-screen overflow-hidden transition-max-height duration-500 ease-in-out ">
+                <div className="mt-16 pb-2 z-40">
+                  <Link href="/compras" className="block py-2 text-center text-white ">Compras</Link>
+                  <Link href="/nosotros" className="block py-2 text-center text-white ">Nosotros</Link>
+                  <Link href="/suscripciones" className="block py-2 text-center text-white ">Suscripciones</Link>
+                  <Link href="/login" className="block py-2 text-center text-white ">Log In</Link>
+                </div>
+              </div>
             </div>
           
         
         </div>
       </nav>
       
-      <div ref={menuRef} className="sm:hidden fixed bg-[#3B0613] w-screen overflow-hidden transition-max-height duration-500 ease-in-out ">
-        <div className="mt-16 pb-2">
-          <Link href="/compras" className="block py-2 text-center text-white ">Compras</Link>
-          <Link href="/nosotros" className="block py-2 text-center text-white ">Nosotros</Link>
-          <Link href="/suscripciones" className="block py-2 text-center text-white ">Suscripciones</Link>
-          <Link href="/login" className="block py-2 text-center text-white ">Log In</Link>
-        </div>
-      </div>
+      
       
       
     </>

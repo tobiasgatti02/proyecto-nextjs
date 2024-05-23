@@ -1,22 +1,29 @@
-"use client";
-import React, { useEffect, useState } from 'react';
-import { Card, CardBody, CardFooter, Image } from "@nextui-org/react";
+"use client"
+import React, { Suspense, useState, useEffect } from 'react';
 import NavBar from '../ui/components/navBar';
+import GrupoBotones from '../ui/components/botones';
 import { fetchVinos } from '../lib/data';
 import { Vino } from '../lib/definitions';
-import GrupoBotones from '../ui/components/botones';
+import Search from '../ui/components/busqueda';
+import { CardSkeleton } from '../ui/components/skeletons';
+import PaginationSlider from '../ui/components/PaginationSlider';
+const VinoCardList = React.lazy(() => import('../ui/components/cards'));
 
 const Compras = () => {
   const [vinos, setVinos] = useState<Vino[]>([]);
   const [filteredVinos, setFilteredVinos] = useState<Vino[]>([]);
   const [filter, setFilter] = useState<string>('todos');
+  const [loading, setLoading] = useState<boolean>(true);
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(0);
 
   useEffect(() => {
     const getVinos = async () => {
       try {
         const fetchedVinos = await fetchVinos();
         setVinos(fetchedVinos);
-        setFilteredVinos(fetchedVinos);
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching vinos:', error);
       }
@@ -25,39 +32,62 @@ const Compras = () => {
   }, []);
 
   useEffect(() => {
-    if (filter === 'todos') {
-      setFilteredVinos(vinos);
-    } else {
-      setFilteredVinos(vinos.filter(vino => vino.type === filter));
+    let filteredData = vinos;
+    if (filter !== 'todos') {
+      filteredData = vinos.filter(vino => vino.type === filter);
     }
-  }, [filter, vinos]);
+    if (searchTerm) {
+      filteredData = filteredData.filter(vino => vino.wine.toLowerCase().includes(searchTerm.toLowerCase()));
+    }
+    setFilteredVinos(filteredData);
+    setTotalPages(Math.ceil(filteredData.length / ITEMS_PER_PAGE));
+    setCurrentPage(1); // Reinicia la página a la primera cuando se actualiza la búsqueda
+  }, [filter, vinos, searchTerm]);
+
+  const handleSearch = (term: string) => {
+    setSearchTerm(term);
+  };
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const ITEMS_PER_PAGE = 20;
 
   return (
-    <div className=''>
-      <div className=''>
-      <NavBar />
+    <>
+      <div className='z-50'>
+        <NavBar />
       </div>
-      
-      <div className='pt-60'>
+
+      <div className='z-0 pt-60'>
+        <div className='mx-20'>
+          <Search placeholder="Search vinos..." handleSearch={handleSearch} />
+        </div>
         <div className="flex justify-center ">
           <GrupoBotones filter={filter} setFilter={setFilter} />
         </div>
-        <div className="gap-2 grid grid-cols-2 sm:grid-cols-4 p-4">
-          {filteredVinos.map((vino, index) => (
-            <Card shadow="sm" key={index} isPressable onPress={() => console.log(vino.wine)}>
-              <CardBody className="overflow-visible p-0">
-                <Image shadow="sm" radius="lg" width="100%" alt={vino.wine} className="w-full object-cover h-[140px]" src={vino.image} />
-              </CardBody>
-              <CardFooter className="text-small justify-between">
-                <b>{vino.wine}</b>
-                <p className="text-default-500">{vino.winery}</p>
-              </CardFooter>
-            </Card>
-          ))}
-        </div>
+        {loading ? (
+          <div className=" grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
+            <CardSkeleton cardWidth="full" />
+            <CardSkeleton cardWidth="full" />
+            <CardSkeleton cardWidth="full" />
+            <CardSkeleton cardWidth="full" /> {/* Renderiza el CardSkeleton mientras se están cargando los datos */}
+          </div>
+        ) : (
+            <Suspense fallback={<CardSkeleton cardWidth="full" />}>
+            <VinoCardList vinos={filteredVinos} currentPage={currentPage} />
+            <PaginationSlider
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+            />
+          </Suspense>
+        )}
       </div>
-    </div>
-  );
+   
+      </>
+    );
 };
 
 export default Compras;
