@@ -32,13 +32,20 @@ const Bodine = () => {
   return (
     <>
       <div className="relative w-full min-h-96 h-screen max-h-max overflow-hidden" style={{ maxHeight: '800px' }}>
-        <Image src={bgImage} alt="Imagen de fondo" layout="fill" objectFit="cover" objectPosition="30% center" quality={100} />
+        <Image 
+        src={bgImage}
+        alt="Imagen de fondo" 
+        layout="fill" 
+        objectFit="cover" 
+        objectPosition="30% center" 
+        quality={100} 
+        />
         <div className="absolute inset-0 bg-black bg-opacity-35" />
         <div className={`${maven_Pro.className} absolute inset-1 mt-20 flex items-center justify-center`}>
           <h1 className="text-white text-center sm:text-2xl lg:text-3xl text-lg">A UN PASO DE DESCUBRIR LOS <strong>MEJORES VINOS</strong></h1>
         </div>
       </div>
-      <div className="absolute top-0 left-0 w-full">
+      <div className="z-50 absolute top-0 left-0 w-full">
         <NavBar />
       </div>
       <div className="py-10 border-b border-black sm:min-w-[300px] sm:max-w-[600px] sm:mx-auto"></div>
@@ -59,7 +66,7 @@ const Bodine = () => {
         </Slider>
       </div>
       
-      <div className="relative w-full h-[550px] md:h-[700px] lg:h-[1000px] overflow-hidden">
+      <div className="relative w-full  h-[300px] max-h-max overflow-hidden" >
         <Image
           src={bodega}
           alt="Imagen de fondo"
@@ -67,6 +74,7 @@ const Bodine = () => {
           objectFit="cover"
           objectPosition="center"
           quality={100}
+          loading='lazy'
         />
       </div>
       <div className="py-10 border-b border-black sm:min-w-[300px] sm:max-w-[600px] sm:mx-auto"></div>
@@ -86,13 +94,13 @@ const Bodine = () => {
           ))}
         </Slider>
       </div>
-      <div className="relative w-full h-[550px] md:h-[700px] lg:h-[1000px] overflow-hidden">
+      <div className="relative w-full min-h-96 h-[1000px]max-h-max overflow-hidden" style={{ maxHeight: '800px' }}>
         <Image
           src={suscripciones}
           alt="Imagen de fondo"
           layout="fill"
           objectFit="cover"
-          objectPosition="center"
+          objectPosition="60% center"
           quality={100}
         />
       </div>
