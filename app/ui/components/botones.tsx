@@ -25,7 +25,7 @@ const GrupoBotones = ({ filter, setFilter }: { filter: string, setFilter: (value
             id='botonFiltro'
             key={button.value}
             onClick={() => handleClick(button.value)}
-            className={`mx-3 py-2 text-white ${isActive ? 'underlineBoton' : ''}`}
+            className={`mx-10 py-1 text-white ${isActive ? 'underlineBoton' : ''}`}
           >
             {button.label}
           </button>
