@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import './stylesBotones.css';
 
-const GrupoBotones = ({ filter, setFilter }) => {
+const GrupoBotones = ({ filter, setFilter }: { filter: string, setFilter: (value: string) => void }) => {
   const [activeButton, setActiveButton] = useState('');
-
-  const handleClick = (filterValue) => {
+  const handleClick = (filterValue: string) => {
     if (filterValue !== activeButton) {
       setActiveButton(filterValue);
       setFilter(filterValue);
@@ -12,7 +11,7 @@ const GrupoBotones = ({ filter, setFilter }) => {
   };
 
   return (
-    <div className="flex justify-center mb-4">
+    <div className="">
       {[
         { label: 'Todos', value: 'todos' },
         { label: 'Tintos', value: 'red' },
@@ -26,7 +25,7 @@ const GrupoBotones = ({ filter, setFilter }) => {
             id='botonFiltro'
             key={button.value}
             onClick={() => handleClick(button.value)}
-            className={`mx-2 px-4 py-2 text-white ${isActive ? 'underlineBoton' : ''}`}
+            className={`mx-3 py-2 text-white ${isActive ? 'underlineBoton' : ''}`}
           >
             {button.label}
           </button>

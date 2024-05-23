@@ -33,13 +33,13 @@ const Compras = () => {
   }, [filter, vinos]);
 
   return (
-    <div>
+    <div className=''>
       <div className=''>
       <NavBar />
       </div>
       
       <div className='pt-60'>
-        <div className="flex justify-center mb-4 ">
+        <div className="flex justify-center ">
           <GrupoBotones filter={filter} setFilter={setFilter} />
         </div>
         <div className="gap-2 grid grid-cols-2 sm:grid-cols-4 p-4">

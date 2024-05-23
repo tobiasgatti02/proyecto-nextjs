@@ -92,7 +92,7 @@ function NavBar() {
 
         
            
-            <div className="z-50 bg-[#3B0613] flex sm:hidden w-screen justify-between">
+            <div className=" bg-[#3B0613] flex sm:hidden w-screen justify-between">
               <Image
                 src={logo}
                 alt="Logo"
@@ -112,19 +112,19 @@ function NavBar() {
                 </button>
               </div>
             </div>
-            <div ref={menuRef} className="sm:hidden fixed bg-[#3B0613] w-screen overflow-hidden transition-max-height duration-500 ease-in-out ">
-        <div className="mt-16 pb-2 z-50">
-          <Link href="/compras" className="block py-2 text-center text-white mx-40">Compras</Link>
-          <Link href="/nosotros" className="block py-2 text-center text-white mx-40">Nosotros</Link>
-          <Link href="/suscripciones" className="block py-2 text-center text-white mx-40">Suscripciones</Link>
-          <Link href="/login" className="block py-2 text-center text-white mx-40">Log In</Link>
-        </div>
-      </div>
+          
         
         </div>
       </nav>
       
-   
+      <div ref={menuRef} className="sm:hidden fixed bg-[#3B0613] w-screen overflow-hidden transition-max-height duration-500 ease-in-out ">
+        <div className="mt-16 pb-2">
+          <Link href="/compras" className="block py-2 text-center text-white ">Compras</Link>
+          <Link href="/nosotros" className="block py-2 text-center text-white ">Nosotros</Link>
+          <Link href="/suscripciones" className="block py-2 text-center text-white ">Suscripciones</Link>
+          <Link href="/login" className="block py-2 text-center text-white ">Log In</Link>
+        </div>
+      </div>
       
       
     </>
