@@ -8,11 +8,11 @@
   #botonFiltro::after {
     width: 0;
     background: #fff;
-    height: 3px;
+    height: 1px;
     transition: all 0.5s ease-in-out;
     content: "";
     position: absolute;
-    bottom: -5px;
+    bottom: 4px;
     right: 0;
   }
   
