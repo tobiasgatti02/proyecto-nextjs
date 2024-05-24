@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardBody, CardFooter, Image } from "@nextui-org/react";
 import { Vino } from '../../lib/definitions';
+import { SelectorCantidad } from './selectorCantidad';
 
 interface VinoCardListProps {
   vinos: Vino[];
@@ -18,15 +19,17 @@ const VinoCardList: React.FC<VinoCardListProps> = ({ vinos, currentPage, itemsPe
       {visibleVinos.map((vino, index) => (
         <Card key={index} isPressable onPress={() => console.log(vino.wine)} style={{ backgroundColor: 'transparent', boxShadow: 'none', border: '1px solid #000' }}>
           <CardBody className="justify-center items-center" >
-            <Image 
-              alt={vino.wine} 
-              className="w-full h-full rounded-lg" 
-              src={vino.image} 
+            <Image
+              alt={vino.wine}
+              className="w-full h-full rounded-lg"
+              src={vino.image}
             />
           </CardBody>
-          <CardFooter className="text-small block">
+          <CardFooter className="text-small block bg-gray-300">
             <b className='block'>{vino.wine}</b>
             <b className='block'>${vino.price}</b>
+            <SelectorCantidad cantidad={1} className='mx-auto justify-center'/>
+            
           </CardFooter>
         </Card>
       ))}

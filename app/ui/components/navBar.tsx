@@ -67,24 +67,29 @@ function NavBar() {
           
           
           <div className={`hidden w-screen flex-grow sm:flex lg:items-center lg:w-auto text-lg md:text-xl lg:flex-grow justify-between place-content-center sm:block transition-all duration-500 ease-in-out ${isAtTop ? 'text-white' : 'text-white'}`}>
+          <div className="hidden sm:block">
+            <Link href="/">
+              <Image
+                src={logo}
+                alt="Logo"
+                className="sm:w-40 sm:h-15 lg:w-60 lg:h-20 transition-all duration-500 ease-in-out transform hover:scale-110"
+              />
+              </Link>
+            </div>
             <Link href="/compras" className="block lg:inline-block lg:mt-0 hover:text-2xl transform duration-500">
               Compras
             </Link>
             <Link href="/nosotros" className="block lg:inline-block lg:mt-0 hover:text-2xl transform duration-500">
               Nosotros
             </Link>
-            <div className="hidden sm:block">
-              <Image
-                src={logo}
-                alt="Logo"
-                className="sm:w-40 sm:h-15 lg:w-60 lg:h-20 transition-all duration-500 ease-in-out transform hover:scale-110"
-              />
-            </div>
             <Link href="/suscripciones" className="block lg:inline-block lg:mt-0 hover:text-2xl transform duration-500">
               Suscripciones
             </Link>
-            <Link href="/login" className="block lg:inline-block lg:mt-0 hover:text-2xl transform duration-500">
+            <Link href="/auth/login" className="block lg:inline-block lg:mt-0 hover:text-2xl transform duration-500">
               Log In
+            </Link>
+            <Link href="/carrito" className="block lg:inline-block lg:mt-0">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM246-720l96 200h280l110-200H246Zm-38-80h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Zm134 280h280-280Z"/></svg>
             </Link>
           </div>
 
@@ -93,11 +98,13 @@ function NavBar() {
         
            
             <div className=" bg-[#3B0613] flex sm:hidden w-screen justify-between">
+              <Link href="/">
               <Image
                 src={logo}
                 alt="Logo"
                 className="z-50 w-auto h-auto mx-3"
               />
+              </Link>
               <div className="pt-1 z-50">
                 <button onClick={toggleMenu} aria-controls="navbar-cta" aria-expanded={isMenuOpen}>
                   <svg className={`w-10 h-12 mx-3 transition-transform duration-500 ${isMenuOpen ? 'rotate-45' : ''}`} aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -112,11 +119,14 @@ function NavBar() {
                 </button>
               </div>
               <div ref={menuRef} className="sm:hidden z-40 fixed bg-[#3B0613] w-screen overflow-hidden transition-max-height duration-500 ease-in-out ">
-                <div className="mt-16 pb-2 z-40">
+                <div className="mt-16 pb-2 z-40 justify-center">
                   <Link href="/compras" className="block py-2 text-center text-white ">Compras</Link>
                   <Link href="/nosotros" className="block py-2 text-center text-white ">Nosotros</Link>
                   <Link href="/suscripciones" className="block py-2 text-center text-white ">Suscripciones</Link>
-                  <Link href="/login" className="block py-2 text-center text-white ">Log In</Link>
+                  <Link href="/auth/login" className="block py-2 text-center text-white ">Log In</Link>
+                  <Link href="/carrito" className="block lg:mt-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px"className='mx-auto' viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM246-720l96 200h280l110-200H246Zm-38-80h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Zm134 280h280-280Z"/></svg>
+                  </Link>
                 </div>
               </div>
             </div>
