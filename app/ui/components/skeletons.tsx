@@ -1,4 +1,4 @@
-// CardSkeleton.tsx
+
 import React from 'react';
 
 const shimmer =

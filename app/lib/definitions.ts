@@ -9,10 +9,10 @@ export type User = {
     id: number;
     winery: string;
     wine: string;
-    rating_average: number;
-    rating_reviews: string;
+    average_rating: number;
+    reviews: string;
     location: string;
     image: string;
     type: string;
-    price: string;
+    price: number;
   };

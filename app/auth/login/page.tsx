@@ -1,35 +1,33 @@
+import React from 'react';
 import NavBar from '@/app/ui/components/navBar';
 import { maven_Pro } from '../../fonts'
 import Link from 'next/link';
 
-export default function () {
+export default function LoginPage() {
     return (
         <div className={` ${maven_Pro.className} text-white flex flex-col min-h-screen pt-32 max-w-[400px] mx-auto`}>
             <div className='bg-black'>
-            <NavBar/>
+                <NavBar />
             </div>
             <h1 className="text-4xl mb-5 text-center">Ingresar</h1>
 
             <div className="flex flex-col pt-10">
-
                 <label htmlFor="email">Correo electrónico</label>
                 <input
                     className="px-5 py-2 border bg-gray-200 rounded mb-5"
                     type="email" />
 
-
-                <label htmlFor="email">Contraseña</label>
+                <label htmlFor="password">Contraseña</label>
                 <input
                     className="px-5 py-2 border bg-gray-200 rounded mb-5"
-                    type="email" />
+                    type="password" />
 
                 <button
                     className="bg-blue-600 rounded text-black">
                     Ingresar
                 </button>
 
-
-                {/* divisor l ine */}
+                {/* divider line */}
                 <div className="flex items-center my-5">
                     <div className="flex-1 border-t border-gray-500"></div>
                     <div className="px-2 text-gray-800">O</div>
@@ -41,7 +39,6 @@ export default function () {
                     className="btn-secondary text-center bg-gray-200 rounded text-black">
                     Crear una nueva cuenta
                 </Link>
-
             </div>
         </div>
     );
