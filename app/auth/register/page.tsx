@@ -6,7 +6,7 @@ import Link from 'next/link';
 export default function CreateAccountPage() {
     return (
         <div className={` ${maven_Pro.className} text-white flex flex-col min-h-screen pt-32 max-w-[400px] mx-auto`}>
-            <div className='bg-black'>
+            <div className='bg-black    '>
                 <NavBar/>
             </div>
             <h1 className="text-4xl mb-5 text-center">Crea Tu Nueva Cuenta</h1>
@@ -14,17 +14,17 @@ export default function CreateAccountPage() {
             <div className="flex flex-col pt-10">
                 <label htmlFor="fullName">Nombre Completo</label>
                 <input
-                    className="px-5 py-2 border bg-gray-200 rounded mb-5"
+                    className="px-5 py-2 border bg-gray-200 text-black rounded mb-5"
                     type="text" />
 
                 <label htmlFor="email">Correo electrónico</label>
                 <input
-                    className="px-5 py-2 border bg-gray-200 rounded mb-5"
+                    className="px-5 py-2 border bg-gray-200 text-black rounded mb-5"
                     type="email" />
 
                 <label htmlFor="password">Contraseña</label>
                 <input
-                    className="px-5 py-2 border bg-gray-200 rounded mb-5"
+                    className="px-5 py-2 border text-black bg-gray-200 rounded mb-5"
                     type="password" />
 
                 <button
