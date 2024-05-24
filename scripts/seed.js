@@ -1,6 +1,6 @@
 const { db } = require('@vercel/postgres');
 require('dotenv').config();
-const { fetchVinos, insertVinos } = require('../app/lib/data.js');
+const { fetchVinos, insertVinos } = require('../app/lib/dataSeed.js');
 const bcrypt = require('bcrypt');
 
 async function seedVinos(client) {
