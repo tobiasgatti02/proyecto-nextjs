@@ -8,7 +8,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
 import fotoVino from '../public/vino.png';
-import bodega from '../public/bodega.jpg';
+import campo_viñedo from '../public/bodine/campo_viñedo.jpg';
 import suscripciones from '../public/suscripciones.jpg';
 import Footer from '../app/ui/components/footer';
 
@@ -28,6 +28,8 @@ const settings = {
   autoplaySpeed: 3000,
 };
 
+const logo = '/logo.png';
+
 const Bodine = () => {
   return (
     <>
@@ -39,7 +41,7 @@ const Bodine = () => {
         </div>
       </div>
       <div className="z-50 absolute top-0 left-0 w-full">
-        <NavBar />
+        <NavBar text="text-white"logo={logo} logoWidth={200} logoHeight={50} bgColorTop='bg-transparent' bgColorScrolled='bg-[#3B0613]'/>
       </div>
       <div className="py-10 border-b border-black sm:min-w-[300px] sm:max-w-[600px] sm:mx-auto"></div>
       <div>
@@ -59,13 +61,13 @@ const Bodine = () => {
         </Slider>
       </div>
       
-      <div className="relative w-full h-[300px] md:h-[700px] lg:h-[600px] overflow-hidden">
+      <div className="relative w-full h-[400px] md:h-[700px] lg:h-[800px] overflow-hidden">
         <Image
-          src={bodega}
+          src={campo_viñedo}
           alt="Imagen de fondo"
           layout="fill"
           objectFit="cover"
-          objectPosition="center"
+          objectPosition="70% center"
           quality={100}
         />
       </div>

@@ -4,7 +4,7 @@ import { maven_Pro } from "../fonts";
 
 export default function Layout({children}: {children: React.ReactNode}) {
   return (
-    <div className={`${maven_Pro.className} bg-[#3B0613] text-white min-h-screen`}>
+    <div className={`${maven_Pro.className}`}>
         {children}
     </div>
   );

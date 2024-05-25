@@ -1,48 +1,47 @@
-"use client"
-
+"use client";
 import React from 'react';
 import NavBar from "../ui/components/navBar";
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import silver from '../../public/bodine/silver.jpg';
-import gold from '../../public/bodine/gold2.jpg';
-import platinum from '../../public/bodine/platinum.jpg';
+import copa from '../../public/bodine/copa_elegante.jpg';
+import uvas from '../../public/bodine/uvas.jpg';
+import viñedo from '../../public/bodine/viñedo.jpg';
+import logo from '../../public/logo.png'; // Importa el logo aquí
 
 const settings = {
-  dots: true,
+  dots: false,
   infinite: true,
   speed: 500,
   slidesToShow: 1,
   slidesToScroll: 1,
   autoplay: true,
-  autoplaySpeed: 3000,
+  autoplaySpeed: 10000,
 };
 
 const subs = [
-  {image: silver}, 
-  {image: gold },
-  {image: platinum }
+  { image: copa }, 
+  { image: uvas }, 
+  { image: viñedo }
 ];
 
-const suscripciones = () => {
+const Suscripciones = () => {
+  const logo = '/logoNegro.png'; // Define el logo aquí
   return (
-    <div>
-      <NavBar />
-      <div className='pt-36 overflow-hidden'>
-      <Slider {...settings}>
-        {subs.map(sub => (
-          <div key={sub.image.src} className="text-center">
-            <div className="flex justify-center items-center h-full">
-              <img src={sub.image.src} alt={sub.image.src} className="mx-auto" />
+    <div className="flex flex-col min-h-screen h-screen">
+  
+      <NavBar logo={logo} logoWidth={200} logoHeight={50} bgColorTop='bg-transparent' text='black ' bgColorScrolled='bg-transparent' />
+      <div className="flex-grow relative overflow-hidden">
+        <Slider {...settings} className="absolute top-0 left-0 w-full h-full">
+          {subs.map(sub => (
+            <div key={sub.image.src} className="w-full h-screen">
+              <img src={sub.image.src} alt={sub.image.src} className="w-full h-full object-cover overflow-hidden" />
             </div>
-          </div>
-        ))}
-      </Slider>
+          ))}
+        </Slider>
       </div>
-      
     </div>
   );
 }
 
-export default suscripciones;
+export default Suscripciones;
