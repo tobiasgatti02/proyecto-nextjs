@@ -53,11 +53,11 @@ const Compras = () => {
   };
 
   const ITEMS_PER_PAGE = 20;
-
+  const logo = '/logo.png';
   return (
     <>
       <div className='z-50'>
-        <NavBar />
+      <NavBar logo={logo} logoWidth={200} logoHeight={50} bgColorTop='bg-transparent' text='text-white' bgColorScrolled='bg-transparent' />
       </div>
 
       <div className='z-0 pt-32'>
