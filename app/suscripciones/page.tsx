@@ -32,11 +32,10 @@ const Suscripciones = () => {
   const logo = '/logoNegro.png';
   return (
     <div className="flex flex-col min-h-screen h-screen">
-      <NavBar logo={logo} logoWidth={200} logoHeight={50} bgColorTop='bg-transparent' text='black ' bgColorScrolled='bg-transparent' />
       <div className="flex-grow relative overflow-hidden">
         <Slider {...settings} className="w-full">
           {subs.map((sub, index) => {
-            const maskId = `mask_${index}`; // Genera un maskId único basado en el índice
+            const maskId = `mask_${index}`; 
             return (
               <div key={index} className="relative">
                 <img src={sub.image.src} alt={sub.image.src} className="w-full h-screen object-cover" />

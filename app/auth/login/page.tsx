@@ -7,9 +7,7 @@ export default function LoginPage() {
     const logo = '/logo.png';
     return (
         <div className={` ${maven_Pro.className} text-white flex flex-col min-h-screen pt-32 max-w-[400px] mx-auto`}>
-            <div className='bg-black'>
-            <NavBar logo={logo} logoWidth={200} logoHeight={50} bgColorTop='bg-transparent' text='text-white' bgColorScrolled='bg-transparent' />
-            </div>
+            
             <h1 className="text-4xl mb-5 text-center">Ingresar</h1>
 
             <div className="flex flex-col pt-10">

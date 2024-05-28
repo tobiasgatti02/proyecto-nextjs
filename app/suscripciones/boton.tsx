@@ -28,18 +28,18 @@ class FancyButton extends Component<FancyButtonProps> {
 
 		const buttonStyle: React.CSSProperties = {
 			width,
-			height,
+			height: height ?? 0,
 		};
 
 		const fancyFrontStyle: React.CSSProperties = {
-			transform: `rotateX(0deg) translateZ(${height / 2}px)`,
+			transform: `rotateX(0deg) translateZ(${(height ?? 0) / 2}px)`,
 		};
 
 		const fancyBackStyle: React.CSSProperties = {
-			transform: `rotateX(90deg) translateZ(${height / 2}px)`,
+			transform: `rotateX(90deg) translateZ(${(height ?? 0) / 2}px)`,
 		};
 
-		const textTransform = `matrix(1 0 0 1 ${width / 2} ${height / 1.6})`;
+		const textTransform = `matrix(1 0 0 1 ${width ?? 0 / 2} ${(height ?? 0) / 1.6})`;
 		const viewBox = `0 0 ${width} ${height}`;
 
 		return (

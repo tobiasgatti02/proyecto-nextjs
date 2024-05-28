@@ -78,9 +78,7 @@ const Compras = () => {
   const logo = '/logo.png';
   return (
     <>
-      <div className='z-50'>
-        <NavBar logo={logo} logoWidth={200} logoHeight={50} bgColorTop='bg-transparent' text='text-white' bgColorScrolled='bg-[#3B0613]' />
-      </div>
+    
 
       <div className='z-0 pt-32'>
         <div className='mx-20'>
