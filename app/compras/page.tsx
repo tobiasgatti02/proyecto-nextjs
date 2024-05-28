@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { Suspense, useState, useEffect } from 'react';
 import NavBar from '../ui/components/navBar';
 import GrupoBotones from '../ui/components/botones';
@@ -7,15 +7,19 @@ import { Vino } from '../lib/definitions';
 import Search from '../ui/components/busqueda';
 import { CardSkeleton } from '../ui/components/skeletons';
 import PaginationSlider from '../ui/components/PaginationSlider';
+import { useSearchParams, useRouter } from 'next/navigation';
 const VinoCardList = React.lazy(() => import('../ui/components/cards'));
 
 const Compras = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  
   const [vinos, setVinos] = useState<Vino[]>([]);
   const [filteredVinos, setFilteredVinos] = useState<Vino[]>([]);
-  const [filter, setFilter] = useState<string>('todos');
+  const [filter, setFilter] = useState<string>(searchParams.get('filter') || 'todos');
   const [loading, setLoading] = useState<boolean>(true);
-  const [searchTerm, setSearchTerm] = useState<string>('');
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [searchTerm, setSearchTerm] = useState<string>(searchParams.get('searchTerm') || '');
+  const [currentPage, setCurrentPage] = useState<number>(Number(searchParams.get('page')) || 1);
   const [totalPages, setTotalPages] = useState<number>(0);
 
   useEffect(() => {
@@ -42,14 +46,32 @@ const Compras = () => {
     setFilteredVinos(filteredData);
     setTotalPages(Math.ceil(filteredData.length / ITEMS_PER_PAGE));
     setCurrentPage(1); // Reinicia la página a la primera cuando se actualiza la búsqueda
+
+    // Actualiza la URL con los parámetros de búsqueda y filtro
+    const queryParams = new URLSearchParams();
+    if (searchTerm) queryParams.set('searchTerm', searchTerm);
+    if (filter) queryParams.set('filter', filter);
+    queryParams.set('page', '1');
+
+    router.push(`/compras?${queryParams.toString()}`, undefined);
   }, [filter, vinos, searchTerm]);
 
   const handleSearch = (term: string) => {
     setSearchTerm(term);
   };
 
+  const handleFilterChange = (newFilter: string) => {
+    setFilter(newFilter);
+  };
+
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
+    const queryParams = new URLSearchParams();
+    if (searchTerm) queryParams.set('searchTerm', searchTerm);
+    if (filter) queryParams.set('filter', filter);
+    queryParams.set('page', page.toString());
+
+    router.push(`/compras?${queryParams.toString()}`, undefined);
   };
 
   const ITEMS_PER_PAGE = 20;
@@ -57,7 +79,7 @@ const Compras = () => {
   return (
     <>
       <div className='z-50'>
-      <NavBar logo={logo} logoWidth={200} logoHeight={50} bgColorTop='bg-transparent' text='text-white' bgColorScrolled='bg-transparent' />
+        <NavBar logo={logo} logoWidth={200} logoHeight={50} bgColorTop='bg-transparent' text='text-white' bgColorScrolled='bg-[#3B0613]' />
       </div>
 
       <div className='z-0 pt-32'>
@@ -65,33 +87,32 @@ const Compras = () => {
           <Search placeholder="Buscar vinos..." handleSearch={handleSearch} />
         </div>
         <div className="flex justify-center mt-10">
-          <GrupoBotones filter={filter} setFilter={setFilter} />
+          <GrupoBotones filter={filter} setFilter={handleFilterChange} />
         </div>
         {loading ? (
-          <div className="mt-12 gap-2 grid grid-cols-2 sm:grid-cols-4 ">
+          <div className="mt-12 gap-2 grid grid-cols-2 sm:grid-cols-4">
             <CardSkeleton cardWidth="full" />
             <CardSkeleton cardWidth="full" />
             <CardSkeleton cardWidth="full" />
-            <CardSkeleton cardWidth="full" /> 
             <CardSkeleton cardWidth="full" />
             <CardSkeleton cardWidth="full" />
             <CardSkeleton cardWidth="full" />
-            <CardSkeleton cardWidth="full" /> 
-              </div>
-            ) : (
-                <Suspense fallback={null}>
-                <VinoCardList vinos={filteredVinos} currentPage={currentPage} itemsPerPage={ITEMS_PER_PAGE} />
-                <PaginationSlider
-                  currentPage={currentPage}
-                  totalPages={totalPages}
-                  onPageChange={handlePageChange}
-                />
-              </Suspense>
-            )}
+            <CardSkeleton cardWidth="full" />
+            <CardSkeleton cardWidth="full" />
           </div>
-   
-      </>
-    );
+        ) : (
+          <Suspense fallback={null}>
+            <VinoCardList vinos={filteredVinos} currentPage={currentPage} itemsPerPage={ITEMS_PER_PAGE} />
+            <PaginationSlider
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+            />
+          </Suspense>
+        )}
+      </div>
+    </>
+  );
 };
 
 export default Compras;
