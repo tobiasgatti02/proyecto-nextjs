@@ -29,15 +29,13 @@ const VinoCardList: React.FC<VinoCardListProps> = ({ vinos, currentPage, itemsPe
           <CardFooter className="text-small block bg-gray-300">
             <b className='block'>{vino.wine}</b>
             <b className='block'>${vino.price}</b>
-            <div className='flex pt-3'>
+            <div className='flex pt-3 mb-3'>
+              <SelectorCantidad cantidad={1} className='mx-auto justify-center' />
+              <button> agregar al carrito</button>
+            </div>
             <Link href={`/vino/${vino.id}`}>
               Ver Producto
             </Link>
-            <SelectorCantidad cantidad={1} className='mx-auto justify-center'/>
-            <button> agregar al carrito</button>
-            
-            </div>
-            
           </CardFooter>
         </Card>
       ))}
