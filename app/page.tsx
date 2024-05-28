@@ -37,7 +37,7 @@ const Bodine = () => {
         <Image 
           src={bgImage}
           alt="Imagen de fondo" 
-          layout="fill" 
+          fill
           objectFit="cover" 
           objectPosition="30% center" 
           quality={100} 

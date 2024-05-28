@@ -4,7 +4,6 @@ import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import logo1 from '../../../public/logo.png';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import carro from '../../../public/carro.png';
 
 function NavBar({ bgColorTop, bgColorScrolled,text,logo,logoWidth, logoHeight }: {logoHeight:number,logo:string,logoWidth:number,text:string, bgColorTop: string, bgColorScrolled: string }) {
