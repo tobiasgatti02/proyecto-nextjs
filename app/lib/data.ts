@@ -34,3 +34,15 @@ export async function getUser(email: string) {
     throw new Error('Failed to fetch user.');
   }
 }
+
+export async function getVino(id: number) {
+  try {
+    noStore();
+    const vino = await sql`SELECT * FROM vinos WHERE id=${id}`;
+    return vino.rows[0] as Vino;
+  } catch (error) {
+    console.error('Failed to fetch vino:', error);
+    throw new Error('Failed to fetch vino.');
+  }
+
+}

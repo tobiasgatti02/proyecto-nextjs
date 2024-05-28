@@ -35,6 +35,7 @@ export default function Carrito() {
     return(
         <div className="text-white flex justify-center items-center px-10 sm:px-8 pt-32">
             <div className="flex flex-col w-[1000px]">
+            <Titulo titulo='carrito' className="text-2xl "/>
                 <Link href="/compras" className="underline mb-10 max-w-[300px]">
                             continúa comprando
                         </Link>
