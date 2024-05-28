@@ -27,7 +27,7 @@ class FancyButton extends Component<FancyButtonProps> {
 		const maskStyle = `#fancy-masked-element_${maskId} { mask: url(#${maskId}); -webkit-mask: url(#${maskId})}`;
 
 		const buttonStyle: React.CSSProperties = {
-			width,
+			width: width ?? 0,
 			height: height ?? 0,
 		};
 
@@ -39,8 +39,8 @@ class FancyButton extends Component<FancyButtonProps> {
 			transform: `rotateX(90deg) translateZ(${(height ?? 0) / 2}px)`,
 		};
 
-		const textTransform = `matrix(1 0 0 1 ${width ?? 0 / 2} ${(height ?? 0) / 1.6})`;
-		const viewBox = `0 0 ${width} ${height}`;
+		const textTransform = `matrix(1 0 0 1 ${(width ?? 0) / 2} ${(height ?? 0) / 1.6})`;
+		const viewBox = `0 0 ${width ?? 0} ${height ?? 0}`;
 
 		return (
 			<div className="fancy-button" style={buttonStyle}>
