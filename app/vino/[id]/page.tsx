@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { getVino } from '@/app/lib/data'
 import { useParams } from 'next/navigation'
@@ -7,12 +7,32 @@ import Link from 'next/link'
 import { Card, CardBody, CardFooter, Image } from '@nextui-org/react'
 import { Vino } from '@/app/lib/definitions'
 import { SelectorCantidad } from '@/app/ui/components/selectorCantidad'
+import { Store } from '@/app/utils/store'
 
 const VinoScreen = () => {
   const pathname = usePathname()
   const params = useParams()
   const id = params.id
   const [vino, setVino] = useState<Vino | null>(null)
+  const storeData = useContext(Store)
+  
+  const { state, dispatch } = storeData || {}
+
+  const addToCartHandler = () => {
+    if (state && dispatch && vino) {
+      const existItem = state.carrito.productos.find((x: any) => x.id === vino.id);
+      const cantidad = existItem ? existItem.cantidad + 1 : 1;
+      
+      console.log('vino: ', vino)
+      console.log('cantidad: ', cantidad)
+      dispatch({ type: 'ADD_PRODUCT', producto: { ...vino, cantidad } });
+      console.log('Agregado al carrito');
+      console.log('Carrito:', state.carrito);
+    } else {
+      console.error('No se pudo agregar al carrito: vino es undefined');
+    }
+  };
+  
 
   useEffect(() => {
     const fetchVino = async () => {
@@ -30,7 +50,7 @@ const VinoScreen = () => {
   return (
     <div className="p-4">
       <div className="text-center">
-      <Link href={'/'} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 md:px-5 rounded mt-4">
+        <Link href={'/'} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 md:px-5 rounded mt-4">
           Seguir comprando
         </Link>
         <Card className="flex flex-col mx-auto my-10 items-center w-full max-w-lg">
@@ -48,7 +68,7 @@ const VinoScreen = () => {
           </CardBody>
           <CardFooter className="block w-full">
             <div className="flex text-left">
-            <div className=' space-y-10'>
+              <div className=' space-y-10'>
                 <h3>Tipo:</h3>
                 <h3>Bodega:</h3>
                 <h3>Origen:</h3>
@@ -71,13 +91,16 @@ const VinoScreen = () => {
             </div>
             <div className="flex mt-16 md:mt-20 justify-end">
               <SelectorCantidad cantidad={1} className="mr-2 md:mr-0" />
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 md:px-5 rounded ml-2 md:ml-5">
+              <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 md:px-5 rounded ml-2 md:ml-5"
+                onClick={addToCartHandler}
+              >
                 Agregar al carrito
               </button>
             </div>
           </CardFooter>
         </Card>
-        
+
       </div>
     </div>
   )
