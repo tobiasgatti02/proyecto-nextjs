@@ -20,7 +20,7 @@ export const SelectorCantidad = ({cantidad, className}: Props) => {
             <button onClick={ () =>onCantidadChange(-1) }>
                 <IoRemoveCircleOutline size={ 30 }/>
             </button>
-            <span className='w-auto mx-3 px-5 bg-gray-100 text-center text-black rounded'>
+            <span className='w-auto mx-3 px-5 h-8 bg-gray-100 text-center text-black rounded pt-1'>
                 {count}
             </span>
             <button onClick={ () => onCantidadChange(1) }>

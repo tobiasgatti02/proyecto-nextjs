@@ -6,7 +6,7 @@ import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import { Card, CardBody, CardFooter, Image } from '@nextui-org/react'
 import { Vino } from '@/app/lib/definitions'
-
+import { SelectorCantidad } from '@/app/ui/components/selectorCantidad'
 
 const VinoScreen = () => {
   const pathname = usePathname()
@@ -21,41 +21,60 @@ const VinoScreen = () => {
     }
 
     fetchVino()
-   
   }, [id])
- let image = vino?.image
+
   if (!vino) {
     return <div>Cargando...</div>
   }
 
   return (
-    <div>
-      <h2 className='text-center my-5 font-bold'>{vino.wine}</h2>
-      <div className=' text-center'>
-        <Card className='flex mx-36 my-10 items-center'>
-          <CardBody className='items-center'>
-            <div className='col-md-4'>
-              <Image 
-              src={vino.image}
-              alt='Imagen del producto'
-              width={100}
-              height={100}
+    <div className="p-4">
+      <div className="text-center">
+        <Card className="flex flex-col mx-auto my-10 items-center w-full max-w-lg">
+          <h2 className="text-center my-5 font-bold text-lg md:text-xl">{vino.wine}</h2>
+          <CardBody className="items-center">
+            <div className="w-full flex justify-center">
+              <Image
+                src={vino.image}
+                alt="Imagen del producto"
+                width={100}
+                height={100}
+                className="max-w-full"
               />
             </div>
-            </CardBody>
-            <CardFooter className='flex'>
-              <div>
-                <h3>
-                Valoración Promedio:
-                </h3>
+          </CardBody>
+          <CardFooter className="block w-full">
+            <div className="flex text-left">
+            <div className=' space-y-10'>
+                <h3>Tipo:</h3>
+                <h3>Bodega:</h3>
+                <h3>Origen:</h3>
+                <h3>Valoración:</h3>
+                <h3>Precio:</h3>
               </div>
-              <div className='mx-5'>
-              <h3><strong>{vino.average_rating} en {vino.reviews}</strong></h3>
+              <div className='mx-8 font-semibold space-y-10'>
+                <h3>{vino.type}</h3>
+                <h3>{vino.winery}</h3>
+                <h3>{vino.location}</h3>
+                <h3>{vino.average_rating} en {vino.reviews}</h3>
+                <h3>${vino.price}</h3>
               </div>
-              
-            </CardFooter>
-          </Card>
-          <Link href={'/'} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded'>
+            </div>
+            <div className="text-left mt-16 md:mt-20">
+              <h2>Seccion Maridaje:</h2>
+              <p className="mt-2 md:mt-4">
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. A voluptates ex eius fugit est eveniet! Illum, esse, placeat nihil debitis maiores quis nobis nemo in ratione, vitae architecto quidem ut.
+              </p>
+            </div>
+            <div className="flex mt-16 md:mt-20 justify-end">
+              <SelectorCantidad cantidad={1} className="mr-2 md:mr-0" />
+              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 md:px-5 rounded ml-2 md:ml-5">
+                Agregar al carrito
+              </button>
+            </div>
+          </CardFooter>
+        </Card>
+        <Link href={'/'} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 md:px-5 rounded mt-4">
           Seguir comprando
         </Link>
       </div>
