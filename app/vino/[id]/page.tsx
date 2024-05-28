@@ -30,6 +30,9 @@ const VinoScreen = () => {
   return (
     <div className="p-4">
       <div className="text-center">
+      <Link href={'/'} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 md:px-5 rounded mt-4">
+          Seguir comprando
+        </Link>
         <Card className="flex flex-col mx-auto my-10 items-center w-full max-w-lg">
           <h2 className="text-center my-5 font-bold text-lg md:text-xl">{vino.wine}</h2>
           <CardBody className="items-center">
@@ -74,9 +77,7 @@ const VinoScreen = () => {
             </div>
           </CardFooter>
         </Card>
-        <Link href={'/'} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 md:px-5 rounded mt-4">
-          Seguir comprando
-        </Link>
+        
       </div>
     </div>
   )
