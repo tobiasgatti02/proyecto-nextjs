@@ -32,47 +32,65 @@ export function StoreProvider({ children }: any) {
 function reducer(state: any, action: any) {
     switch (action.type) {
         case 'ADD_PRODUCT':
-            const nuevoProducto = action.producto;
+            const nuevoProducto = action.payload;
+            const cantidad = action.payload.cantidad || 1
             const existItem = state.carrito.productos.find((x: any) => x.id === nuevoProducto.id);
 
-            const productos = existItem ? state.carrito.productos.map((x: any) => x.id === nuevoProducto.id ? nuevoProducto : x)
-                : [...state.carrito.productos, nuevoProducto];
+            if (!existItem) {
+                return {
+                    ...state,
+                    carrito: {
+                        productos: [...state.carrito.productos, { ...nuevoProducto, cantidad }],
+                        cantidad: state.carrito.cantidad + cantidad,
+                    }
+                };
+            }
 
             return {
                 ...state,
                 carrito: {
-                    productos,
-                    cantidad: state.carrito.cantidad + 1,
+                    productos: state.carrito.productos.map((producto: any) =>
+                        producto.id === existItem.id ? { ...producto, cantidad: producto.cantidad + cantidad } : producto
+                    ),
+                    cantidad: state.carrito.cantidad + cantidad,
                 }
             };
-        
         case 'REMOVE_PRODUCT_UNIT':
+            const productoARemover = action.payload;
+            // buscamos el producto a remover y le restamos una unidad, luego restamos en uno la cantidad total
+            if (productoARemover.cantidad === 1) {
+                return {
+                    ...state,
+                    carrito: {
+                        productos: state.carrito.productos.filter((producto: any) => producto.id !== productoARemover.id),
+                        cantidad: state.carrito.cantidad - 1,
+                    }
+                };
+            }
             return {
                 ...state,
                 carrito: {
-                    productos: state.carrito.productos.map((producto: any) => {
-                        if (producto.id === action.id && producto.cantidad > 1) {
-                            return {
-                                ...producto,
-                                cantidad: producto.cantidad - 1,
-                            }
-                        }
-                        return producto;
-                    }),
+                    productos: state.carrito.productos.map((producto: any) =>
+                        producto.id === productoARemover.id ? { ...productoARemover, cantidad: productoARemover.cantidad - 1 } : producto
+                    ),
                     cantidad: state.carrito.cantidad - 1,
                 }
             };
-
         case 'REMOVE_PRODUCT':
-            const productToRemove = action.payload;
-            const cantidadToRemove = productToRemove.cantidad;
-            return {
-                ...state,
-                carrito: {
-                    productos: state.carrito.productos.filter((producto: any) => producto.id !== productToRemove.id),
-                    cantidad: state.carrito.cantidad - cantidadToRemove,
-                }
-            };
+            const productoId = action.payload.id;
+            const item = state.carrito.productos.find((x:any) => x.id === productoId);
+
+            if (item) {
+                return {
+                    ...state,
+                    carrito: {
+                        productos: state.carrito.productos.filter((producto:any) => producto.id !== productoId),
+                        cantidad: state.carrito.cantidad - item.cantidad // Decrementar por la cantidad total del producto eliminado
+                    }
+                };
+            }
+
+            return state;
 
         case 'CLEAR':
             return {

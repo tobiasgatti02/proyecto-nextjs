@@ -14,20 +14,14 @@ const VinoScreen = () => {
   const params = useParams()
   const id = params.id
   const [vino, setVino] = useState<Vino | null>(null)
+  const [cantidad, setCantidad] = useState<number>(1);
   const storeData = useContext(Store)
   
   const { state, dispatch } = storeData || {}
 
-  const addToCartHandler = () => {
+  const addToCartHandler = (cantidad:number) => {
     if (state && dispatch && vino) {
-      const existItem = state.carrito.productos.find((x: any) => x.id === vino.id);
-      const cantidad = existItem ? existItem.cantidad + 1 : 1;
-      
-      console.log('vino: ', vino)
-      console.log('cantidad: ', cantidad)
-      dispatch({ type: 'ADD_PRODUCT', producto: { ...vino, cantidad } });
-      console.log('Agregado al carrito');
-      console.log('Carrito:', state.carrito);
+      dispatch({ type: 'ADD_PRODUCT', payload: { ...vino, cantidad }});
     } else {
       console.error('No se pudo agregar al carrito: vino es undefined');
     }
@@ -90,10 +84,10 @@ const VinoScreen = () => {
               </p>
             </div>
             <div className="flex mt-16 md:mt-20 justify-end">
-              <SelectorCantidad cantidad={1} className="mr-2 md:mr-0" />
+              <SelectorCantidad cantidad={1} onChange={setCantidad} className="mr-2 md:mr-0" />
               <button
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 md:px-5 rounded ml-2 md:ml-5"
-                onClick={addToCartHandler}
+                onClick={() => addToCartHandler(cantidad)}
               >
                 Agregar al carrito
               </button>

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { SelectorCantidad } from "../ui/components/selectorCantidad";
 import React, { useContext, useEffect, useState } from 'react';
 import { Store } from "../utils/store";
+import { SelectorCantidadCarrito } from "../ui/components/selectorCantidadCarrito";
 
 export default function Carrito() {
     const storeData = useContext(Store);
@@ -14,6 +15,7 @@ export default function Carrito() {
         if (storeData && storeData.state) {
             setProductos(storeData.state.carrito.productos);
         }
+        console.log('state: ', storeData?.state)
     }, [storeData]);
 
     const removeCartHandler = (producto: any) => {
@@ -21,13 +23,7 @@ export default function Carrito() {
             storeData.dispatch({ type: 'REMOVE_PRODUCT', payload: producto });
         }
     };
-
-    const updateCarritoHandler = (producto: any, cant: number) => {
-        if (storeData && storeData.dispatch) {
-            const cantidad = Number(cant);
-            storeData.dispatch({ type: 'CART_ADD_ITEM', payload: { ...producto, cantidad } });
-        }
-    };
+    
     const vaciarCarritoHandler = () => {
         if (storeData && storeData.dispatch) {
             storeData.dispatch({ type: 'CLEAR' });
@@ -54,7 +50,7 @@ export default function Carrito() {
                                     <div>
                                         <p>{producto.wine}</p>
                                         <p>${producto.price}</p>
-                                        <SelectorCantidad cantidad={producto.cantidad} />
+                                        <SelectorCantidadCarrito producto={producto} cantidad={producto.cantidad} className="mt-3" />
                                         <button className="underline mt-3" onClick={() => removeCartHandler(producto)}>
                                             Remover
                                         </button>

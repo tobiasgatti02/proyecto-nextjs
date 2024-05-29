@@ -16,7 +16,7 @@ const VinoCardList: React.FC<VinoCardListProps> = ({ vinos, currentPage, itemsPe
   const visibleVinos = vinos.slice(startIndex, endIndex);
 
   return (
-    <div className="mt-12 gap-3 grid grid-cols-2 sm:grid-cols-4 p-4 bg-white rounded-lg">
+    <div className="mt-12 gap-3 grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 p-4 bg-white rounded-lg">
       {visibleVinos.map((vino, index) => (
         <Card key={index} isPressable onPress={() => console.log(vino.wine)} style={{ backgroundColor: 'transparent', boxShadow: 'none', border: '1px solid #000' }}>
           <CardBody className="justify-center items-center" >
@@ -29,7 +29,7 @@ const VinoCardList: React.FC<VinoCardListProps> = ({ vinos, currentPage, itemsPe
           <CardFooter className="text-small block bg-gray-300">
             <b className='block'>{vino.wine}</b>
             <b className='block'>${vino.price}</b>
-            <div className='flex pt-3 mb-3'>
+            <div className='block pt-3 mb-3'>
               <SelectorCantidad cantidad={1} className='mx-auto justify-center' />
               <button> agregar al carrito</button>
             </div>

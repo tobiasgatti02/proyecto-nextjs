@@ -5,14 +5,19 @@ import { useState } from 'react';
 interface Props {
     cantidad: number;
     className?: string;
+    onChange?: (cantidad: number) => void;
 }
 
-export const SelectorCantidad = ({cantidad, className}: Props) => {
+export const SelectorCantidad = ({cantidad, className, onChange}: Props) => {
 
     const [count, setCount] = useState(cantidad);
     const onCantidadChange = (value: number) => {
-        if (count + value < 1 ) return;
-        setCount(count + value);
+        const newCount = count + value;
+        if (newCount< 1 ) return;
+        setCount(newCount);
+        if(onChange){ 
+            onChange(newCount);
+        }
     }
 
     return(
