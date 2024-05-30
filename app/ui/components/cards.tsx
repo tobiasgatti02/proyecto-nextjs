@@ -79,7 +79,7 @@ const VinoCardList: React.FC<VinoCardListProps> = ({ vinos, currentPage, itemsPe
               <button
                 onClick={() => addToCartHandler(vino)}
                 className='mt-3 transition duration-700 hover:bg-gray-400 rounded text-medium hover:font-medium'>
-                agregar al carrito
+                Agregar al Carrito
               </button>
             </div>
             <div className='inline-block transition duration-700 hover:bg-gray-400 hover:font-medium rounded text-medium'>

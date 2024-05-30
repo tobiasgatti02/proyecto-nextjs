@@ -39,12 +39,6 @@ export default function LoginPage() {
                     <div className="px-2 text-gray-800">O</div>
                     <div className="flex-1 border-t border-gray-500"></div>
                 </div>
-
-                <Link
-                    href="/auth/register"
-                    className="btn-secondary text-center bg-gray-200 rounded text-black">
-                    Crear una nueva cuenta
-                </Link>
             </div>
         </div>
     );
