@@ -32,6 +32,14 @@ const Suscripciones = () => {
   const logo = '/logoNegro.png';
   return (
     <div className="flex flex-col min-h-screen h-screen">
+       <NavBar
+            text="text-black"
+            logo={logo}
+            logoWidth={200}
+            logoHeight={50}
+            bgColorTop="bg-transparent"
+            bgColorScrolled="bg-transparent"
+            />
       <div className="flex-grow relative overflow-hidden">
         <Slider {...settings} className="w-full">
           {subs.map((sub, index) => {

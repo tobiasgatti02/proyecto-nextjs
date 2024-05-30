@@ -60,11 +60,13 @@ const VinoCardList: React.FC<VinoCardListProps> = ({ vinos, currentPage, itemsPe
           style={{ backgroundColor: 'transparent', boxShadow: 'none', border: '1px solid #000' }}
         >
           <CardBody className="justify-center items-center bg-gray-300" >
+            <Link href={`/vino/${vino.id}`}>
             <Image
               alt={vino.wine}
-              className="w-full h-full rounded-lg"
+              className="w-full h-full rounded-lg transition-transform duration-300 ease-in-out transform hover:scale-105"
               src={vino.image}
             />
+            </Link>
           </CardBody>
           <CardFooter className="text-small block bg-gray-300 border-t-2 border-black xs:min-h-[222px] min-h-[240px]">
             <b className='block'>{vino.wine}</b>

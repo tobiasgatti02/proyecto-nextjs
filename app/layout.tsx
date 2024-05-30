@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { StoreProvider } from "./utils/store";
-import NavBarCliente from "./ui/components/navBarParameters";
 const inter = Inter({ subsets: ["latin"] });
 
 
@@ -18,7 +17,7 @@ export default function RootLayout({
   }: Readonly<{
     children: React.ReactNode;
   }>) {
-    const logo = '/logo.png'
+  
 
   
 
@@ -27,7 +26,7 @@ export default function RootLayout({
       
       <body className={inter.className}>
       
-      <NavBarCliente logo={logo}/>
+     
       
         
         <StoreProvider>

@@ -7,7 +7,14 @@ export default function CreateAccountPage() {
     const logo = '/logo.png';
     return (
         <div className={` ${maven_Pro.className} text-white flex flex-col min-h-screen pt-32 max-w-[400px] mx-auto`}>
-            
+             <NavBar
+            text="text-white"
+            logo={logo}
+            logoWidth={200}
+            logoHeight={50}
+            bgColorTop="bg-transparent"
+            bgColorScrolled="bg-[#3B0613]"
+            />
             <h1 className="text-4xl mb-5 text-center">Crea Tu Nueva Cuenta</h1>
 
             <div className="flex flex-col pt-10">

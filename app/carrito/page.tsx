@@ -6,6 +6,7 @@ import { SelectorCantidad } from "../ui/components/selectorCantidad";
 import React, { useContext, useEffect, useState } from 'react';
 import { Store } from "../utils/store";
 import { SelectorCantidadCarrito } from "../ui/components/selectorCantidadCarrito";
+import NavBar from "../ui/components/navBar";
 
 export default function Carrito() {
     const storeData = useContext(Store);
@@ -29,9 +30,18 @@ export default function Carrito() {
             storeData.dispatch({ type: 'CLEAR' });
         }
     }
-
+    const logo = '/logo.png';
     return (
+        
         <div className="text-white flex justify-center min-h-screen pt-32">
+             <NavBar
+            text="text-white"
+            logo={logo}
+            logoWidth={200}
+            logoHeight={50}
+            bgColorTop="bg-transparent"
+            bgColorScrolled="bg-[#3B0613]"
+            />
             <div className="flex flex-col w-[1000px] mb-0">
                 <Titulo titulo='carrito' className="text-2xl mb-0" />
                 <Link href="/compras" className="underline mb-10 max-w-[300px]">

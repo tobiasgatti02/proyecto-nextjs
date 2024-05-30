@@ -34,6 +34,14 @@ const Bodine = () => {
   return (
     <>
       <div className="relative w-full min-h-96 h-screen max-h-max overflow-hidden" style={{ maxHeight: '800px' }}>
+          <NavBar
+            text="text-white"
+            logo={logo}
+            logoWidth={200}
+            logoHeight={50}
+            bgColorTop="bg-transparent"
+            bgColorScrolled="bg-[#3B0613]"
+            />
         <Image 
           src={bgImage}
           alt="Imagen de fondo" 

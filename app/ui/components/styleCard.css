@@ -1,0 +1,11 @@
+.card-image-wrapper {
+    perspective: 1000px; /* Establece una perspectiva 3D */
+  }
+  
+  .card-image-wrapper img {
+    transition: transform 0.6s; /* Añade una transición suave al efecto de giro */
+  }
+  
+  .card-image-wrapper:hover img {
+    transform: rotateY(20deg); /* Gira la imagen en el eje Y al hacer hover */
+  }

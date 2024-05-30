@@ -8,6 +8,8 @@ import { Card, CardBody, CardFooter, Image } from '@nextui-org/react'
 import { Vino } from '@/app/lib/definitions'
 import { SelectorCantidad } from '@/app/ui/components/selectorCantidad'
 import { Store } from '@/app/utils/store'
+import NavBar from '@/app/ui/components/navBar'
+import { CardSkeleton } from '@/app/ui/components/skeletons'
 
 const VinoScreen = () => {
   const params = useParams()
@@ -15,35 +17,40 @@ const VinoScreen = () => {
   const [vino, setVino] = useState<Vino | null>(null)
   const [cantidad, setCantidad] = useState<number>(1);
   const storeData = useContext(Store)
-  
   const { state, dispatch } = storeData || {}
 
-  const addToCartHandler = (cantidad:number) => {
+  const addToCartHandler = () => {
     if (state && dispatch && vino) {
       dispatch({ type: 'ADD_PRODUCT', payload: { ...vino, cantidad }});
     } else {
       console.error('No se pudo agregar al carrito: vino es undefined');
     }
   };
-  
 
   useEffect(() => {
     const fetchVino = async () => {
       const data = await getVino(Number(id))
       setVino(data)
     }
-
     fetchVino()
   }, [id])
 
   if (!vino) {
-    return <div>Cargando...</div>
+    return <div className='mt-36'><CardSkeleton cardWidth={'w-full'}/></div>
   }
 
   return (
     <div className="p-4 bg-gray-200">
+      <NavBar 
+        text="text-black"
+        logo="/logoNegro.png"
+        logoWidth={200}
+        logoHeight={50}
+        bgColorTop="bg-transparent"
+        bgColorScrolled="bg-transparent"
+        />
       <div className="text-center pt-36">
-        <Link href={'/'} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 md:px-5 rounded mt-4">
+        <Link href={'/compras'} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 md:px-5 rounded mt-4">
           Seguir comprando
         </Link>
         <Card className="flex flex-col mx-auto my-10 items-center w-full max-w-lg">
@@ -83,17 +90,16 @@ const VinoScreen = () => {
               </p>
             </div>
             <div className="flex mt-16 md:mt-20 justify-end">
-              <SelectorCantidad cantidad={1} onChange={setCantidad} className="mr-2 md:mr-0" />
+              <SelectorCantidad cantidad={cantidad} onChange={setCantidad} className="mr-2 md:mr-0" />
               <button
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 md:px-5 rounded ml-2 md:ml-5"
-                onClick={() => addToCartHandler(cantidad)}
+                onClick={addToCartHandler}
               >
                 Agregar al carrito
               </button>
             </div>
           </CardFooter>
         </Card>
-
       </div>
     </div>
   )

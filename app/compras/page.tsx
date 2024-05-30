@@ -8,6 +8,8 @@ import Search from '../ui/components/busqueda';
 import { CardSkeleton } from '../ui/components/skeletons';
 import PaginationSlider from '../ui/components/PaginationSlider';
 import { useSearchParams, useRouter } from 'next/navigation';
+
+
 const VinoCardList = React.lazy(() => import('../ui/components/cards'));
 
 const Compras = () => {
@@ -74,12 +76,20 @@ const Compras = () => {
     router.push(`/compras?${queryParams.toString()}`, undefined);
   };
 
-  const ITEMS_PER_PAGE = 20;
+  const ITEMS_PER_PAGE = 9;
   const logo = '/logo.png';
   return (
     <>
     
-
+    <NavBar
+        text="text-white"
+        logo={logo}
+        logoWidth={200}
+        logoHeight={50}
+        bgColorTop="bg-transparent"
+        bgColorScrolled="bg-[#3B0613]"
+      />
+  
       <div className='z-0 pt-32'>
         <div className='mx-20'>
           <Search placeholder="Buscar vinos..." handleSearch={handleSearch} />
