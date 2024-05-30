@@ -10,7 +10,6 @@ import { SelectorCantidad } from '@/app/ui/components/selectorCantidad'
 import { Store } from '@/app/utils/store'
 
 const VinoScreen = () => {
-  const pathname = usePathname()
   const params = useParams()
   const id = params.id
   const [vino, setVino] = useState<Vino | null>(null)
@@ -42,8 +41,8 @@ const VinoScreen = () => {
   }
 
   return (
-    <div className="p-4">
-      <div className="text-center">
+    <div className="p-4 bg-gray-200">
+      <div className="text-center pt-36">
         <Link href={'/'} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 md:px-5 rounded mt-4">
           Seguir comprando
         </Link>

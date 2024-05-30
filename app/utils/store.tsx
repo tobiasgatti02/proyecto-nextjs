@@ -28,7 +28,6 @@ export function StoreProvider({ children }: any) {
     return <Store.Provider value={{ state, dispatch }}>{children}</Store.Provider>;
 }
 
-// Creamos la función reductora
 function reducer(state: any, action: any) {
     switch (action.type) {
         case 'ADD_PRODUCT':
@@ -57,7 +56,6 @@ function reducer(state: any, action: any) {
             };
         case 'REMOVE_PRODUCT_UNIT':
             const productoARemover = action.payload;
-            // buscamos el producto a remover y le restamos una unidad, luego restamos en uno la cantidad total
             if (productoARemover.cantidad === 1) {
                 return {
                     ...state,
@@ -85,7 +83,7 @@ function reducer(state: any, action: any) {
                     ...state,
                     carrito: {
                         productos: state.carrito.productos.filter((producto:any) => producto.id !== productoId),
-                        cantidad: state.carrito.cantidad - item.cantidad // Decrementar por la cantidad total del producto eliminado
+                        cantidad: state.carrito.cantidad - item.cantidad
                     }
                 };
             }

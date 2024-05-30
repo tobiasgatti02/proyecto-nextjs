@@ -27,11 +27,11 @@ const PaginationSlider: React.FC<PaginationSliderProps> = ({ currentPage, totalP
           >
             Prev
           </button>
-          <div className="flex justify-center items-center space-x-2 my-2">
+          <div className="flex justify-center items-center text-center space-x-2 my-2">
             <span className="text-white">Page</span>
             <input
               type="number"
-              className="w-12 px-2 py-1 rounded border border-white text-center"
+              className="w-12 px-2 py-1 rounded border border-white text-center bg-gray-800 text-white no-arrows"
               value={currentPage}
               onChange={(e) => onPageChange(parseInt(e.target.value))}
               min={1}
