@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { insertVino } from '../lib/actions';
 import Router from 'next/router';
-import { useSession } from 'next-auth/react';
+  import { getSession } from 'next-auth/react';
 
 const AddWineForm = () => {
   const [wineData, setWineData] = useState({
@@ -23,11 +23,16 @@ const AddWineForm = () => {
     }
   }, []);
 
-
-const checkAuthStatus = () => {
-  const [session, loading] = useSession();
-  return !loading && !!session;
-};
+  const checkAuthStatus = async () => {
+    const session = await getSession();
+    if (!session) {
+      // No active session, user is not authenticated
+      return false;
+    } else {
+      // User is authenticated
+      return true;
+    }
+  };
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
