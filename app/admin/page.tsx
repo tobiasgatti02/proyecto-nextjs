@@ -1,11 +1,10 @@
-// AddWineForm.js
 'use client'
-import React, { useState } from 'react';
-
-//import { insertVino } from '../lib/actions';
+import React, { useState, useEffect } from 'react';
+import { insertVino } from '../lib/actions';
+import Router from 'next/router';
+import { useSession } from 'next-auth/react';
 
 const AddWineForm = () => {
-
   const [wineData, setWineData] = useState({
     wine: '',
     type: '',
@@ -15,21 +14,44 @@ const AddWineForm = () => {
     average_rating: 0,
     reviews: '',
     location: ''
-    });
+  });
 
-  const handleChange = (e) => {
+  useEffect(() => {
+    const loggedIn = checkAuthStatus(); // Implement this function to check if the user is logged in
+    if (!loggedIn) {
+      Router.push('/login'); // Redirect to login page if not logged in
+    }
+  }, []);
+
+
+const checkAuthStatus = () => {
+  const [session, loading] = useSession();
+  return !loading && !!session;
+};
+  
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setWineData({ ...wineData, [name]: value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       // Envía los datos del vino al backend para procesar la inserción
       await insertVino(wineData);
       console.log('Wine added successfully!');
+
       // Limpia el formulario después de la inserción exitosa
-      setWineData({ wine: '', type: '',winery: ''  ,price: 0, image: '', average_rating: 0, reviews: '', location: ''});
+      setWineData({
+        wine: '',
+        type: '',
+        price: 0,
+        image: '',
+        winery: '',
+        average_rating: 0,
+        reviews: '',
+        location: ''
+      });
     } catch (error) {
       console.error('Error adding wine:', error);
     }

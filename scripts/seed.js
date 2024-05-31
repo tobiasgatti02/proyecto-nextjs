@@ -3,6 +3,11 @@ require('dotenv').config();
 const { fetchVinos, insertVinos } = require('../app/lib/dataSeed.js');
 const users = require('../app/lib/placeholder-data.js').users;
 const bcrypt = require('bcrypt');
+
+
+
+
+
 async function seedUsers(client) {
   try {
     await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;

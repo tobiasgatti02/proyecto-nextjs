@@ -25,6 +25,7 @@
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.4.5",
     "framer-motion": "^11.2.6",
+    "jwt-decode": "^4.0.0",
     "next": "^14.2.3",
     "next-auth": "^5.0.0-beta.18",
     "pg": "^8.11.5",
