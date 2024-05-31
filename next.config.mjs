@@ -4,6 +4,7 @@ const nextConfig = {
   images: {
     domains: ['images.vivino.com'],
   },
+  
 };
 
 export default nextConfig;

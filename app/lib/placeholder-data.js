@@ -46,8 +46,9 @@ const vinos = [
     {
         id: '410544b2-4001-4271-9855-fec4b6a6442a',
         name: 'admin',
-        email: 'admin@gmail.com',
-        password: 'bodine@',
+        email: 'admin@admin.com',
+        password: 'admin',
+        role: 'admin'
       }
   ];
   

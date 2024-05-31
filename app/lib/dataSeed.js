@@ -1,5 +1,6 @@
 const { db } = require('@vercel/postgres');
 const { unstable_noStore: noStore } = require('next/cache');
+require('dotenv').config();
 
 const API_ENDPOINTS = {
   reds: 'https://api.sampleapis.com/wines/reds',
@@ -91,4 +92,42 @@ async function insertVinos(vinos) {
   console.log(`Inserted ${vinos.length} vinos`);
 }
 
-module.exports = { fetchVinos, getUser, insertVinos };
+
+async function insertVino(vino, connectionString) {
+  const MAX_RETRIES = 3;
+  console.log(`Inserted vino: ${vino.wine}`);
+  let attempt = 0;
+  let success = false;
+
+  console.log({
+     POSTGRES_URL: process.env.POSTGRES_URL,
+     POSTGRES_URL_NON_POOLING: process.env.POSTGRES_URL_NON_POOLING
+    });
+
+  while (attempt < MAX_RETRIES && !success) {
+    try {
+      await db.query(`
+        INSERT INTO vinos (winery, wine, average_rating, reviews, location, image, type, price)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+        ON CONFLICT (id) DO NOTHING;
+      `, [vino.winery, vino.wine, vino.rating_average, vino.rating_reviews, vino.location, vino.image, vino.type, vino.price], { connectionString });
+      success = true;
+      console.log(`Inserted vino: ${vino.wine}`);
+    } catch (error) {
+      attempt++;
+      console.error(`Error inserting vino (attempt ${attempt}):`, error);
+      if (attempt >= MAX_RETRIES) {
+        throw new Error('Failed to insert vino after multiple attempts.');
+      }
+    }
+  }
+
+  console.log(`Inserted vino: ${vino.wine}`);
+}
+
+
+
+
+
+
+module.exports = { fetchVinos, getUser, insertVinos, insertVino};
