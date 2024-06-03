@@ -5,6 +5,8 @@ import Router from 'next/router';
   import { getSession } from 'next-auth/react';
 
 const AddWineForm = () => {
+
+  
   const [wineData, setWineData] = useState({
     wine: '',
     type: '',
@@ -16,23 +18,6 @@ const AddWineForm = () => {
     location: ''
   });
 
-  useEffect(() => {
-    const loggedIn = checkAuthStatus(); // Implement this function to check if the user is logged in
-    if (!loggedIn) {
-      Router.push('/login'); // Redirect to login page if not logged in
-    }
-  }, []);
-
-  const checkAuthStatus = async () => {
-    const session = await getSession();
-    if (!session) {
-      // No active session, user is not authenticated
-      return false;
-    } else {
-      // User is authenticated
-      return true;
-    }
-  };
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
