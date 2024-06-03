@@ -40,7 +40,7 @@ const Compras = () => {
   useEffect(() => {
     let filteredData = vinos;
     if (filter !== 'todos') {
-      filteredData = vinos.filter(vino => vino.type === filter);
+      filteredData = vinos.filter(vino => vino.wine_category === filter);
     }
     if (searchTerm) {
       filteredData = filteredData.filter(vino => vino.wine.toLowerCase().includes(searchTerm.toLowerCase()));
