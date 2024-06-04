@@ -1,9 +1,9 @@
-'use server'
-import { db } from '@vercel/postgres';
-import MercadoPagoConfig, { Preference } from 'mercadopago'
-import {  AuthError } from 'next-auth';
-import {signIn,signOut} from '@/auth'
-
+"use server";
+import { db } from "@vercel/postgres";
+import MercadoPagoConfig, { Preference } from "mercadopago";
+import { AuthError } from "next-auth";
+import { signIn, signOut } from "@/auth";
+import { PreferenceResponse } from "mercadopago/dist/clients/preference/commonTypes";
 
 export async function insertUser(userData: { name: string, email: string, password: string, role: string }) {
   try {
@@ -23,6 +23,10 @@ export async function insertUser(userData: { name: string, email: string, passwo
   }
 }
 
+const client = new MercadoPagoConfig({
+  accessToken: process.env.NEXT_PUBLIC_MP_ACCESS_TOKEN!,
+});
+
 export async function deleteVino(wineId: number) {
   try {
     const query = `
@@ -32,23 +36,24 @@ export async function deleteVino(wineId: number) {
     const values = [wineId];
     await db.query(query, values);
   } catch (error: any) {
-    throw new Error('Error deleting wine: ' + error.message);
+    throw new Error("Error deleting wine: " + error.message);
   }
 }
 
 
 
-export async function crearPreferencia(items: any): Promise<string | undefined>{
-  'use server'
-  const client = new MercadoPagoConfig({ accessToken: process.env.NEXT_PUBLIC_MP_ACCESS_TOKEN! })
-  const preference = new Preference(client).create({
-    body: {
-        items
-    }
-  })
-  return (await preference).id
-}
+export async function crearPreferencia(
+  items: any
+): Promise<string | undefined> {
+  "use server";
 
+  const preference = await new Preference(client).create({
+    body: {
+      items,
+    },
+  });
+  return preference.sandbox_init_point;
+}
 
 export async function insertVino(wineData: any) {
   try {
@@ -68,7 +73,7 @@ export async function insertVino(wineData: any) {
     ];
     await db.query(query, values);
   } catch (error: any) {
-    throw new Error('Error inserting wine: ' + error.message);
+    throw new Error("Error inserting wine: " + error.message);
   }
 }
 
@@ -92,27 +97,23 @@ export async function updateVino(wineId: number, wineData: any) {
     ];
     await db.query(query, values);
   } catch (error: any) {
-    throw new Error('Error updating wine: ' + error.message);
+    throw new Error("Error updating wine: " + error.message);
   }
 }
 
-
-
 export async function authenticate(
   prevState: string | undefined,
-  formData: FormData,
+  formData: FormData
 ) {
   try {
-    await signIn('credentials', formData);
-
-
+    await signIn("credentials", formData);
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
-        case 'CredentialsSignin':
-          return 'Invalid credentials.';
+        case "CredentialsSignin":
+          return "Invalid credentials.";
         default:
-          return 'Something went wrong.';
+          return "Something went wrong.";
       }
     }
     throw error;
@@ -120,6 +121,5 @@ export async function authenticate(
 }
 
 export async function logout() {
-  await signOut({redirectTo: "/"});
+  await signOut({ redirectTo: "/" });
 }
-
