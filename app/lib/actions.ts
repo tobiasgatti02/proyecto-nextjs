@@ -1,17 +1,19 @@
 'use server'
 import { db } from '@vercel/postgres';
+import MercadoPagoConfig, { Preference } from 'mercadopago'
 
-export async function deleteVino(wineId: number) {
-  try {
-    const query = `
-      DELETE FROM vinos
-      WHERE id = $1
-    `;
-    await db.query(query, [wineId]);
-  } catch (error: any) {
-    throw new Error('Error deleting wine: ' + error.message);
-  }
+
+export async function crearPreferencia(items: any): Promise<string | undefined>{
+  'use server'
+  const client = new MercadoPagoConfig({ accessToken: process.env.NEXT_PUBLIC_MP_ACCESS_TOKEN! })
+  const preference = new Preference(client).create({
+    body: {
+        items
+    }
+  })
+  return (await preference).id
 }
+
 
 export async function insertVino(wineData: any) {
   try {

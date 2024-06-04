@@ -34,7 +34,7 @@ async function fetchData(endpoint) {
       location: wine.location,
       image: wine.image,
       price: getRandomPrice(),
-      type: type
+      wine_category: type
     }));
 }
 
@@ -74,10 +74,10 @@ async function insertVinos(vinos) {
     while (attempt < MAX_RETRIES && !success) {
       try {
         await db.query(`
-          INSERT INTO vinos (winery, wine, average_rating, reviews, location, image, type, price)
+          INSERT INTO vinos (winery, wine, average_rating, reviews, location, image, wine_category, price)
           VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
           ON CONFLICT (id) DO NOTHING;
-        `, [vino.winery, vino.wine, vino.rating_average, vino.rating_reviews, vino.location, vino.image, vino.type, vino.price]);
+        `, [vino.winery, vino.wine, vino.rating_average, vino.rating_reviews, vino.location, vino.image, vino.wine_category, vino.price]);
         success = true;
       } catch (error) {
         attempt++;
@@ -107,10 +107,10 @@ async function insertVino(vino, connectionString) {
   while (attempt < MAX_RETRIES && !success) {
     try {
       await db.query(`
-        INSERT INTO vinos (winery, wine, average_rating, reviews, location, image, type, price)
+        INSERT INTO vinos (winery, wine, average_rating, reviews, location, image, wine_category, price)
         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
         ON CONFLICT (id) DO NOTHING;
-      `, [vino.winery, vino.wine, vino.rating_average, vino.rating_reviews, vino.location, vino.image, vino.type, vino.price], { connectionString });
+      `, [vino.winery, vino.wine, vino.rating_average, vino.rating_reviews, vino.location, vino.image, vino.wine_category, vino.price], { connectionString });
       success = true;
       console.log(`Inserted vino: ${vino.wine}`);
     } catch (error) {

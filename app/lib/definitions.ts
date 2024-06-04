@@ -14,6 +14,9 @@ export type User = {
     reviews: string;
     location: string;
     image: string;
-    type: string;
+    wine_category: string;
     price: number;
+    cantidad?:number
   };
+
+  
