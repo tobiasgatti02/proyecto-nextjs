@@ -145,7 +145,7 @@ function NavBar({ bgColorTop, bgColorScrolled,text,logo,logoWidth, logoHeight }:
                   <Link href="/compras" className="block py-2 text-center text-white ">Compras</Link>
                   <Link href="/nosotros" className="block py-2 text-center text-white ">Nosotros</Link>
                   <Link href="/suscripciones" className="block py-2 text-center text-white ">Suscripciones</Link>
-                  {session ? (
+ {session ? (
                   <button onClick={() => signOut()} className="block py-2 text-center text-white w-full">
                     Log Out
                   </button>
