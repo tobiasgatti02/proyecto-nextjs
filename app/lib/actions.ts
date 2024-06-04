@@ -1,7 +1,21 @@
 'use server'
 import { db } from '@vercel/postgres';
 import MercadoPagoConfig, { Preference } from 'mercadopago'
+import {  AuthError } from 'next-auth';
+import {signIn,signOut} from '@/auth'
 
+export async function deleteVino(wineId: number) {
+  try {
+    const query = `
+      DELETE FROM vinos
+      WHERE id = $1
+    `;
+    const values = [wineId];
+    await db.query(query, values);
+  } catch (error: any) {
+    throw new Error('Error deleting wine: ' + error.message);
+  }
+}
 
 export async function crearPreferencia(items: any): Promise<string | undefined>{
   'use server'
@@ -60,3 +74,31 @@ export async function updateVino(wineId: number, wineData: any) {
     throw new Error('Error updating wine: ' + error.message);
   }
 }
+
+
+
+export async function authenticate(
+  prevState: string | undefined,
+  formData: FormData,
+) {
+  try {
+    await signIn('credentials', formData);
+
+
+  } catch (error) {
+    if (error instanceof AuthError) {
+      switch (error.type) {
+        case 'CredentialsSignin':
+          return 'Invalid credentials.';
+        default:
+          return 'Something went wrong.';
+      }
+    }
+    throw error;
+  }
+}
+
+export async function logout() {
+  await signOut({redirectTo: "/"});
+}
+

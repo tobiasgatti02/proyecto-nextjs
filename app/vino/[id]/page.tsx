@@ -76,7 +76,7 @@ const VinoScreen = () => {
                 <h3>Precio:</h3>
               </div>
               <div className='mx-8 font-semibold space-y-10'>
-                <h3>{vino.type}</h3>
+                <h3>{vino.wine_category}</h3>
                 <h3>{vino.winery}</h3>
                 <h3>{vino.location}</h3>
                 <h3>{vino.average_rating} en {vino.reviews}</h3>

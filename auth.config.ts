@@ -24,12 +24,9 @@ export const authConfig: NextAuthConfig = {
       const isOnHome = nextUrl.pathname === '/';
       const isOnSuscripciones = nextUrl.pathname.startsWith('/suscripciones');
       const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
-      const isOnCarrito = nextUrl.pathname.startsWith('/carrito');
 
       if (isLoggedIn) {
-        if (isOnLogin) {
-          return NextResponse.redirect(baseUrl + '/');
-        }
+        
         if (isOnCompras) {
           return true;
         }
@@ -40,20 +37,24 @@ export const authConfig: NextAuthConfig = {
             return NextResponse.redirect(baseUrl + '/');
           }
         }
-      } 
-      else {
-        if (isOnAdmin) {
-          return NextResponse.redirect(baseUrl + '/auth/login');
-        }
-        if (isOnLogin || isOnCompras || isOnSuscripciones || isOnHome || isOnCarrito) {
+      }
+      if (!isLoggedIn) {
+        if (isOnLogin || isOnHome || isOnSuscripciones || isOnCompras) {
           return true;
         }
+        
+        return NextResponse.redirect(baseUrl + '/auth/login');
+        
       }
-
-      return NextResponse.next(); // Handle all other cases
+    
+        return NextResponse.next();
+      
+    
+      
+     
     },
-    async jwt({ token, user, trigger }) {
-      if (trigger === 'signIn' && user) {
+    async jwt({ token, user, trigger,session }) {
+      if (trigger === 'signIn') {
         return {
           ...token,
           id: user.id,
@@ -61,6 +62,7 @@ export const authConfig: NextAuthConfig = {
           role: user.role,
         };
       }
+
       return token;
     },
     async session({ session, token }: { session: any; token: JWT }) {
