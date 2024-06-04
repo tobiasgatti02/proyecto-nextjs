@@ -22,6 +22,7 @@ export const authConfig: NextAuthConfig = {
       const isOnCompras = nextUrl.pathname.startsWith('/compras');
       const isOnLogin = nextUrl.pathname.startsWith('/auth/login');
       const isOnHome = nextUrl.pathname === '/';
+      const isOnCarrito = nextUrl.pathname.startsWith('/carrito');
       const isOnSuscripciones = nextUrl.pathname.startsWith('/suscripciones');
       const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
 
@@ -39,7 +40,7 @@ export const authConfig: NextAuthConfig = {
         }
       }
       if (!isLoggedIn) {
-        if (isOnLogin || isOnHome || isOnSuscripciones || isOnCompras) {
+        if (isOnLogin || isOnHome || isOnSuscripciones || isOnCompras || isOnCarrito) {
           return true;
         }
         
