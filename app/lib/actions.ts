@@ -2,8 +2,19 @@
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
 import { db } from '@vercel/postgres';
+import MercadoPagoConfig, { Preference } from 'mercadopago'
 
 
+export async function crearPreferencia(items: any): Promise<string | undefined>{
+  'use server'
+  const client = new MercadoPagoConfig({ accessToken: process.env.NEXT_PUBLIC_MP_ACCESS_TOKEN! })
+  const preference = new Preference(client).create({
+    body: {
+        items
+    }
+  })
+  return (await preference).id
+}
 
 
 export async function insertVino(wineData: any) {

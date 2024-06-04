@@ -16,6 +16,7 @@ export type User = {
     image: string;
     wine_category: string;
     price: number;
+    cantidad?:number
   };
 
   

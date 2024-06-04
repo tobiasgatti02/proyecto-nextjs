@@ -2,19 +2,50 @@
 import Link from "next/link";
 import Titulo from "../ui/components/titulo";
 import Image from 'next/image';
-import { SelectorCantidad } from "../ui/components/selectorCantidad";
 import React, { useContext, useEffect, useState } from 'react';
 import { Store } from "../utils/store";
 import { SelectorCantidadCarrito } from "../ui/components/selectorCantidadCarrito";
 import NavBar from "../ui/components/navBar";
+import { initMercadoPago, Wallet } from '@mercadopago/sdk-react'
+import { crearPreferencia } from "../lib/actions";
+import  { Vino } from '../lib/definitions'
+
 
 export default function Carrito() {
-    const storeData = useContext(Store);
     const [productos, setProductos] = useState([]);
+    const [productosMapeados, setProductosMapeados] = useState([]);
+    const [preferenceId, setPreferenceId] = useState('');
+
+    const mapearAMercadoPago = (productos: any) => {
+        return productos.map((producto: Vino) => ({
+            id : String(producto.id),
+            title: producto.wine,
+            description: producto.winery,
+            picture_url: producto.image,
+            category_id: producto.wine_category,
+            quantity: producto.cantidad,
+            unit_price: Number(producto.price)
+        }));
+    }
+
+    const handleBuy = async () => {
+        console.log('productosMapeados: ', productosMapeados);
+        const id: string | undefined  = await crearPreferencia(productosMapeados);
+        console.log('id: ', id);
+        if (id) {
+            setPreferenceId(id);
+        }
+    }
+
+    const storeData = useContext(Store);
+
+    initMercadoPago(process.env.NEXT_PUBLIC_MP_PUBLIC_KEY!, { locale: 'es-AR' });
+
 
     useEffect(() => {
         if (storeData && storeData.state) {
             setProductos(storeData.state.carrito.productos);
+            setProductosMapeados(mapearAMercadoPago(storeData.state.carrito.productos));
         }
         console.log('state: ', storeData?.state)
     }, [storeData]);
@@ -24,7 +55,7 @@ export default function Carrito() {
             storeData.dispatch({ type: 'REMOVE_PRODUCT', payload: producto });
         }
     };
-    
+
     const vaciarCarritoHandler = () => {
         if (storeData && storeData.dispatch) {
             storeData.dispatch({ type: 'CLEAR' });
@@ -32,15 +63,15 @@ export default function Carrito() {
     }
     const logo = '/logo.png';
     return (
-        
+
         <div className="text-white flex justify-center min-h-screen pt-32">
-             <NavBar
-            text="text-white"
-            logo={logo}
-            logoWidth={200}
-            logoHeight={50}
-            bgColorTop="bg-transparent"
-            bgColorScrolled="bg-[#3B0613]"
+            <NavBar
+                text="text-white"
+                logo={logo}
+                logoWidth={200}
+                logoHeight={50}
+                bgColorTop="bg-transparent"
+                bgColorScrolled="bg-[#3B0613]"
             />
             <div className="flex flex-col w-[1000px] mb-0">
                 <Titulo titulo='carrito' className="text-2xl mb-0" />
@@ -86,11 +117,11 @@ export default function Carrito() {
                                     </span>
                                 </div>
                                 <div className="mt-5 w-full mb-2">
-                                    <Link
-                                        href="/pagar"
-                                        className="flex bg-blue-400 rounded-2xl justify-center">
-                                        Ir a Pagar
-                                    </Link>
+                                    <button onClick={handleBuy}>
+                                        Estoy Listo Para Pagar!
+                                    </button>
+                                    {preferenceId && <Wallet initialization={{ preferenceId: preferenceId }} customization={{ texts: { valueProp: 'smart_option' } }} />}
+                                    
                                 </div>
                             </div>
                             <button className="mt-10" onClick={vaciarCarritoHandler}>Vaciar Carrito</button>
