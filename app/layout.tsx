@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { StoreProvider } from "./utils/store";
+import SessionWrapper from './ui/components/sessionWrapper'
 const inter = Inter({ subsets: ["latin"] });
 
 
@@ -28,11 +29,13 @@ export default function RootLayout({
       
      
       
-        
+        <SessionWrapper>
         <StoreProvider>
           {children}
         </StoreProvider>
+        </SessionWrapper>
       </body>
+
 
     </html>
   );

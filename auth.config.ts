@@ -27,6 +27,12 @@ export const authConfig: NextAuthConfig = {
       const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
 
       if (isLoggedIn) {
+        if (isOnHome || isOnSuscripciones || isOnCarrito) {
+          return true;
+        }
+        if (isOnLogin) {
+          return NextResponse.redirect(baseUrl + '/');
+        }
         
         if (isOnCompras) {
           return true;

@@ -4,6 +4,25 @@ import MercadoPagoConfig, { Preference } from 'mercadopago'
 import {  AuthError } from 'next-auth';
 import {signIn,signOut} from '@/auth'
 
+
+export async function insertUser(userData: { name: string, email: string, password: string, role: string }) {
+  try {
+    const query = `
+      INSERT INTO users (name, email, password, role)
+      VALUES ($1, $2, $3, $4)
+    `;
+    const values = [
+      userData.name,
+      userData.email,
+      userData.password,
+      userData.role,
+    ];
+    await db.query(query, values);
+  } catch (error: any) {
+    throw new Error('Error inserting user: ' + error.message);
+  }
+}
+
 export async function deleteVino(wineId: number) {
   try {
     const query = `
@@ -16,6 +35,8 @@ export async function deleteVino(wineId: number) {
     throw new Error('Error deleting wine: ' + error.message);
   }
 }
+
+
 
 export async function crearPreferencia(items: any): Promise<string | undefined>{
   'use server'
