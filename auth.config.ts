@@ -25,6 +25,8 @@ export const authConfig: NextAuthConfig = {
       const isOnCarrito = nextUrl.pathname.startsWith('/carrito');
       const isOnSuscripciones = nextUrl.pathname.startsWith('/suscripciones');
       const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
+      const isOnVinos = nextUrl.pathname.startsWith('/vino');
+      const isOnNosotros = nextUrl.pathname.startsWith('/nosotros');
 
       if (isLoggedIn) {
         if (isOnHome || isOnSuscripciones || isOnCarrito) {
@@ -46,7 +48,7 @@ export const authConfig: NextAuthConfig = {
         }
       }
       if (!isLoggedIn) {
-        if (isOnLogin || isOnHome || isOnSuscripciones || isOnCompras || isOnCarrito) {
+        if (isOnLogin || isOnHome || isOnNosotros || isOnVinos || isOnSuscripciones || isOnCompras || isOnCarrito) {
           return true;
         }
         
