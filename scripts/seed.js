@@ -110,6 +110,44 @@ async function seedWineCategories(client) {
     throw error;
   }
 }
+async function seedOrders(client) {
+  try {
+    const createTable = await client.sql`
+  CREATE TABLE IF NOT EXISTS ORDERS (
+    ORDER_ID SERIAL PRIMARY KEY,
+    ORDER_DATE DATE NOT NULL,
+    ORDER_HOUR TIME NOT NULL,
+    VALUE INT NOT NULL,
+    STATE VARCHAR(50) NOT NULL
+);`
+    console.log(`Created "ORDERS" table`);
+    return createTable;
+  } catch (error) {
+    console.error('Error seeding ORDERS:', error);
+    throw error;
+  }
+}
+
+async function seedOrderDetails(client) {
+  try {
+    const createTable = await client.sql`
+  CREATE TABLE IF NOT EXISTS ORDER_DETAILS (
+    DETAIL_ID SERIAL PRIMARY KEY,
+    ORDER_ID INT NOT NULL,
+    ID_WINE INT,
+    QUANTITY INT NOT NULL,
+    PRICE INT NOT NULL,
+    FOREIGN KEY (ID_WINE) REFERENCES vinos (ID),
+    FOREIGN KEY (ORDER_ID) REFERENCES ORDERS (ORDER_ID)
+);`
+    console.log(`Created "ORDER_DETAILS" table`);
+    return createTable;
+  }
+  catch (error) {
+    console.error('Error seeding ORDER_DETAILS:', error);
+    throw error;
+  }
+}
 
 async function seedWines(client) {
   try {
@@ -150,68 +188,9 @@ async function seedWines(client) {
     //await seedUsers(client);
     //await seedWineCategories(client);
     //await seedWines(client);
+    await seedOrders(client);
+    await seedOrderDetails(client);
   } finally {
     client.release();
   }
 })();
-
-/**
-CREATE TABLE IF NOT EXISTS wine_categorys (
-    wine_category VARCHAR(100) PRIMARY KEY,
-    name VARCHAR(100) NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS WINES (
-    ID_WINE SERIAL PRIMARY KEY,
-    WINERY VARCHAR(255) NOT NULL,
-    WINE VARCHAR(255) NOT NULL,
-    AVERAGE_RATING VARCHAR(10),
-    REVIEWS INT,
-    LOCATION VARCHAR(255),
-    WINE_CATEGORY VARCHAR(100),
-    PRICE INT,
-    FOREIGN KEY (WINE_CATEGORY) REFERENCES WINE_CATEGORIES (WINE_CATEGORY)
-);
-
-CREATE TABLE IF NOT EXISTS IMAGES (
-    ID_IMAGE SERIAL PRIMARY KEY,
-    IMAGE_URL TEXT NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS WINE_IMAGES (
-    ID_WINE INT,
-    ID_IMAGE INT,
-    PRIMARY KEY (ID_WINE, ID_IMAGE),
-    FOREIGN KEY (ID_WINE) REFERENCES WINES (ID_WINE),
-    FOREIGN KEY (ID_IMAGE) REFERENCES IMAGES (ID_IMAGE)
-);
-
-CREATE TABLE IF NOT EXISTS ORDERS (
-    ORDER_ID SERIAL PRIMARY KEY,
-    ORDER_DATE DATE NOT NULL,
-    ORDER_HOUR TIME NOT NULL,
-    DETAIL_ID INT NOT NULL,
-    VALUE INT NOT NULL,
-    STATE VARCHAR(50) NOT NULL,
-    FOREIGN KEY (DETAIL_ID) REFERENCES ORDER_DETAILS (DETAIL_ID)
-);
-
-CREATE TABLE IF NOT EXISTS ORDER_DETAILS (
-    DETAIL_ID SERIAL PRIMARY KEY,
-    ORDER_ID
-    ID_WINE INT,
-    QUANTITY INT NOT NULL,
-    PRICE INT NOT NULL,
-    FOREIGN KEY (ID_WINE) REFERENCES WINES (ID_WINE),
-    FOREIGN KEY (ORDER_ID) REFERENCES ORDERS (ORDER_ID)
-);
-
-CREATE TABLE IF NOT EXISTS USERS (
-    USER_ID SERIAL PRIMARY KEY,
-    ROLE VARCHAR(50) NOT NULL,
-    EMAIL VARCHAR(255) NOT NULL UNIQUE,
-    PASSWORD VARCHAR(255) NOT NULL
-); 
-
-
-*/
