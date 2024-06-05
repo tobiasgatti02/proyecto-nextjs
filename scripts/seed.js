@@ -111,10 +111,10 @@ async function seedWineCategories(client) {
   }
 }
 async function seedOrders(client) {
-  try {
+  try { //TODO: cambiar el tipo de la columba order_id a INT, ya que se agrega el id de mp
     const createTable = await client.sql`
   CREATE TABLE IF NOT EXISTS ORDERS (
-    ORDER_ID SERIAL PRIMARY KEY,
+    ORDER_ID SERIAL PRIMARY KEY, 
     ORDER_DATE DATE NOT NULL,
     ORDER_HOUR TIME NOT NULL,
     VALUE INT NOT NULL,

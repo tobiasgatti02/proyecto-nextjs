@@ -40,6 +40,24 @@ export async function deleteVino(wineId: number) {
   }
 }
 
+export async function insertOrden(userData: { id: number, date: string, hour: string, value: number, state: string }) {
+  try {
+    const query = `
+      INSERT INTO ordenes (ORDER_ID, ORDER_DATE, ORDER_HOUR, VALUE, STATE)
+      VALUES ($1, $2, $3, $4, $5)
+    `;
+    const values = [
+      userData.id,
+      userData.date,
+      userData.hour,
+      userData.value,
+      userData.state,
+    ];
+    await db.query(query, values);
+  } catch (error: any) {
+    throw new Error("Error inserting order: " + error.message);
+  }
+}
 
 
 export async function crearPreferencia(
@@ -49,6 +67,13 @@ export async function crearPreferencia(
 
   const preference = await new Preference(client).create({
     body: {
+      back_urls: {
+        //TODO cambiar las redirecciones a las de la pagina en produccion.
+        failure: "http://localhost:3000",
+        pending: "http://localhost:3000",
+        success: "http://localhost:3000",
+      },
+      auto_return: "approved",
       items,
     },
   });

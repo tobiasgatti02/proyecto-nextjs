@@ -1,5 +1,7 @@
 import { MercadoPagoConfig, Payment } from "mercadopago";
 import type { NextRequest } from "next/server";
+import { insertOrden } from "@/app/lib/actions";
+import { RedirectType, redirect } from "next/navigation";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
@@ -19,5 +21,7 @@ export async function POST(req: NextRequest) {
   //console.log("payment: ", payment);
   //TODO ver que datos devuelve la compra y si es posible con los mismos guardarlos en la base de datos,
   //ya que seria la manera mas segura de mantener la consistencia mas alla de si se cae o no nuestra app.
+  console.log("id: ", pago.id, 'date: ', pago.date_approved, 'hour: ', pago.date_approved, 'value: ', pago.transaction_amount, 'state: ', pago.status);
+  //insertOrden({ id: pago.id ?? 0, date: pago.date_approved ?? '', hour: pago.date_approved ?? '', value: pago.transaction_amount ?? 0, state: pago.status ?? 'failed' });
   return Response.json({ success: true });
 }
