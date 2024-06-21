@@ -32,7 +32,6 @@ export const authConfig: NextAuthConfig = {
       const isOnVinos = nextUrl.pathname.startsWith('/vino');
       const isOnRegister = nextUrl.pathname.startsWith('/auth/register');
       const isOnNosotros = nextUrl.pathname.startsWith('/nosotros');
-      const isOnRegister = nextUrl.pathname.startsWith('/auth/register');
 
       if (isLoggedIn) {
         if (isOnHome || isOnSuscripciones || isOnCarrito) {
