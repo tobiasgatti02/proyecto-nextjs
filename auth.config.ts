@@ -31,8 +31,7 @@ export const authConfig: NextAuthConfig = {
       const baseUrl = process.env.NEXTAUTH_URL;
       const isOnVinos = nextUrl.pathname.startsWith('/vino');
       const isOnRegister = nextUrl.pathname.startsWith('/auth/register');
-      const isOnNosotros = nextUrl.pathname.startsWith('/nosotros');
-      const isOnRegister = nextUrl.pathname.startsWith('/auth/register');
+      const isOnMaridaje = nextUrl.pathname.startsWith('/maridaje');
 
       if (isLoggedIn) {
         if (isOnHome || isOnSuscripciones || isOnCarrito) {
@@ -54,7 +53,7 @@ export const authConfig: NextAuthConfig = {
         }
       }
       if (!isLoggedIn) {
-        if (isOnLogin || isOnRegister || isOnHome || isOnNosotros || isOnVinos || isOnSuscripciones || isOnCompras || isOnCarrito) {
+        if (isOnLogin || isOnRegister || isOnHome || isOnMaridaje|| isOnVinos || isOnSuscripciones || isOnCompras || isOnCarrito) {
           return true;
         }
 
