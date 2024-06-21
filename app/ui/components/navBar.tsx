@@ -6,9 +6,10 @@ import Image from 'next/image';
 import logo1 from '../../../public/logo.png';
 import Link from 'next/link';
 import carro from '../../../public/carro.png';
+import { useRouter } from 'next/navigation';
 
 function NavBar({ bgColorTop, bgColorScrolled,text,logo,logoWidth, logoHeight }: {logoHeight:number,logo:string,logoWidth:number,text:string, bgColorTop: string, bgColorScrolled: string }) {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAtTop, setIsAtTop] = useState(true);
   const [isScrolledUp, setIsScrolledUp] = useState(true);
@@ -16,6 +17,12 @@ function NavBar({ bgColorTop, bgColorScrolled,text,logo,logoWidth, logoHeight }:
   const menuRef = useRef<HTMLDivElement | null>(null);
   const navRef = useRef<HTMLDivElement | null>(null);
   const prevScrollY = useRef(0);
+  const router = useRouter();
+
+  const handleSignOut = async () => {
+    await signOut({ redirect: false });
+    router.push('/');
+  };
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -55,7 +62,7 @@ function NavBar({ bgColorTop, bgColorScrolled,text,logo,logoWidth, logoHeight }:
       }
     }
   }, [isMenuOpen]);
-
+  
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
     return () => {
@@ -89,22 +96,24 @@ function NavBar({ bgColorTop, bgColorScrolled,text,logo,logoWidth, logoHeight }:
             <Link href="/compras" className="block lg:inline-block lg:mt-0 hover:text-2xl transform duration-500">
               Compras
             </Link>
-            <Link href="/nosotros" className="block lg:inline-block lg:mt-0 hover:text-2xl transform duration-500">
-              Nosotros
+            <Link href="/maridaje" className="block lg:inline-block lg:mt-0 hover:text-2xl transform duration-500">
+              Maridaje
             </Link>
           
             <Link href="/suscripciones" className="block lg:inline-block lg:mt-0 hover:text-2xl transform duration-500">
               Suscripciones
             </Link>
-            {session ? (
-              <button onClick={() => signOut()} className="block lg:inline-block lg:mt-0 hover:text-2xl transform duration-500">
-                Log Out
-              </button>
-            ) : (
-              <Link href="/auth/login" className="block lg:inline-block lg:mt-0 hover:text-2xl transform duration-500">
-                Log In
-              </Link>
-            )}
+            {status === 'loading' ? (
+            <span>Loading...</span>
+          ) : session ? (
+            <button onClick={handleSignOut} className="block lg:inline-block lg:mt-0 hover:text-2xl transform duration-500">
+              Log Out
+            </button>
+          ) : (
+            <Link href="/auth/login" className="block lg:inline-block lg:mt-0 hover:text-2xl transform duration-500">
+              Log In
+            </Link>
+          )}
             <Link href="/carrito" className="block lg:inline-block lg:mt-0">
             <Image
                 src={carro}
@@ -143,9 +152,9 @@ function NavBar({ bgColorTop, bgColorScrolled,text,logo,logoWidth, logoHeight }:
               <div ref={menuRef} className="sm:hidden z-40 fixed bg-[#3B0613] w-screen overflow-hidden transition-max-height duration-500 ease-in-out ">
                 <div className="mt-16 pb-2 z-40">
                   <Link href="/compras" className="block py-2 text-center text-white ">Compras</Link>
-                  <Link href="/nosotros" className="block py-2 text-center text-white ">Nosotros</Link>
+                  <Link href="/maridaje" className="block py-2 text-center text-white ">Maridaje</Link>
                   <Link href="/suscripciones" className="block py-2 text-center text-white ">Suscripciones</Link>
- {session ? (
+                  {session ? (
                   <button onClick={() => signOut()} className="block py-2 text-center text-white w-full">
                     Log Out
                   </button>

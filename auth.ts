@@ -46,12 +46,10 @@ export const { auth,handlers, signIn, signOut } = NextAuth({
           return null;
         }
 
-        // Assuming your user object has a 'role' field
-        // Retrieve the role from your user database
-        const role = user.role || 'user';
+       
 
         // Return the user object along with the role
-        return { ...user, role };
+        return { ...user};
       },
     }),
   ],

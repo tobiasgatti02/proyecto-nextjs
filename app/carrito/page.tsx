@@ -1,18 +1,27 @@
 "use client";
 import Link from "next/link";
-import Titulo from "../ui/components/titulo";
 import Image from "next/image";
 import React, { useContext, useEffect, useState } from "react";
 import { Store } from "../utils/store";
 import { SelectorCantidadCarrito } from "../ui/components/selectorCantidadCarrito";
 import NavBar from "../ui/components/navBar";
-import { initMercadoPago, Wallet } from "@mercadopago/sdk-react";
+import { initMercadoPago } from "@mercadopago/sdk-react";
 import { crearPreferencia } from "../lib/actions";
 import { Vino } from "../lib/definitions";
 
 export default function Carrito() {
   const [productos, setProductos] = useState([]);
   const [productosMapeados, setProductosMapeados] = useState([]);
+  const storeData = useContext(Store);
+
+  useEffect(() => {
+    if (storeData && storeData.state) {
+      setProductos(storeData.state.carrito.productos);
+      setProductosMapeados(mapearAMercadoPago(storeData.state.carrito.productos));
+    }
+  }, [storeData]);
+
+  initMercadoPago(process.env.NEXT_PUBLIC_MP_PUBLIC_KEY!, { locale: "es-AR" });
 
   const mapearAMercadoPago = (productos: any) => {
     return productos.map((producto: Vino) => ({
@@ -27,130 +36,106 @@ export default function Carrito() {
   };
 
   const handleBuy = async () => {
-    console.log("productosMapeados: ", productosMapeados);
     const checkoutUrl = await crearPreferencia(productosMapeados);
-
     if (checkoutUrl) {
       window.location.replace(checkoutUrl);
     } else {
-      alert("no lo pude generar man");
+      alert("No se pudo generar el enlace de pago");
     }
   };
 
-  const storeData = useContext(Store);
-
-  initMercadoPago(process.env.NEXT_PUBLIC_MP_PUBLIC_KEY!, { locale: "es-AR" });
-
-  useEffect(() => {
-    if (storeData && storeData.state) {
-      setProductos(storeData.state.carrito.productos);
-      setProductosMapeados(
-        mapearAMercadoPago(storeData.state.carrito.productos)
-      );
-    }
-    console.log("state: ", storeData?.state);
-  }, [storeData]);
-
   const removeCartHandler = (producto: any) => {
-    if (storeData && storeData.dispatch) {
-      storeData.dispatch({ type: "REMOVE_PRODUCT", payload: producto });
-    }
+    storeData?.dispatch({ type: "REMOVE_PRODUCT", payload: producto });
   };
 
   const vaciarCarritoHandler = () => {
-    if (storeData && storeData.dispatch) {
-      storeData.dispatch({ type: "CLEAR" });
-    }
+    storeData?.dispatch({ type: "CLEAR" });
   };
-  const logo = "/logo.png";
+
+  const totalItems = productos.reduce((a: number, c: any) => a + c.cantidad, 0);
+  const totalPrice = productos.reduce((a: number, c: any) => a + c.price * c.cantidad, 0).toFixed(2);
+
   return (
-    <div className="text-white flex justify-center min-h-screen pt-32">
+    <div className="min-h-screen bg-gradient-to-b from-[#3B0613] to-[#1A0208] text-white">
       <NavBar
         text="text-white"
-        logo={logo}
+        logo="/logo.png"
         logoWidth={200}
         logoHeight={50}
         bgColorTop="bg-transparent"
         bgColorScrolled="bg-[#3B0613]"
       />
-      <div className="flex flex-col w-[1000px] mb-0">
-        <Titulo titulo="carrito" className="text-2xl mb-0" />
-        <Link href="/compras" className="underline mb-10 max-w-[300px]">
-          continúa comprando
+      <div className="container mx-auto px-4 pt-32">
+        <h1 className="text-4xl font-bold mb-8">Tu Carrito</h1>
+        <Link href="/compras" className="text-lg hover:underline mb-10 inline-block">
+          ← Continuar comprando
         </Link>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 mb-0">
-          {/* Carrito */}
-          <div className="flex flex-col mb-0">
-            {/* Items en carrito */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+          <div className="lg:col-span-2">
             {productos.length === 0 ? (
-              <div>El carrito no contiene productos</div>
+              <div className="text-center py-10 bg-white/10 rounded-lg">
+                <p className="text-xl">Tu carrito está vacío</p>
+              </div>
             ) : (
               productos.map((producto: any) => (
-                <div
-                  key={producto.id}
-                  className="flex mb-5 shadow-2xl border rounded-lg border-black"
-                >
+                <div key={producto.id} className="flex items-center mb-6 bg-white/10 p-4 rounded-lg transition-all hover:bg-white/20">
                   <Image
                     src={producto.image}
                     alt={producto.wine}
                     width={100}
                     height={100}
-                    className="mr-5 rounded"
+                    className="rounded-md object-cover mr-6"
                   />
-                  <div>
-                    <p>{producto.wine}</p>
-                    <p>${producto.price}</p>
-                    <SelectorCantidadCarrito
-                      producto={producto}
-                      cantidad={producto.cantidad}
-                      className="mt-3"
-                    />
-                    <button
-                      className="underline mt-3"
-                      onClick={() => removeCartHandler(producto)}
-                    >
-                      Remover
-                    </button>
+                  <div className="flex-grow">
+                    <h3 className="text-xl font-semibold">{producto.wine}</h3>
+                    <p className="text-gray-300">{producto.winery}</p>
+                    <p className="text-xl font-bold mt-2">${producto.price}</p>
+                    <div className="flex items-center justify-between mt-4">
+                      <SelectorCantidadCarrito
+                        producto={producto}
+                        cantidad={producto.cantidad}
+                        className="bg-white/20 rounded-md"
+                      />
+                      <button
+                        className="text-red-400 hover:text-red-300 transition-colors"
+                        onClick={() => removeCartHandler(producto)}
+                      >
+                        Eliminar
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))
             )}
           </div>
-          {productos.length === 0 ? (
-            <div></div>
-          ) : (
-            <div>
-              <div className="text-black bg-white rounded-xl shadow-xl p-7 h-fit">
-                <h2 className="text-2xl mb-2"> Resumen de la Compra</h2>
-                <div className="grid grid-cols-2">
-                  <span>cantidad de artículos</span>
-                  {/* renderizar la cantidad de articulos totales sumando cada uno de los productos por su cantidad particular */}
-                  <span className="text-right">
-                    {productos.reduce((a: any, c: any) => a + c.cantidad, 0)}
-                  </span>
-
-                  <span className="mt-5 text-2xl">Total</span>
-                  <span className="text-right text-2xl mt-5">
-                    $
-                    {productos
-                      .reduce((a: any, c: any) => a + c.price * c.cantidad, 0)
-                      .toFixed(2)}
-                  </span>
-                </div>
-                <div className="mt-5 w-full mb-2">
-                  <button
-                    className="bg-blue-400 text-center w-full p-2 rounded-xl"
-                    onClick={handleBuy}
-                  >
-                    Pagar con MercadoPago
-                  </button>
-                </div>
+          <div className="lg:col-span-1">
+            <div className="bg-white/10 rounded-lg p-6 sticky top-32">
+              <h2 className="text-2xl font-bold mb-4">Resumen de la Compra</h2>
+              <div className="flex justify-between mb-2">
+                <span>Cantidad de artículos</span>
+                <span>{totalItems}</span>
               </div>
-              <button className="mt-10" onClick={vaciarCarritoHandler}>
-                Vaciar Carrito
+              <div className="flex justify-between text-2xl font-bold mt-4 pt-4 border-t border-white/20">
+                <span>Total</span>
+                <span>${totalPrice}</span>
+              </div>
+              <button
+                className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg mt-6 transition-colors"
+                onClick={handleBuy}
+                disabled={productos.length === 0}
+              >
+                Pagar con MercadoPago
               </button>
+              {productos.length > 0 && (
+                <button
+                  className="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg mt-4 transition-colors"
+                  onClick={vaciarCarritoHandler}
+                >
+                  Vaciar Carrito
+                </button>
+              )}
             </div>
-          )}
+          </div>
         </div>
       </div>
     </div>

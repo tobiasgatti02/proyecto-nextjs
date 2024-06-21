@@ -13,7 +13,7 @@ interface FancyButtonProps {
 class FancyButton extends Component<FancyButtonProps> {
 	static defaultProps: Partial<FancyButtonProps> = {
 		color: '#FFFFFF',
-		width: 410,
+		width: 250,
 		height: 100,
 		fontSize: 40,
 		borderWidth: 15,
