@@ -1,6 +1,10 @@
 import type { NextAuthConfig } from 'next-auth';
 import { NextResponse } from 'next/server';
 import { JWT } from 'next-auth/jwt';
+import {db} from '@vercel/postgres'
+
+
+
 
 export const authConfig: NextAuthConfig = {
   pages: {
@@ -24,8 +28,9 @@ export const authConfig: NextAuthConfig = {
       const isOnHome = nextUrl.pathname === '/';
       const isOnCarrito = nextUrl.pathname.startsWith('/carrito');
       const isOnSuscripciones = nextUrl.pathname.startsWith('/suscripciones');
-      const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
+      const baseUrl = process.env.NEXTAUTH_URL;
       const isOnVinos = nextUrl.pathname.startsWith('/vino');
+      const isOnRegister = nextUrl.pathname.startsWith('/auth/register');
       const isOnNosotros = nextUrl.pathname.startsWith('/nosotros');
 
       if (isLoggedIn) {
@@ -48,7 +53,7 @@ export const authConfig: NextAuthConfig = {
         }
       }
       if (!isLoggedIn) {
-        if (isOnLogin || isOnHome || isOnNosotros || isOnVinos || isOnSuscripciones || isOnCompras || isOnCarrito) {
+        if (isOnLogin || isOnRegister || isOnHome || isOnNosotros || isOnVinos || isOnSuscripciones || isOnCompras || isOnCarrito) {
           return true;
         }
         
@@ -70,6 +75,35 @@ export const authConfig: NextAuthConfig = {
           email: user.email,
           role: user.role,
         };
+      }
+
+      if (trigger === 'update' && session?.user) {
+        try {
+          // Actualiza la información del usuario en la base de datos
+          const client = await db.connect();
+          const result = await client.query(
+            `UPDATE users SET name = $1, role = $2 WHERE email = $3 RETURNING *`,
+            [session.user.name, session.user.role, session.user.email]
+          );
+          client.release();
+
+          // Si no se pudo actualizar el usuario, retorna el token original
+          if (!result.rows[0]) {
+            return token;
+          }
+
+          // Retorna un nuevo token con la información actualizada del usuario
+          return {
+            ...token,
+            id: result.rows[0].id,
+            email: result.rows[0].email,
+            role: result.rows[0].role,
+            // Agrega otras propiedades que necesites
+          };
+        } catch (error) {
+          console.error('Error updating user:', error);
+          return token;
+        }
       }
 
       return token;

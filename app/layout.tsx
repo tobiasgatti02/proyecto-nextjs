@@ -1,11 +1,9 @@
 
-
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { StoreProvider } from "./utils/store";
-import SessionWrapper from './ui/components/sessionWrapper'
-import Script from "next/script";
+import { SessionProvider } from "next-auth/react";
 const inter = Inter({ subsets: ["latin"] });
 
 
@@ -31,11 +29,11 @@ export default function RootLayout({
       
 
       
-        <SessionWrapper>
+        <SessionProvider>
         <StoreProvider>
           {children}
         </StoreProvider>
-        </SessionWrapper>
+        </SessionProvider>
       </body>
 
 
