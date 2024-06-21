@@ -24,9 +24,10 @@ export const authConfig: NextAuthConfig = {
       const isOnHome = nextUrl.pathname === '/';
       const isOnCarrito = nextUrl.pathname.startsWith('/carrito');
       const isOnSuscripciones = nextUrl.pathname.startsWith('/suscripciones');
-      const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
+      const baseUrl = 'http://localhost:3000';
       const isOnVinos = nextUrl.pathname.startsWith('/vino');
       const isOnNosotros = nextUrl.pathname.startsWith('/nosotros');
+      const isOnRegister = nextUrl.pathname.startsWith('/auth/register');
 
       if (isLoggedIn) {
         if (isOnHome || isOnSuscripciones || isOnCarrito) {
@@ -35,7 +36,7 @@ export const authConfig: NextAuthConfig = {
         if (isOnLogin) {
           return NextResponse.redirect(baseUrl + '/');
         }
-        
+
         if (isOnCompras) {
           return true;
         }
@@ -48,21 +49,21 @@ export const authConfig: NextAuthConfig = {
         }
       }
       if (!isLoggedIn) {
-        if (isOnLogin || isOnHome || isOnNosotros || isOnVinos || isOnSuscripciones || isOnCompras || isOnCarrito) {
+        if (isOnLogin || isOnRegister || isOnHome || isOnNosotros || isOnVinos || isOnSuscripciones || isOnCompras || isOnCarrito) {
           return true;
         }
-        
+
         return NextResponse.redirect(baseUrl + '/auth/login');
-        
+
       }
-    
-        return NextResponse.next();
-      
-    
-      
-     
+
+      return NextResponse.next();
+
+
+
+
     },
-    async jwt({ token, user, trigger,session }) {
+    async jwt({ token, user, trigger, session }) {
       if (trigger === 'signIn') {
         return {
           ...token,
