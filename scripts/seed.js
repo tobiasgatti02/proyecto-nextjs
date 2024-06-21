@@ -117,7 +117,8 @@ async function seedOrders(client) {
     ORDER_ID SERIAL PRIMARY KEY, 
     ORDER_DATE_TIME TIMESTAMP NOT NULL,
     VALUE DECIMAL(5,2) NOT NULL,
-    STATE VARCHAR(50) NOT NULL
+    STATE VARCHAR(50) NOT NULL,
+    MP_ID VARCHAR(50) NOT NULL,
 );`
     console.log(`Created "ORDERS" table`);
     return createTable;
