@@ -2,6 +2,8 @@
 import { sql } from '@vercel/postgres';
 import { unstable_noStore as noStore } from 'next/cache';
 import { Vino, User } from './definitions';
+import NodeCache from 'node-cache';
+
 
 
 export async function fetchVinos(): Promise<Vino[]> {
@@ -24,6 +26,43 @@ export async function fetchVinos(): Promise<Vino[]> {
 
   return vinos;
 }
+
+const myCache = new NodeCache({ stdTTL: 3600 }); // TTL de 1 hora
+
+
+
+export async function fetchVinosHome(): Promise<Vino[]> {
+  const cachedVinos = myCache.get('vinos') as Vino[];
+
+  if (cachedVinos) {
+    return cachedVinos;
+  }
+
+  const data = await sql<Vino[]>`
+    SELECT id, winery, wine, average_rating, reviews, location, image, wine_category, price
+    FROM vinos
+    ORDER BY reviews DESC
+    LIMIT 3
+  `;
+
+  const vinos: Vino[] = data.rows.map((vino: any) => ({
+    id: vino.id,
+    winery: vino.winery,
+    wine: vino.wine,
+    average_rating: vino.average_rating,
+    reviews: vino.reviews,
+    location: vino.location,
+    image: vino.image,
+    wine_category: vino.wine_category,
+    price: vino.price
+  }));
+
+  myCache.set('vinos', vinos);
+
+  return vinos;
+}
+
+
 export async function getUser(email: string) {
   try {
     noStore();

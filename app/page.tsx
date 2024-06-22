@@ -3,14 +3,16 @@ import Image from 'next/image';
 import bgImage from '../public/background.jpg';
 import NavBar from '../app/ui/components/navBar';
 import { maven_Pro } from '../app/fonts';
-import React from "react";
+import React, { useEffect, useState } from "react";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
 import fotoVino from '../public/vino.png';
 import campo_viñedo from '../public/bodine/campo_viñedo.jpg';
 import suscripciones from '../public/suscripciones.jpg';
-import Footer from '../app/ui/components/footer';
+import { fetchVinosHome } from './lib/data';
+import { Vino } from './lib/definitions';
+
 
 const vinos = [
   { id: 1, name: 'Sweet Grapes', image: fotoVino },
@@ -31,6 +33,22 @@ const settings = {
 const logo = '/logo.png';
 
 const Bodine = () => {
+
+  const [vinos, setVinos] = useState<Vino[]>([]);
+
+  useEffect(() => {
+    const getVinos = async () => {
+      try {
+        const vinos = await fetchVinosHome();
+        setVinos(vinos);
+      } catch (error) {
+        console.error('Error fetching vinos:', error);
+      }
+    };
+
+    getVinos();
+  }, []);
+
   return (
     <>
       <div className="relative w-full min-h-96 h-screen max-h-max overflow-hidden" style={{ maxHeight: '800px' }}>
@@ -45,24 +63,27 @@ const Bodine = () => {
       </div>
       <div className="py-10 border-b border-black sm:min-w-[300px] sm:max-w-[600px] sm:mx-auto"></div>
       <div>
-        <h2 className={`${maven_Pro.className} font-semibold overflow-hidden text-center my-5`}>Vinos Destacados</h2>
+        <h2 className={`${maven_Pro.className} font-semibold overflow-hidden text-4xl text-center my-5`}>Vinos Destacados</h2>
       </div>
       <div className="border-b border-black sm:min-w-[300px] sm:max-w-[600px] sm:mx-auto"></div>
       <div className="py-10 overflow-hidden">
-        <Slider {...settings}>
+      <Slider {...settings}>
           {vinos.map(vino => (
             <div key={vino.id} className="text-center">
               <div className="flex justify-center items-center h-full">
-                <Image src={vino.image} alt={vino.name} width={120} height={240} className="mx-auto" />
+                    <Image src={vino.image} alt={vino.wine} width={120} height={240} className="mx-auto" />
               </div>
-              <h3 className={`${maven_Pro.className} text-2xl mt-2`}>{vino.name}</h3>
+              <h3 className={`${maven_Pro.className} text-2xl mt-2`}>{vino.wine}</h3>
             </div>
           ))}
         </Slider>
       </div>
       
       <div className="relative w-full h-[400px] md:h-[700px] lg:h-[800px] overflow-hidden">
+      
+
         <Image
+          
           src={campo_viñedo}
           alt="Imagen de fondo"
           layout="fill"
@@ -81,9 +102,9 @@ const Bodine = () => {
           {vinos.map(vino => (
             <div key={vino.id} className="text-center">
               <div className="flex justify-center items-center h-full">
-                <Image src={vino.image} alt={vino.name} width={120} height={240} className="mx-auto" />
+                <Image  src={vino.image} alt={vino.winery} width={120} height={240} className="mx-auto" />
               </div>
-              <h3 className={`${maven_Pro.className} text-2xl mt-2`}>{vino.name}</h3>
+              <h3 className={`${maven_Pro.className} text-2xl mt-2`}>{vino.winery}</h3>
             </div>
           ))}
         </Slider>
@@ -96,27 +117,11 @@ const Bodine = () => {
           objectFit="cover"
           objectPosition="60% center"
           quality={100}
-        />
+        />              
       </div>
 
-      <div className="py-10 border-b border-black sm:min-w-[300px] sm:max-w-[600px] sm:mx-auto"></div>
-      <div>
-        <h2 className={`${maven_Pro.className} font-semibold text-4xl text-center my-5`}>Suscripciones sugeridas</h2>
-      </div>
-      <div className="border-b border-black sm:min-w-[300px] sm:max-w-[600px] sm:mx-auto"></div>
-      <div className="py-10 overflow-hidden">
-        <Slider {...settings}>
-          {vinos.map(vino => (
-            <div key={vino.id} className="text-center">
-              <div className="flex justify-center items-center h-full">
-                <Image src={vino.image} alt={vino.name} width={120} height={240} className="mx-auto" />
-              </div>
-              <h3 className={`${maven_Pro.className} text-2xl mt-2`}>{vino.name}</h3>
-            </div>
-          ))}
-        </Slider>
-      </div>
-      <Footer />
+      
+      
     </>
   );
 };
