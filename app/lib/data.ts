@@ -70,6 +70,7 @@ export async function getUser(email: string) {
 
 export async function getCompras(){
   try {
+    noStore();
     const compras = await sql`SELECT * FROM ORDERS`;
     return compras.rows;
   } catch (error) {

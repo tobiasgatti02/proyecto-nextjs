@@ -1,12 +1,10 @@
 import { NextResponse } from "next/server";
-import { fetchVinos } from "@/app/lib/data"; // Asegúrate de que la ruta de importación sea correcta
+import { fetchVinos } from "@/app/lib/data"; 
 
 export async function GET() {
     try {
-        // Obtiene los vinos usando la función fetchVinos
         const vinos = await fetchVinos();
 
-        // Retorna los vinos como respuesta JSON
         return NextResponse.json(vinos);
     } catch (error) {
         console.error('Error al obtener los vinos:', error);

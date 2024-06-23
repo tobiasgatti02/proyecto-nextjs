@@ -9,7 +9,6 @@ import { CardSkeleton } from '../ui/components/skeletons';
 import PaginationSlider from '../ui/components/PaginationSlider';
 import { useSearchParams, useRouter } from 'next/navigation';
 
-
 const VinoCardList = React.lazy(() => import('../ui/components/cards'));
 
 const Compras = () => {
@@ -23,6 +22,7 @@ const Compras = () => {
   const [searchTerm, setSearchTerm] = useState<string>(searchParams.get('searchTerm') || '');
   const [currentPage, setCurrentPage] = useState<number>(Number(searchParams.get('page')) || 1);
   const [totalPages, setTotalPages] = useState<number>(0);
+  const [itemsPerPage, setItemsPerPage] = useState<number>(9);
 
   useEffect(() => {
     const getVinos = async () => {
@@ -38,6 +38,21 @@ const Compras = () => {
   }, []);
 
   useEffect(() => {
+    const updateItemsPerPage = () => {
+      if (window.innerWidth < 640) {
+        setItemsPerPage(8);
+      } else {
+        setItemsPerPage(9);
+      }
+    };
+
+    updateItemsPerPage();
+    window.addEventListener('resize', updateItemsPerPage);
+
+    return () => window.removeEventListener('resize', updateItemsPerPage);
+  }, []);
+
+  useEffect(() => {
     let filteredData = vinos;
     if (filter !== 'todos') {
       filteredData = vinos.filter(vino => vino.wine_category === filter);
@@ -46,7 +61,7 @@ const Compras = () => {
       filteredData = filteredData.filter(vino => vino.wine.toLowerCase().includes(searchTerm.toLowerCase()));
     }
     setFilteredVinos(filteredData);
-    setTotalPages(Math.ceil(filteredData.length / ITEMS_PER_PAGE));
+    setTotalPages(Math.ceil(filteredData.length / itemsPerPage));
     setCurrentPage(1); // Reinicia la página a la primera cuando se actualiza la búsqueda
 
     // Actualiza la URL con los parámetros de búsqueda y filtro
@@ -56,7 +71,7 @@ const Compras = () => {
     queryParams.set('page', '1');
 
     router.push(`/compras?${queryParams.toString()}`, undefined);
-  }, [filter, vinos, searchTerm]);
+  }, [filter, vinos, searchTerm, itemsPerPage]);
 
   const handleSearch = (term: string) => {
     setSearchTerm(term);
@@ -76,7 +91,6 @@ const Compras = () => {
     router.push(`/compras?${queryParams.toString()}`, undefined);
   };
 
-  const ITEMS_PER_PAGE = 9;
   const logo = '/logo.png';
   return (
     <>
@@ -110,7 +124,7 @@ const Compras = () => {
           </div>
         ) : (
           <Suspense fallback={null}>
-            <VinoCardList vinos={filteredVinos} currentPage={currentPage} itemsPerPage={ITEMS_PER_PAGE} />
+            <VinoCardList vinos={filteredVinos} currentPage={currentPage} itemsPerPage={itemsPerPage} />
             <PaginationSlider
               currentPage={currentPage}
               totalPages={totalPages}

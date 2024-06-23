@@ -14,7 +14,7 @@ const Search = ({ placeholder, handleSearch }: { placeholder: string; handleSear
       </label>
       <input
         id="search"
-        className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+        className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm text-black outline-2 placeholder:text-gray-500"
         placeholder={placeholder}
         onChange={handleChange}
       />

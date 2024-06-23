@@ -42,14 +42,12 @@ const MaridajeComponent: React.FC = () => {
     return text
       .split('\n')
       .map(line => {
-        // Replace leading asterisks with bullet points
         if (line.startsWith('* ')) {
           line = '•' + line.slice(1);
         }
-        // Replace text between ** with bold
         return line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
       })
-      .join('<br/>'); // Join lines with <br/> for proper formatting
+      .join('<br/>'); 
   };
 
   return (

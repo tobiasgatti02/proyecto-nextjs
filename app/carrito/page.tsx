@@ -79,7 +79,7 @@ export default function Carrito() {
               </div>
             ) : (
               productos.map((producto: any) => (
-                <div key={producto.id} className="flex items-center mb-6 bg-white/10 p-4 rounded-lg transition-all hover:bg-white/20">
+                <div key={producto.id} className="flex flex-col lg:flex-row items-center mb-6 bg-white/10 p-4 rounded-lg transition-all hover:bg-white/20">
                   <Image
                     src={producto.image}
                     alt={producto.wine}
@@ -91,14 +91,14 @@ export default function Carrito() {
                     <h3 className="text-xl font-semibold">{producto.wine}</h3>
                     <p className="text-gray-300">{producto.winery}</p>
                     <p className="text-xl font-bold mt-2">${producto.price}</p>
-                    <div className="flex items-center justify-between mt-4">
+                    <div className="flex flex-col lg:flex-row items-center justify-between mt-4 w-full">
                       <SelectorCantidadCarrito
                         producto={producto}
                         cantidad={producto.cantidad}
-                        className="bg-white/20 rounded-md"
+                        className="bg-white/20 rounded-md mb-4 lg:mb-0"
                       />
                       <button
-                        className="text-red-400 hover:text-red-300 transition-colors"
+                        className="text-red-400 hover:text-red-300 transition-colors lg:ml-4"
                         onClick={() => removeCartHandler(producto)}
                       >
                         Eliminar
