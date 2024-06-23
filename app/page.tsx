@@ -66,7 +66,7 @@ const Bodine = () => {
         <h2 className={`${maven_Pro.className} font-semibold overflow-hidden text-4xl text-center my-5`}>Vinos Destacados</h2>
       </div>
       <div className="border-b border-black sm:min-w-[300px] sm:max-w-[600px] sm:mx-auto"></div>
-      <div className="py-10 overflow-hidden">
+      <div className="py-10 overflow-hidden mx-2">
         <Slider {...settings}>
           {vinos.map(vino => (
             <div key={vino.id} className="text-center">
@@ -97,7 +97,7 @@ const Bodine = () => {
         <h2 className={`${maven_Pro.className} font-semibold text-4xl text-center my-5`}>Bodegas Populares</h2>
       </div>
       <div className="border-b border-black sm:min-w-[300px] sm:max-w-[600px] sm:mx-auto"></div>
-      <div className="py-10 overflow-hidden">
+      <div className="py-10 overflow-hidden mx-2">
         <Slider {...settings}>
           {vinos.map(vino => (
             <div key={vino.id} className="text-center">
