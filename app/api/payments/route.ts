@@ -10,6 +10,7 @@ export async function POST(req: NextRequest) {
 
   const payment = await new Payment(client);
   const pago = await payment.get({ id: body.data.id });
+  console.log('pago', pago);
 
   if (pago && pago.status === 'approved') {
     await insertOrder({ date: pago.date_approved ?? '', value: pago.transaction_amount ?? 0, state: pago.status ?? 'failed', mp_id: pago.id });
