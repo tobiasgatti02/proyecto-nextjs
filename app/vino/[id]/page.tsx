@@ -21,7 +21,7 @@ const VinoScreen = () => {
 
   const addToCartHandler = () => {
     if (state && dispatch && vino) {
-      dispatch({ type: 'ADD_PRODUCT', payload: { ...vino, cantidad }});
+      dispatch({ type: 'ADD_PRODUCT', payload: { ...vino, cantidad } });
     } else {
       console.error('No se pudo agregar al carrito: vino es undefined');
     }
@@ -36,19 +36,19 @@ const VinoScreen = () => {
   }, [id])
 
   if (!vino) {
-    return <div className='mt-36'><CardSkeleton cardWidth={'w-full'}/></div>
+    return <div className='mt-36'><CardSkeleton cardWidth={'w-full'} /></div>
   }
 
   return (
     <div className="p-4 bg-gray-200">
-      <NavBar 
+      <NavBar
         text="text-black"
         logo="/logoNegro.png"
         logoWidth={200}
         logoHeight={50}
         bgColorTop="bg-transparent"
         bgColorScrolled="bg-transparent"
-        />
+      />
       <div className="text-center pt-36">
         <Link href={'/compras'} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 md:px-5 rounded mt-4">
           Seguir comprando
@@ -82,12 +82,6 @@ const VinoScreen = () => {
                 <h3>{vino.average_rating} en {vino.reviews}</h3>
                 <h3>${vino.price}</h3>
               </div>
-            </div>
-            <div className="text-left mt-16 md:mt-20">
-              <h2>Seccion Maridaje:</h2>
-              <p className="mt-2 md:mt-4">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. A voluptates ex eius fugit est eveniet! Illum, esse, placeat nihil debitis maiores quis nobis nemo in ratione, vitae architecto quidem ut.
-              </p>
             </div>
             <div className="flex mt-16 md:mt-20 justify-end">
               <SelectorCantidad cantidad={cantidad} onChange={setCantidad} className="mr-2 md:mr-0" />
