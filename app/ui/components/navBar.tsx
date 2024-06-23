@@ -96,7 +96,7 @@ function NavBar({ bgColorTop, bgColorScrolled,text,logo,logoWidth, logoHeight }:
             </Link>
           
             <Link href="/suscripciones" className="block lg:inline-block lg:mt-0 hover:text-2xl transform duration-500">
-              Suscripciones
+              Suscripciones (Próximamente)
             </Link>
             {session ? (
               <button onClick={() => signOut()} className="block lg:inline-block lg:mt-0 hover:text-2xl transform duration-500">
