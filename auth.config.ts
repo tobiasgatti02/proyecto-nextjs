@@ -92,13 +92,11 @@ export const authConfig: NextAuthConfig = {
             return token;
           }
 
-          // Retorna un nuevo token con la información actualizada del usuario
           return {
             ...token,
             id: result.rows[0].id,
             email: result.rows[0].email,
             role: result.rows[0].role,
-            // Agrega otras propiedades que necesites
           };
         } catch (error) {
           console.error('Error updating user:', error);
@@ -120,5 +118,5 @@ export const authConfig: NextAuthConfig = {
       };
     },
   },
-  providers: [], // Add providers with an empty array for now
+  providers: [], 
 } satisfies NextAuthConfig;

@@ -23,6 +23,11 @@ function NavBar({ bgColorTop, bgColorScrolled,text,logo,logoWidth, logoHeight }:
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const handleSignOut = async () => {
+    await signOut({ redirect: false });
+    router.push('/'); 
+  };
+
   const handleScroll = () => {
     const currentScrollY = window.scrollY;
     const windowWidth = window.innerWidth;
@@ -99,7 +104,7 @@ function NavBar({ bgColorTop, bgColorScrolled,text,logo,logoWidth, logoHeight }:
               Suscripciones (Próximamente)
             </Link>
             {session ? (
-              <button onClick={() => signOut()} className="block lg:inline-block lg:mt-0 hover:text-2xl transform duration-500">
+              <button onClick={handleSignOut} className="block lg:inline-block lg:mt-0 hover:text-2xl transform duration-500">
                 Log Out
               </button>
           ) : (
