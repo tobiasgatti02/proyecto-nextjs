@@ -113,7 +113,7 @@ export async function crearPreferencia(
       items,
     },
   });
-  return preference.sandbox_init_point;
+  return preference.init_point;
 }
 
 export async function insertVino(wineData: any) {
