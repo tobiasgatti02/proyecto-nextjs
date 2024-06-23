@@ -73,7 +73,7 @@ const Bodine = () => {
               <div className="flex justify-center items-center h-full">
                 <Image src={vino.image} alt={vino.wine} width={120} height={240} className="mx-auto" />
               </div>
-              <h3 className={`${maven_Pro.className} text-2xl mt-2`}>{vino.wine}</h3>
+              <h3 className={`${maven_Pro.className} text-lg mt-2`}>{vino.wine}</h3>
             </div>
           ))}
         </Slider>
@@ -104,7 +104,7 @@ const Bodine = () => {
               <div className="flex justify-center items-center h-full">
                 <Image src={vino.image} alt={vino.winery} width={120} height={240} className="mx-auto" />
               </div>
-              <h3 className={`${maven_Pro.className} text-2xl mt-2`}>{vino.winery}</h3>
+              <h3 className={`${maven_Pro.className} text-lg mt-2`}>{vino.winery}</h3>
             </div>
           ))}
         </Slider>
