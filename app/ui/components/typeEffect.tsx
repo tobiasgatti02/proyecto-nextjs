@@ -6,7 +6,7 @@ interface TypewriterEffectProps {
   speed?: number;
 }
 
-const TypewriterEffect: React.FC<TypewriterEffectProps> = ({ text, speed = 5 }) => {
+const TypewriterEffect: React.FC<TypewriterEffectProps> = ({ text, speed = 10 }) => {
   const [displayedText, setDisplayedText] = useState('');
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const TypewriterEffect: React.FC<TypewriterEffectProps> = ({ text, speed = 5 }) 
     return () => clearInterval(intervalId);
   }, [text, speed]);
 
-  return <div>{displayedText}</div>;
+  return <div dangerouslySetInnerHTML={{ __html: displayedText }} />;
 };
 
 export default TypewriterEffect;

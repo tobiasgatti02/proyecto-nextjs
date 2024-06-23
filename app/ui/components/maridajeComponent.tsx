@@ -91,7 +91,10 @@ const MaridajeComponent: React.FC = () => {
       {maridaje && (
         <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
           <h3 className="text-xl font-serif mb-4 text-gray-800">Recomendaciones de Maridaje:</h3>
-          <div className="text-gray-700 whitespace-pre-line" dangerouslySetInnerHTML={{ __html: maridaje }} />
+          <div className="text-gray-700 whitespace-pre-line">
+                        <TypewriterEffect text={maridaje} />
+
+          </div>
         </div>
       )}
     </div>
