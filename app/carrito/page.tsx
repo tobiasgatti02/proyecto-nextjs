@@ -8,6 +8,7 @@ import NavBar from "../ui/components/navBar";
 import { initMercadoPago } from "@mercadopago/sdk-react";
 import { crearPreferencia } from "../lib/actions";
 import { Vino } from "../lib/definitions";
+import { redirect } from "next/navigation";
 
 export default function Carrito() {
   const [productos, setProductos] = useState([]);
@@ -38,7 +39,7 @@ export default function Carrito() {
   const handleBuy = async () => {
     const checkoutUrl = await crearPreferencia(productosMapeados);
     if (checkoutUrl) {
-      window.location.replace(checkoutUrl);
+      redirect(checkoutUrl);
     } else {
       alert("No se pudo generar el enlace de pago");
     }
