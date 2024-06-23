@@ -59,7 +59,7 @@ const Bodine = () => {
         </div>
       </div>
       <div className="z-50 absolute top-0 left-0 w-full">
-        <NavBar text="text-white"logo={logo} logoWidth={200} logoHeight={50} bgColorTop='bg-transparent' bgColorScrolled='bg-[#3B0613]'/>
+        <NavBar text="text-white" logo={logo} logoWidth={200} logoHeight={50} bgColorTop='bg-transparent' bgColorScrolled='bg-[#3B0613]' />
       </div>
       <div className="py-10 border-b border-black sm:min-w-[300px] sm:max-w-[600px] sm:mx-auto"></div>
       <div>
@@ -67,23 +67,23 @@ const Bodine = () => {
       </div>
       <div className="border-b border-black sm:min-w-[300px] sm:max-w-[600px] sm:mx-auto"></div>
       <div className="py-10 overflow-hidden">
-      <Slider {...settings}>
+        <Slider {...settings}>
           {vinos.map(vino => (
             <div key={vino.id} className="text-center">
               <div className="flex justify-center items-center h-full">
-                    <Image src={vino.image} alt={vino.wine} width={120} height={240} className="mx-auto" />
+                <Image src={vino.image} alt={vino.wine} width={120} height={240} className="mx-auto" />
               </div>
-              <h3 className={`${maven_Pro.className} text-2xl mt-2`}>{vino.wine}</h3>
+              <h3 className={`${maven_Pro.className} text-2xl mt-2 mx-2`}>{vino.wine}</h3>
             </div>
           ))}
         </Slider>
       </div>
-      
+
       <div className="relative w-full h-[400px] md:h-[700px] lg:h-[800px] overflow-hidden">
-      
+
 
         <Image
-          
+
           src={campo_viñedo}
           alt="Imagen de fondo"
           layout="fill"
@@ -102,9 +102,9 @@ const Bodine = () => {
           {vinos.map(vino => (
             <div key={vino.id} className="text-center">
               <div className="flex justify-center items-center h-full">
-                <Image  src={vino.image} alt={vino.winery} width={120} height={240} className="mx-auto" />
+                <Image src={vino.image} alt={vino.winery} width={120} height={240} className="mx-auto" />
               </div>
-              <h3 className={`${maven_Pro.className} text-2xl mt-2`}>{vino.winery}</h3>
+              <h3 className={`${maven_Pro.className} text-2xl mt-2 mx-2`}>{vino.winery}</h3>
             </div>
           ))}
         </Slider>
@@ -117,11 +117,11 @@ const Bodine = () => {
           objectFit="cover"
           objectPosition="60% center"
           quality={100}
-        />              
+        />
       </div>
 
-      
-      
+
+
     </>
   );
 };
