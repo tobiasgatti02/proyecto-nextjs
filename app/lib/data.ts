@@ -2,7 +2,7 @@
 import { sql } from '@vercel/postgres';
 import { unstable_noStore as noStore } from 'next/cache';
 import { Vino, User } from './definitions';
-import NodeCache from 'node-cache';
+
 
 
 
@@ -27,16 +27,10 @@ export async function fetchVinos(): Promise<Vino[]> {
   return vinos;
 }
 
-const myCache = new NodeCache({ stdTTL: 3600 }); // TTL de 1 hora
 
 
 
 export async function fetchVinosHome(): Promise<Vino[]> {
-  const cachedVinos = myCache.get('vinos') as Vino[];
-
-  if (cachedVinos) {
-    return cachedVinos;
-  }
 
   const data = await sql<Vino[]>`
     SELECT id, winery, wine, average_rating, reviews, location, image, wine_category, price
@@ -57,7 +51,7 @@ export async function fetchVinosHome(): Promise<Vino[]> {
     price: vino.price
   }));
 
-  myCache.set('vinos', vinos);
+
 
   return vinos;
 }
