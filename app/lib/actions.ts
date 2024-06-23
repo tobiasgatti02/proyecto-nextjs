@@ -3,7 +3,7 @@ import { db } from "@vercel/postgres";
 import MercadoPagoConfig, { Preference } from "mercadopago";
 import { AuthError } from "next-auth";
 import { signIn, signOut } from "@/auth";
-import { PreferenceResponse } from "mercadopago/dist/clients/preference/commonTypes";
+import { promise } from "zod";
 
 export async function insertUser(userData: { name: string, email: string, password: string, role: string }) {
   try {
@@ -40,22 +40,59 @@ export async function deleteVino(wineId: number) {
   }
 }
 
-export async function insertOrden(userData: { id: number, date: string, hour: string, value: number, state: string }) {
+export async function insertOrder(userData: { date: string, value: number, state: string, mp_id: number | undefined }) {
   try {
     const query = `
-      INSERT INTO ordenes (ORDER_ID, ORDER_DATE, ORDER_HOUR, VALUE, STATE)
-      VALUES ($1, $2, $3, $4, $5)
+      INSERT INTO orders (ORDER_DATE_TIME, VALUE, STATE, MP_ID)
+      VALUES ($1, $2, $3, $4)
     `;
     const values = [
-      userData.id,
       userData.date,
-      userData.hour,
       userData.value,
       userData.state,
+      userData.mp_id
     ];
     await db.query(query, values);
+    console.log('Orden insertada correctamente');
   } catch (error: any) {
     throw new Error("Error inserting order: " + error.message);
+  }
+}
+
+export async function findOrderByMpId(mpId: number | undefined) {
+  if (!mpId) {
+    throw new Error("MP ID is required");
+  }
+  try {
+    const query = `
+      SELECT * FROM orders
+      WHERE MP_ID = $1
+    `;
+    const values = [mpId];
+    const result = await db.query(query, values);
+    return result.rows[0];
+  } catch (error: any) {
+    throw new Error("Error finding order by MP ID: " + error.message);
+  }
+}
+
+export async function insertDetailOrder(userData: { order_id: number, wine_id: number, quantity: number, price: number }) {
+
+  try {
+    const query = `
+      INSERT INTO order_details (ORDER_ID, ID_WINE, QUANTITY, PRICE)
+      VALUES ($1, $2, $3, $4)
+    `;
+    const values = [
+      userData.order_id,
+      userData.wine_id,
+      userData.quantity,
+      userData.price,
+    ];
+    await db.query(query, values);
+    console.log('Detalle de orden insertado correctamente');
+  } catch (error: any) {
+    throw new Error("Error inserting order detail: " + error.message);
   }
 }
 
@@ -68,10 +105,9 @@ export async function crearPreferencia(
   const preference = await new Preference(client).create({
     body: {
       back_urls: {
-        //TODO cambiar las redirecciones a las de la pagina en produccion.
-        failure: "http://localhost:3000",
-        pending: "http://localhost:3000",
-        success: "http://localhost:3000",
+        failure: "https://bodine.vercel.app/",
+        pending: "https://bodine.vercel.app/",
+        success: "https://bodine.vercel.app/",
       },
       auto_return: "approved",
       items,
