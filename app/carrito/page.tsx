@@ -39,7 +39,7 @@ export default function Carrito() {
   const handleBuy = async () => {
     const checkoutUrl = await crearPreferencia(productosMapeados);
     if (checkoutUrl) {
-      redirect(checkoutUrl);
+      redirect(checkoutUrl!);
     } else {
       alert("No se pudo generar el enlace de pago");
     }
