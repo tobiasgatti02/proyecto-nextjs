@@ -74,6 +74,17 @@ export async function getUser(email: string) {
   }
 }
 
+export async function getCompras(){
+  try {
+    const compras = await sql`SELECT * FROM ORDERS`;
+    return compras.rows;
+  } catch (error) {
+    console.error('Failed to fetch compras:', error);
+    throw new Error('Failed to fetch compras.');
+  }
+
+}
+
 export async function getVino(id: number) {
   try {
     noStore();
