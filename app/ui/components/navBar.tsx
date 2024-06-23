@@ -9,7 +9,7 @@ import carro from '../../../public/carro.png';
 import { useRouter } from 'next/navigation';
 
 function NavBar({ bgColorTop, bgColorScrolled,text,logo,logoWidth, logoHeight }: {logoHeight:number,logo:string,logoWidth:number,text:string, bgColorTop: string, bgColorScrolled: string }) {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAtTop, setIsAtTop] = useState(true);
   const [isScrolledUp, setIsScrolledUp] = useState(true);
@@ -18,11 +18,6 @@ function NavBar({ bgColorTop, bgColorScrolled,text,logo,logoWidth, logoHeight }:
   const navRef = useRef<HTMLDivElement | null>(null);
   const prevScrollY = useRef(0);
   const router = useRouter();
-
-  const handleSignOut = async () => {
-    await signOut({ redirect: false });
-    router.push('/');
-  };
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -103,12 +98,10 @@ function NavBar({ bgColorTop, bgColorScrolled,text,logo,logoWidth, logoHeight }:
             <Link href="/suscripciones" className="block lg:inline-block lg:mt-0 hover:text-2xl transform duration-500">
               Suscripciones
             </Link>
-            {status === 'loading' ? (
-            <span>Loading...</span>
-          ) : session ? (
-            <button onClick={handleSignOut} className="block lg:inline-block lg:mt-0 hover:text-2xl transform duration-500">
-              Log Out
-            </button>
+            {session ? (
+              <button onClick={() => signOut()} className="block lg:inline-block lg:mt-0 hover:text-2xl transform duration-500">
+                Log Out
+              </button>
           ) : (
             <Link href="/auth/login" className="block lg:inline-block lg:mt-0 hover:text-2xl transform duration-500">
               Log In
