@@ -180,7 +180,3 @@ export async function authenticate(
     throw error;
   }
 }
-
-export async function logout() {
-  await signOut({ redirectTo: "/" });
-}

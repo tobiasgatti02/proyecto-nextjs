@@ -1,6 +1,6 @@
 'use client'
 import React, { useContext, useEffect, useState } from 'react'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { getVino } from '@/app/lib/data'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
@@ -19,6 +19,7 @@ const VinoScreen = () => {
   const storeData = useContext(Store)
   const { state, dispatch } = storeData || {}
 
+
   const addToCartHandler = () => {
     if (state && dispatch && vino) {
       dispatch({ type: 'ADD_PRODUCT', payload: { ...vino, cantidad } });
@@ -30,7 +31,12 @@ const VinoScreen = () => {
   useEffect(() => {
     const fetchVino = async () => {
       const data = await getVino(Number(id))
-      setVino(data)
+      if (!data) {
+        window.alert('Vino no encontrado')
+        window.location.replace('/notFound')
+      } else {
+        setVino(data)
+      }
     }
     fetchVino()
   }, [id])
