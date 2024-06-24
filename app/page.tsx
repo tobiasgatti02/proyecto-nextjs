@@ -14,11 +14,7 @@ import { fetchVinosHome } from './lib/data';
 import { Vino } from './lib/definitions';
 
 
-const vinos = [
-  { id: 1, name: 'Sweet Grapes', image: fotoVino },
-  { id: 2, name: 'Canadian Beauty', image: fotoVino },
-  { id: 3, name: 'Alpine Tastes', image: fotoVino }
-];
+
 
 const settings = {
   dots: true,
@@ -52,7 +48,11 @@ const Bodine = () => {
   return (
     <>
       <div className="relative w-full min-h-96 h-screen max-h-max overflow-hidden" style={{ maxHeight: '800px' }}>
-        <Image src={bgImage} alt="Imagen de fondo" layout="fill" objectFit="cover" objectPosition="30% center" quality={100} />
+        <Image src={bgImage} alt="Imagen de fondo"
+          fill
+          priority={true}
+          style={{ objectFit: 'cover', objectPosition: '30% center' }}
+          quality={100} />
         <div className="absolute inset-0 bg-black bg-opacity-35" />
         <div className={`${maven_Pro.className} absolute inset-1 mt-20 flex items-center justify-center`}>
           <h1 className="text-white text-center sm:text-2xl lg:text-3xl text-lg">A UN PASO DE DESCUBRIR LOS <strong>MEJORES VINOS</strong></h1>
@@ -86,9 +86,8 @@ const Bodine = () => {
 
           src={campo_viñedo}
           alt="Imagen de fondo"
-          layout="fill"
-          objectFit="cover"
-          objectPosition="70% center"
+          fill
+          style={{ objectFit: 'cover', objectPosition: '70% center' }}
           quality={100}
         />
       </div>
@@ -113,9 +112,8 @@ const Bodine = () => {
         <Image
           src={suscripciones}
           alt="Imagen de fondo"
-          layout="fill"
-          objectFit="cover"
-          objectPosition="60% center"
+          fill
+          style={{ objectFit: 'cover', objectPosition: '60% center' }}
           quality={100}
         />
       </div>
