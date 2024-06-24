@@ -48,7 +48,7 @@ export const { auth,handlers, signIn, signOut } = NextAuth({
 
        
 
-        // Return the user object along with the role
+
         return { ...user};
       },
     }),
