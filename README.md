@@ -30,3 +30,4 @@ observaciones:
     #3 Por recomendación de nuestro ayudante asignado no modelamos las suscripciones en la base de datos, por lo tanto el apartado suscripciones no posee funcionalidades.
     #4 El log para el admin está habilitado en producción, ya que en local hay un error relacionado con el csrf que no pudimos trackear correctamente.
 
+
