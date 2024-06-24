@@ -32,7 +32,7 @@ export default function LoginPage() {
                 setError('Invalid email or password');
             } else {
                 router.push('/');
-                router.refresh(); // Force a refresh of the current route
+                router.refresh();
             }
         } catch (error) {
             setError('An unexpected error occurred');

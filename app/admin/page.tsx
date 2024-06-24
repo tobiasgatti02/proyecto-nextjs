@@ -69,7 +69,7 @@ export default function AdminWineManager() {
   };
 
   const checkAdminStatus = () => {
-    setIsAdmin(true); // Simulated admin status
+    setIsAdmin(true);
   };
 
   const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -146,23 +146,6 @@ export default function AdminWineManager() {
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
-  };
-
-  const handleQuantityChange = (id: number, cantidad: number) => {
-    setQuantities(prevQuantities => ({
-      ...prevQuantities,
-      [id]: cantidad,
-    }));
-  };
-
-  const addToCartHandler = (vino: Vino) => {
-    const cantidad = quantities[vino.id] || 1;
-    if (state && dispatch) {
-      dispatch({ type: 'ADD_PRODUCT', payload: { ...vino, cantidad } });
-      console.log('added to cart');
-    } else {
-      console.error('No se pudo agregar al carrito: vino es undefined');
-    }
   };
 
   return (

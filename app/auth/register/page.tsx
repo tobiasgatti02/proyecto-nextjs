@@ -13,7 +13,7 @@ const CreateAccountPage = () => {
     name: '',
     email: '',
     password: '',
-    role: 'user' // Asumiendo un rol por defecto
+    role: 'user'
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
