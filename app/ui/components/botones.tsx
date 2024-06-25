@@ -13,10 +13,10 @@ const GrupoBotones = ({ filter, setFilter }: { filter: string, setFilter: (value
   return (
     <div className="">
       {[
-        { label: 'Todos', value: 'todos' },
-        { label: 'Tintos', value: 'red' },
-        { label: 'Blancos', value: 'white' },
-        { label: 'Rosados', value: 'rose' }
+        { label: 'All', value: 'todos' },
+        { label: 'Red', value: 'red' },
+        { label: 'White', value: 'white' },
+        { label: 'Rose', value: 'rose' }
       ].map((button) => {
         const isActive = activeButton === button.value;
         return (

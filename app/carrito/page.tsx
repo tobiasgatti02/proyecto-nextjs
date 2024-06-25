@@ -66,15 +66,15 @@ export default function Carrito() {
         bgColorScrolled="bg-[#3B0613]"
       />
       <div className="container mx-auto px-4 pt-32">
-        <h1 className="text-4xl font-bold mb-8">Tu Carrito</h1>
+        <h1 className="text-4xl font-bold mb-8">Your Cart</h1>
         <Link href="/compras" className="text-lg hover:underline mb-10 inline-block">
-          ← Continuar comprando
+          ← Keep buying
         </Link>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
           <div className="lg:col-span-2">
             {productos.length === 0 ? (
               <div className="text-center py-10 bg-white/10 rounded-lg">
-                <p className="text-xl">Tu carrito está vacío</p>
+                <p className="text-xl">Your cart is empty</p>
               </div>
             ) : (
               productos.map((producto: any) => (
@@ -100,7 +100,7 @@ export default function Carrito() {
                         className="text-red-400 hover:text-red-300 transition-colors lg:ml-4"
                         onClick={() => removeCartHandler(producto)}
                       >
-                        Eliminar
+                        Delete
                       </button>
                     </div>
                   </div>
@@ -110,9 +110,9 @@ export default function Carrito() {
           </div>
           <div className="lg:col-span-1">
             <div className="bg-white/10 rounded-lg p-6 sticky top-32">
-              <h2 className="text-2xl font-bold mb-4">Resumen de la Compra</h2>
+              <h2 className="text-2xl font-bold mb-4">Purchase Summary</h2>
               <div className="flex justify-between mb-2">
-                <span>Cantidad de artículos</span>
+                <span>Number of items</span>
                 <span>{totalItems}</span>
               </div>
               <div className="flex justify-between text-2xl font-bold mt-4 pt-4 border-t border-white/20">
@@ -124,14 +124,14 @@ export default function Carrito() {
                 onClick={handleBuy}
                 disabled={productos.length === 0}
               >
-                Pagar con MercadoPago
+                Pay with MercadoPago
               </button>
               {productos.length > 0 && (
                 <button
                   className="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg mt-4 transition-colors"
                   onClick={vaciarCarritoHandler}
                 >
-                  Vaciar Carrito
+                  Clear Cart
                 </button>
               )}
             </div>

@@ -94,14 +94,14 @@ function NavBar({ bgColorTop, bgColorScrolled,text,logo,logoWidth, logoHeight }:
               </Link>
             </div>
             <Link href="/compras" className="block lg:inline-block lg:mt-0 hover:text-2xl transform duration-500">
-              Compras
+              Shop
             </Link>
             <Link href="/maridaje" className="block lg:inline-block lg:mt-0 hover:text-2xl transform duration-500">
-              Maridaje
+            Food pairing
             </Link>
           
             <Link href="/suscripciones" className="block lg:inline-block lg:mt-0 hover:text-2xl transform duration-500">
-              Suscripciones (Próximamente)
+              Suscriptions (Coming soon)
             </Link>
             {session ? (
               <button onClick={handleSignOut} className="block lg:inline-block lg:mt-0 hover:text-2xl transform duration-500">
@@ -149,9 +149,9 @@ function NavBar({ bgColorTop, bgColorScrolled,text,logo,logoWidth, logoHeight }:
               </div>
               <div ref={menuRef} className="sm:hidden z-40 fixed bg-[#3B0613] w-screen overflow-hidden transition-max-height duration-500 ease-in-out ">
                 <div className="mt-16 pb-2 z-40">
-                  <Link href="/compras" className="block py-2 text-center text-white ">Compras</Link>
-                  <Link href="/maridaje" className="block py-2 text-center text-white ">Maridaje</Link>
-                  <Link href="/suscripciones" className="block py-2 text-center text-white ">Suscripciones</Link>
+                  <Link href="/compras" className="block py-2 text-center text-white ">Shop</Link>
+                  <Link href="/maridaje" className="block py-2 text-center text-white ">Food Pairing</Link>
+                  <Link href="/suscripciones" className="block py-2 text-center text-white ">Suscriptions</Link>
                   {session ? (
                   <button onClick={() => signOut()} className="block py-2 text-center text-white w-full">
                     Log Out

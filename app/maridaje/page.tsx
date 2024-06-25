@@ -16,7 +16,7 @@ export default function MaridajePage() {
       <div className="max-w-3xl mt-32 mx-auto bg-white rounded-lg shadow-xl overflow-hidden">
         <div className="px-4 py-5 sm:p-6">
           <h1 className="text-4xl font-extrabold text-gray-900 text-center mb-8 font-serif">
-            Descubre el Maridaje Perfecto
+          Discover the Perfect Pairing
           </h1>
           <MaridajeComponent />
         </div>

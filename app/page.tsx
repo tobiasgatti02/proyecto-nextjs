@@ -55,7 +55,7 @@ const Bodine = () => {
           quality={100} />
         <div className="absolute inset-0 bg-black bg-opacity-35" />
         <div className={`${maven_Pro.className} absolute inset-1 mt-20 flex items-center justify-center`}>
-          <h1 className="text-white text-center sm:text-2xl lg:text-3xl text-lg">A UN PASO DE DESCUBRIR LOS <strong>MEJORES VINOS</strong></h1>
+          <h1 className="text-white text-center sm:text-2xl lg:text-3xl text-lg">One Step Away from Discovering the  <strong>Best Wines</strong></h1>
         </div>
       </div>
       <div className="z-50 absolute top-0 left-0 w-full">
@@ -63,7 +63,7 @@ const Bodine = () => {
       </div>
       <div className="py-10 border-b border-black sm:min-w-[300px] sm:max-w-[600px] sm:mx-auto"></div>
       <div>
-        <h2 className={`${maven_Pro.className} font-semibold overflow-hidden text-4xl text-center my-5`}>Vinos Destacados</h2>
+        <h2 className={`${maven_Pro.className} font-semibold overflow-hidden text-4xl text-center my-5`}>Featured Wines</h2>
       </div>
       <div className="border-b border-black sm:min-w-[300px] sm:max-w-[600px] sm:mx-auto"></div>
       <div className="py-10 overflow-hidden mx-2">

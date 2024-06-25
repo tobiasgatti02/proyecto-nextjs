@@ -48,11 +48,11 @@ const CreateAccountPage = () => {
         bgColorScrolled="bg-[#3B0613]"
       />
       <div className='bg-[#3B0613] p-8 rounded-xl shadow-lg'>
-        <h1 className="text-3xl font-bold mb-6 text-center">Crea Tu Nueva Cuenta</h1>
+        <h1 className="text-3xl font-bold mb-6 text-center">Create your account</h1>
 
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="name" className="block text-sm font-medium mb-1">Nombre Completo</label>
+            <label htmlFor="name" className="block text-sm font-medium mb-1">Full name</label>
             <input
               id="name"
               name="name"
@@ -66,7 +66,7 @@ const CreateAccountPage = () => {
           </div>
 
           <div>
-            <label htmlFor="email" className="block text-sm font-medium mb-1">Correo Electrónico</label>
+            <label htmlFor="email" className="block text-sm font-medium mb-1">E-mail</label>
             <input
               id="email"
               name="email"
@@ -80,7 +80,7 @@ const CreateAccountPage = () => {
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-medium mb-1">Contraseña</label>
+            <label htmlFor="password" className="block text-sm font-medium mb-1">Password</label>
             <input
               id="password"
               name="password"
@@ -91,21 +91,22 @@ const CreateAccountPage = () => {
               onChange={handleChange}
               required
             />
-            <p className="text-gray-400 text-xs mt-1">Mínimo 8 caracteres, incluya mayúsculas, minúsculas y números.</p>
+            <p className="text-gray-400 text-xs mt-1">Minimum 8 characters, including uppercase, lowercase, and numbers.
+</p>
           </div>
 
           <button
             type="submit"
             className="w-full bg-[#5C0A21] text-white py-3 rounded-lg font-semibold transition duration-300 ease-in-out hover:bg-[#7B0E2F] focus:outline-none focus:ring-2 focus:ring-[#5C0A21] focus:ring-opacity-50"
           >
-            Crear Cuenta
+            Sign up
           </button>
         </form>
 
         <p className="text-gray-400 text-sm mt-6 text-center">
-          ¿Ya tienes una cuenta?{' '}
+          Already signed?{' '}
           <Link href="/auth/login" className="text-[#FF6B6B] hover:underline">
-            Iniciar Sesión
+            Log In
           </Link>
         </p>
       </div>

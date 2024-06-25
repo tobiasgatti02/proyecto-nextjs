@@ -4,7 +4,7 @@ html,
 .fancy-button {
   position: relative;
   display: block;
-  cursor: pointer;
+  
   perspective: 1800px;
 }
 .fancy-button .fancy-flipper {
