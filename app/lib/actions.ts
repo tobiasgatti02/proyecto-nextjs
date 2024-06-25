@@ -2,7 +2,7 @@
 import { db } from "@vercel/postgres";
 import MercadoPagoConfig, { Preference } from "mercadopago";
 import { AuthError } from "next-auth";
-import { signIn, signOut } from "@/auth";
+
 import { promise } from "zod";
 
 export async function insertUser(userData: { name: string, email: string, password: string, role: string }) {
@@ -159,24 +159,5 @@ export async function updateVino(wineId: number, wineData: any) {
     await db.query(query, values);
   } catch (error: any) {
     throw new Error("Error updating wine: " + error.message);
-  }
-}
-
-export async function authenticate(
-  prevState: string | undefined,
-  formData: FormData
-) {
-  try {
-    await signIn("credentials", formData);
-  } catch (error) {
-    if (error instanceof AuthError) {
-      switch (error.type) {
-        case "CredentialsSignin":
-          return "Invalid credentials.";
-        default:
-          return "Something went wrong.";
-      }
-    }
-    throw error;
   }
 }
