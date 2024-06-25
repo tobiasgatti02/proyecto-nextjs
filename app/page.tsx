@@ -32,18 +32,7 @@ const Bodine = () => {
 
   const [vinos, setVinos] = useState<Vino[]>([]);
 
-  useEffect(() => {
-    const getVinos = async () => {
-      try {
-        const vinos = await fetchVinosHome();
-        setVinos(vinos);
-      } catch (error) {
-        console.error('Error fetching vinos:', error);
-      }
-    };
-
-    getVinos();
-  }, []);
+ 
 
   return (
     <>
@@ -67,16 +56,7 @@ const Bodine = () => {
       </div>
       <div className="border-b border-black sm:min-w-[300px] sm:max-w-[600px] sm:mx-auto"></div>
       <div className="py-10 overflow-hidden mx-2">
-        <Slider {...settings}>
-          {vinos.map(vino => (
-            <div key={vino.id} className="text-center">
-              <div className="flex justify-center items-center h-full">
-                <Image src={vino.image} alt={vino.wine} width={120} height={240} className="mx-auto" />
-              </div>
-              <h3 className={`${maven_Pro.className} text-lg mt-2`}>{vino.wine}</h3>
-            </div>
-          ))}
-        </Slider>
+       
       </div>
 
       <div className="relative w-full h-[400px] md:h-[700px] lg:h-[800px] overflow-hidden">
@@ -97,16 +77,7 @@ const Bodine = () => {
       </div>
       <div className="border-b border-black sm:min-w-[300px] sm:max-w-[600px] sm:mx-auto"></div>
       <div className="py-10 overflow-hidden mx-2">
-        <Slider {...settings}>
-          {vinos.map(vino => (
-            <div key={vino.id} className="text-center">
-              <div className="flex justify-center items-center h-full">
-                <Image src={vino.image} alt={vino.winery} width={120} height={240} className="mx-auto" />
-              </div>
-              <h3 className={`${maven_Pro.className} text-lg mt-2`}>{vino.winery}</h3>
-            </div>
-          ))}
-        </Slider>
+       
       </div>
       <div className="relative w-full h-[550px] md:h-[700px] lg:h-[1000px] overflow-hidden">
         <Image

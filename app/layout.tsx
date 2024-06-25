@@ -29,11 +29,8 @@ export default function RootLayout({
       
 
       
-        <SessionProvider>
-        <StoreProvider>
           {children}
-        </StoreProvider>
-        </SessionProvider>
+       
       </body>
 
 
