@@ -1,20 +1,29 @@
 "use client";
 
 import { signOut, useSession } from 'next-auth/react';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import logo1 from '../../../public/logo.png';
 import Link from 'next/link';
 import carro from '../../../public/carro.png';
 import { useRouter } from 'next/navigation';
 
-function NavBar({ bgColorTop, bgColorScrolled,text,logo,logoWidth, logoHeight }: {logoHeight:number,logo:string,logoWidth:number,text:string, bgColorTop: string, bgColorScrolled: string }) {
+interface NavBarProps {
+  bgColorTop: string;
+  bgColorScrolled: string;
+  text: string;
+  logo: string;
+  logoWidth: number;
+  logoHeight: number;
+}
+
+function NavBar({ bgColorTop, bgColorScrolled, text, logo, logoWidth, logoHeight }: NavBarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAtTop, setIsAtTop] = useState(true);
   const [isScrolledUp, setIsScrolledUp] = useState(true);
   const [navHeight, setNavHeight] = useState(0);
-  const menuRef = useRef<HTMLDivElement | null>(null);
-  const navRef = useRef<HTMLDivElement | null>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const navRef = useRef<HTMLDivElement>(null);
   const prevScrollY = useRef(0);
   const router = useRouter();
 
@@ -22,13 +31,13 @@ function NavBar({ bgColorTop, bgColorScrolled,text,logo,logoWidth, logoHeight }:
     setIsMenuOpen(!isMenuOpen);
   };
 
-
-
-  const handleScroll = () => {
+  const handleScroll = useCallback(() => {
+    if (typeof window === 'undefined') return;
+    
     const currentScrollY = window.scrollY;
     const windowWidth = window.innerWidth;
 
-    if (windowWidth <= 640) return; // No aplicar scroll behavior en dispositivos móviles
+    if (windowWidth <= 640) return;
 
     if (currentScrollY === 0) {
       setIsAtTop(true);
@@ -41,7 +50,7 @@ function NavBar({ bgColorTop, bgColorScrolled,text,logo,logoWidth, logoHeight }:
       }
     }
     prevScrollY.current = currentScrollY;
-  };
+  }, [navHeight]);
 
   useEffect(() => {
     if (navRef.current) {
@@ -52,28 +61,28 @@ function NavBar({ bgColorTop, bgColorScrolled,text,logo,logoWidth, logoHeight }:
   useEffect(() => {
     if (menuRef.current) {
       if (isMenuOpen) {
-        menuRef.current.style.maxHeight = `${menuRef.current.scrollHeight}px`;
+        menuRef.current!.style.maxHeight = `${menuRef.current!.scrollHeight}px`;
       } else {
-        menuRef.current.style.maxHeight = '0px';
+        menuRef.current!.style.maxHeight = '0px';
       }
     }
   }, [isMenuOpen]);
   
   useEffect(() => {
+    if (typeof window === 'undefined') return;
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [navHeight]);
-
+  }, [handleScroll]);
   return (
     <>
-      <nav
+       <nav
       ref={navRef}
       className={`fixed top-0 left-0 right-0 z-50 transition-transform duration-700 ${
         isAtTop ? `${bgColorTop}` : (isScrolledUp ? `${bgColorScrolled} translate-y-0` : 'bg-transparent -translate-y-full')
       } sm:p-3`}
-      >        
+    >           
       <div className="flex flex-col sm:flex-row items-center justify-between flex-wrap sm:mx-7">
           
           
