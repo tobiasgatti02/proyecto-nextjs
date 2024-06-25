@@ -1,7 +1,6 @@
 "use client";
 import Image from 'next/image';
 import bgImage from '../public/background.jpg';
-import NavBar from '../app/ui/components/navBar';
 import { maven_Pro } from '../app/fonts';
 import React, { useEffect, useState } from "react";
 import 'slick-carousel/slick/slick.css';
@@ -14,7 +13,9 @@ import { fetchVinosHome } from './lib/data';
 import { Vino } from './lib/definitions';
 
 
+import dynamic from 'next/dynamic'
 
+const NavBar = dynamic(() => import('../app/ui/components/navBar'), { ssr: false })
 
 const settings = {
   dots: true,
