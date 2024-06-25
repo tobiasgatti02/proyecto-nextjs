@@ -1,5 +1,5 @@
 "use client";
-import './styles.css';
+
 import { signOut, useSession } from 'next-auth/react';
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
