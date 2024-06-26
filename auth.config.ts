@@ -41,7 +41,7 @@ export const authConfig: NextAuthConfig = {
           return NextResponse.redirect(baseUrl + '/');
         }
         if (isOnAdmin) {
-          if (auth?.user?.role === 'admin') {
+          if (auth?.user?.role === 'admin' && !isOnAdmin) {
             return NextResponse.redirect(baseUrl + '/admin');
           } else {
             return NextResponse.redirect(baseUrl + '/');
