@@ -1,7 +1,10 @@
 import type { NextAuthConfig } from 'next-auth';
 import { NextResponse } from 'next/server';
 import { JWT } from 'next-auth/jwt';
-import { db } from '@vercel/postgres';
+import { db } from '@vercel/postgres'
+
+
+
 
 export const authConfig: NextAuthConfig = {
   pages: {
@@ -20,33 +23,45 @@ export const authConfig: NextAuthConfig = {
     async authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
       const isOnAdmin = nextUrl.pathname.startsWith('/admin');
+      const isOnCompras = nextUrl.pathname.startsWith('/compras');
       const isOnLogin = nextUrl.pathname.startsWith('/auth/login');
-      const isOnRegister = nextUrl.pathname.startsWith('/auth/register');
+      const isOnHome = nextUrl.pathname.startsWith('/');
+      const isOnCarrito = nextUrl.pathname.startsWith('/carrito');
+      const isOnSuscripciones = nextUrl.pathname.startsWith('/suscripciones');
       const baseUrl = process.env.NEXTAUTH_URL;
+      const isOnVinos = nextUrl.pathname.startsWith('/vino');
+      const isOnRegister = nextUrl.pathname.startsWith('/auth/register');
+      const isOnMaridaje = nextUrl.pathname.startsWith('/maridaje');
 
       if (isLoggedIn) {
-        if (auth?.user?.role === 'admin') {
-          if (isOnAdmin) {
+        if (isOnHome || isOnSuscripciones || isOnCarrito || isOnVinos || isOnMaridaje || isOnCompras) {
+          return true;
+        }
+        if (isOnLogin || isOnRegister) {
+          return NextResponse.redirect(baseUrl + '/');
+        }
+        if (isOnAdmin) {
+          if (auth?.user?.role === 'admin') {
             return true;
           } else {
-            return NextResponse.redirect(baseUrl + '/admin');
-          }
-        } else {
-          if (isOnLogin || isOnRegister) {
             return NextResponse.redirect(baseUrl + '/');
           }
-          return true;
         }
       }
-
       if (!isLoggedIn) {
-        if (isOnLogin || isOnRegister) {
+        if (isOnLogin || isOnRegister || isOnHome || isOnMaridaje|| isOnVinos || isOnSuscripciones || isOnCompras || isOnCarrito) {
           return true;
         }
+
         return NextResponse.redirect(baseUrl + '/auth/login');
+
       }
 
       return NextResponse.next();
+
+
+
+
     },
     async jwt({ token, user, trigger, session }) {
       if (trigger === 'signIn') {
@@ -60,6 +75,7 @@ export const authConfig: NextAuthConfig = {
 
       if (trigger === 'update' && session?.user) {
         try {
+          // Actualiza la información del usuario en la base de datos
           const client = await db.connect();
           const result = await client.query(
             `UPDATE users SET name = $1, role = $2 WHERE email = $3 RETURNING *`,
@@ -67,6 +83,7 @@ export const authConfig: NextAuthConfig = {
           );
           client.release();
 
+          // Si no se pudo actualizar el usuario, retorna el token original
           if (!result.rows[0]) {
             return token;
           }
@@ -97,5 +114,5 @@ export const authConfig: NextAuthConfig = {
       };
     },
   },
-  providers: [],
+  providers: [], 
 } satisfies NextAuthConfig;
