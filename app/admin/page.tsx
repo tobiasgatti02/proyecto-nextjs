@@ -1,6 +1,6 @@
 'use client'
 import React, { useState, useEffect, useContext } from 'react';
-import {insertVino, deleteVino, updateVino } from '../lib/actions';
+import { insertVino, deleteVino, updateVino } from '../lib/actions';
 import { fetchVinos } from '../lib/data';
 import NavBar from '@/app/ui/components/navBar';
 import { maven_Pro } from '../fonts';
@@ -134,6 +134,7 @@ export default function AdminWineManager() {
     setEditingWine(wine);
     setShowEditForm(true);
     setShowAddForm(false);
+    document.getElementById('edit-form')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   const handleSearch = (term: string) => {
@@ -150,7 +151,7 @@ export default function AdminWineManager() {
 
   return (
     <div>
-       <NavBar
+      <NavBar
         text="text-white"
         logo={logo}
         logoWidth={200}
@@ -158,255 +159,153 @@ export default function AdminWineManager() {
         bgColorTop="bg-transparent"
         bgColorScrolled="bg-[#3B0613]"
       />
-    <div className={`${maven_Pro.className} text-white flex flex-col min-h-screen pt-32 max-w-[1200px] mx-auto`}>
-     
-      <div className='bg-[#3B0613] p-8 rounded-xl shadow-lg'>
-        <h1 className="text-3xl font-bold mb-6 text-center">Wine Administration</h1>
-        
-        <div className='mb-6'>
-          <Search placeholder="Buscar vinos..." handleSearch={handleSearch} />
-        </div>
-        
-        <div className="flex justify-center mb-6">
-          <GrupoBotones filter={filter} setFilter={handleFilterChange} />
-        </div>
-        
-        {isAdmin && (
-          <button
-            onClick={() => { setShowAddForm(true); setShowEditForm(false); }}
-            className="mb-4 bg-green-500 text-white px-4 py-2 rounded"
-          >
-            Add New Wine
-          </button>
-        )}
-
-        <div className="mt-12 gap-3 grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 p-4 rounded-lg bg-[#4A091A]">
-          {filteredVinos.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE).map((vino) => (
-            <Card
-              key={vino.id}
-              isPressable
-              onPress={() => console.log(vino.wine)}
-              style={{ backgroundColor: 'transparent', boxShadow: 'none', border: '1px solid #000' }}
+      <div className={`${maven_Pro.className} text-white flex flex-col min-h-screen pt-32 max-w-[1200px] mx-auto`}>
+        <div className='bg-[#3B0613] p-8 rounded-xl shadow-lg'>
+          <h1 className="text-3xl font-bold mb-6 text-center">Wine Administration</h1>
+          <div className='mb-6'>
+            <Search placeholder="Buscar vinos..." handleSearch={handleSearch} />
+          </div>
+          <div className="flex justify-center mb-6">
+            <GrupoBotones filter={filter} setFilter={handleFilterChange} />
+          </div>
+          {isAdmin && (
+            <button
+              onClick={() => { setShowAddForm(true); setShowEditForm(false); document.getElementById('add-form')?.scrollIntoView({ behavior: 'smooth' }); }}
+              className="mb-4 bg-green-500 text-white px-4 py-2 rounded"
             >
-              <CardBody className="justify-center items-center bg-gray-300">
-                <Link href={`/vino/${vino.id}`}>
-                  <Image
-                    alt={vino.wine}
-                    className="w-full h-full rounded-lg transition-transform duration-300 ease-in-out transform hover:scale-105"
-                    src={vino.image}
-                  />
-                </Link>
-              </CardBody>
-              <CardFooter className="text-small block bg-gray-300 border-t-2 border-black xs:min-h-[222px] min-h-[240px]">
-                <b className='block'>{vino.wine}</b>
-                <b className='block'>${vino.price}</b>
-               
-                <div className='inline-block transition duration-700 hover:bg-gray-400 hover:font-medium rounded text-medium'>
+              Add New Wine
+            </button>
+          )}
+          <div className="mt-12 gap-3 grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 p-4 rounded-lg bg-[#4A091A]">
+            {filteredVinos.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE).map((vino) => (
+              <Card
+                key={vino.id}
+                isPressable
+                onPress={() => console.log(vino.wine)}
+                style={{ backgroundColor: 'transparent', boxShadow: 'none', border: '1px solid #000' }}
+              >
+                <CardBody className="justify-center items-center bg-gray-300">
                   <Link href={`/vino/${vino.id}`}>
-                    Ver Producto
+                    <Image
+                      alt={vino.wine}
+                      className="w-full h-full rounded-lg transition-transform duration-300 ease-in-out transform hover:scale-105"
+                      src={vino.image}
+                    />
                   </Link>
-                </div>
-                {isAdmin && (
-                  <div className='mt-3'>
-                    <button
-                      onClick={() => handleEdit(vino)}
-                      className='mr-2 bg-blue-500 text-white px-3 py-1 rounded'
-                    >
-                      Editar
-                    </button>
-                    <button
-                      onClick={() => handleDelete(vino.id)}
-                     
-                      className='bg-red-500 text-white px-3 py-1 rounded'
-                    >
-                      Eliminar
-                    </button>
+                </CardBody>
+                <CardFooter className="text-small block bg-gray-300 border-t-2 border-black xs:min-h-[222px] min-h-[240px]">
+                  <b className='block'>{vino.wine}</b>
+                  <b className='block'>${vino.price}</b>
+                  <div className='inline-block transition duration-700 hover:bg-gray-400 hover:font-medium rounded text-medium'>
+                    <Link href={`/vino/${vino.id}`}>
+                      Ver Producto
+                    </Link>
                   </div>
-                )}
-              </CardFooter>
-            </Card>
-          ))}
+                  {isAdmin && (
+                    <div className='mt-3'>
+                      <button
+                        onClick={() => handleEdit(vino)}
+                        className='mr-2 bg-blue-500 text-white px-3 py-1 rounded'
+                      >
+                        Editar
+                      </button>
+                      <button
+                        onClick={() => handleDelete(vino.id)}
+                        className='bg-red-500 text-white px-3 py-1 rounded'
+                      >
+                        Eliminar
+                      </button>
+                    </div>
+                  )}
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
+          <PaginationSlider
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
+          {showEditForm && editingWine && (
+            <form id="edit-form" onSubmit={handleEditSubmit} className="mt-8 bg-[#4A091A] p-6 rounded-lg shadow-lg">
+              <h2 className="text-2xl font-bold mb-4">Editar Vino</h2>
+              <div className="mb-4">
+                <label htmlFor="wine" className="block font-bold mb-2">Nombre del Vino</label>
+                <input type="text" id="wine" name="wine" value={editingWine.wine} onChange={handleEditChange} className="w-full px-3 py-2 text-black rounded" />
+              </div>
+              <div className="mb-4">
+                <label htmlFor="wine_category" className="block font-bold mb-2">Categoría del Vino</label>
+                <input type="text" id="wine_category" name="wine_category" value={editingWine.wine_category} onChange={handleEditChange} className="w-full px-3 py-2 text-black rounded" />
+              </div>
+              <div className="mb-4">
+                <label htmlFor="price" className="block font-bold mb-2">Precio</label>
+                <input type="number" id="price" name="price" value={editingWine.price} onChange={handleEditChange} className="w-full px-3 py-2 text-black rounded" />
+              </div>
+              <div className="mb-4">
+                <label htmlFor="image" className="block font-bold mb-2">Imagen</label>
+                <input type="text" id="image" name="image" value={editingWine.image} onChange={handleEditChange} className="w-full px-3 py-2 text-black rounded" />
+              </div>
+              <div className="mb-4">
+                <label htmlFor="winery" className="block font-bold mb-2">Bodega</label>
+                <input type="text" id="winery" name="winery" value={editingWine.winery} onChange={handleEditChange} className="w-full px-3 py-2 text-black rounded" />
+              </div>
+              <div className="mb-4">
+                <label htmlFor="average_rating" className="block font-bold mb-2">Rating Promedio</label>
+                <input type="number" id="average_rating" name="average_rating" value={editingWine.average_rating} onChange={handleEditChange} className="w-full px-3 py-2 text-black rounded" />
+              </div>
+              <div className="mb-4">
+                <label htmlFor="reviews" className="block font-bold mb-2">Reseñas</label>
+                <input type="text" id="reviews" name="reviews" value={editingWine.reviews} onChange={handleEditChange} className="w-full px-3 py-2 text-black rounded" />
+              </div>
+              <div className="mb-4">
+                <label htmlFor="location" className="block font-bold mb-2">Ubicación</label>
+                <input type="text" id="location" name="location" value={editingWine.location} onChange={handleEditChange} className="w-full px-3 py-2 text-black rounded" />
+              </div>
+              <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">Actualizar Vino</button>
+              <button onClick={() => setShowEditForm(false)} className="ml-4 bg-red-500 text-white px-4 py-2 rounded">Cancelar</button>
+            </form>
+          )}
+          {showAddForm && (
+            <form id="add-form" onSubmit={handleAddSubmit} className="mt-8 bg-[#4A091A] p-6 rounded-lg shadow-lg">
+              <h2 className="text-2xl font-bold mb-4">Agregar Nuevo Vino</h2>
+              <div className="mb-4">
+                <label htmlFor="wine" className="block font-bold mb-2">Nombre del Vino</label>
+                <input type="text" id="wine" name="wine" value={newWine.wine} onChange={handleAddChange} className="w-full px-3 py-2 text-black rounded" />
+              </div>
+              <div className="mb-4">
+                <label htmlFor="wine_category" className="block font-bold mb-2">Categoría del Vino</label>
+                <input type="text" id="wine_category" name="wine_category" value={newWine.wine_category} onChange={handleAddChange} className="w-full px-3 py-2 text-black rounded" />
+              </div>
+              <div className="mb-4">
+                <label htmlFor="price" className="block font-bold mb-2">Precio</label>
+                <input type="number" id="price" name="price" value={newWine.price} onChange={handleAddChange} className="w-full px-3 py-2 text-black rounded" />
+              </div>
+              <div className="mb-4">
+                <label htmlFor="image" className="block font-bold mb-2">Imagen</label>
+                <input type="text" id="image" name="image" value={newWine.image} onChange={handleAddChange} className="w-full px-3 py-2 text-black rounded" />
+              </div>
+              <div className="mb-4">
+                <label htmlFor="winery" className="block font-bold mb-2">Bodega</label>
+                <input type="text" id="winery" name="winery" value={newWine.winery} onChange={handleAddChange} className="w-full px-3 py-2 text-black rounded" />
+              </div>
+              <div className="mb-4">
+                <label htmlFor="average_rating" className="block font-bold mb-2">Rating Promedio</label>
+                <input type="number" id="average_rating" name="average_rating" value={newWine.average_rating} onChange={handleAddChange} className="w-full px-3 py-2 text-black rounded" />
+              </div>
+              <div className="mb-4">
+                <label htmlFor="reviews" className="block font-bold mb-2">Reseñas</label>
+                <input type="text" id="reviews" name="reviews" value={newWine.reviews} onChange={handleAddChange} className="w-full px-3 py-2 text-black rounded" />
+              </div>
+              <div className="mb-4">
+                <label htmlFor="location" className="block font-bold mb-2">Ubicación</label>
+                <input type="text" id="location" name="location" value={newWine.location} onChange={handleAddChange} className="w-full px-3 py-2 text-black rounded" />
+              </div>
+              <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded">Agregar Vino</button>
+              <button onClick={() => setShowAddForm(false)} className="ml-4 bg-red-500 text-white px-4 py-2 rounded">Cancelar</button>
+            </form>
+          )}
         </div>
-        
-        <PaginationSlider
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={handlePageChange}
-        />
-        
-        {showEditForm && editingWine && (
-          <form onSubmit={handleEditSubmit} className="mt-8 bg-[#4A091A] p-6 rounded-lg">
-            <h2 className="text-2xl font-bold mb-4">Edit Wine</h2>
-            <div className="space-y-4">
-              <input 
-                className='w-full px-4 py-3 bg-[#4A091A] text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5C0A21] focus:ring-opacity-50 placeholder-gray-400'
-                type="text" 
-                name="wine" 
-                value={editingWine.wine} 
-                onChange={handleEditChange} 
-                placeholder="Wine Name" 
-                required 
-              />
-              <input 
-                className='w-full px-4 py-3 bg-[#4A091A] text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5C0A21] focus:ring-opacity-50 placeholder-gray-400'
-                type="text" 
-                name="wine_category" 
-                value={editingWine.wine_category} 
-                onChange={handleEditChange} 
-                placeholder="Wine Category" 
-                required 
-              />
-              <input 
-                className='w-full px-4 py-3 bg-[#4A091A] text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5C0A21] focus:ring-opacity-50 placeholder-gray-400'
-                type="number" 
-                name="price" 
-                value={editingWine.price} 
-                onChange={handleEditChange} 
-                placeholder="Price" 
-                required 
-              />
-              <input 
-                className='w-full px-4 py-3 bg-[#4A091A] text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5C0A21] focus:ring-opacity-50 placeholder-gray-400'
-                type="text" 
-                name="image" 
-                value={editingWine.image} 
-                onChange={handleEditChange} 
-                placeholder="Image URL" 
-                required 
-              />
-              <input 
-                className='w-full px-4 py-3 bg-[#4A091A] text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5C0A21] focus:ring-opacity-50 placeholder-gray-400'
-                type="text" 
-                name="winery" 
-                value={editingWine.winery} 
-                onChange={handleEditChange} 
-                placeholder="Winery" 
-                required 
-              />
-              <input 
-                className='w-full px-4 py-3 bg-[#4A091A] text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5C0A21] focus:ring-opacity-50 placeholder-gray-400'
-                type="number" 
-                name="average_rating" 
-                value={editingWine.average_rating} 
-                onChange={handleEditChange} 
-                placeholder="Average Rating" 
-                required 
-              />
-              <input 
-                className='w-full px-4 py-3 bg-[#4A091A] text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5C0A21] focus:ring-opacity-50 placeholder-gray-400'
-                type="text" 
-                name="reviews" 
-                value={editingWine.reviews} 
-                onChange={handleEditChange} 
-                placeholder="Reviews" 
-                required 
-              />
-              <input 
-                className='w-full px-4 py-3 bg-[#4A091A] text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5C0A21] focus:ring-opacity-50 placeholder-gray-400'
-                type="text" 
-                name="location" 
-                value={editingWine.location} 
-                onChange={handleEditChange} 
-                placeholder="Location" 
-                required 
-              />
-            </div>
-            <button
-              type="submit"
-              className="w-full bg-[#5C0A21] text-white py-3 rounded-lg font-semibold mt-6 transition duration-300 ease-in-out hover:bg-[#7B0E2F] focus:outline-none focus:ring-2 focus:ring-[#5C0A21] focus:ring-opacity-50"
-            >
-              Update Wine
-            </button>
-          </form>
-        )}
-
-        {showAddForm && (
-          <form onSubmit={handleAddSubmit} className="mt-8 bg-gray-700 p-6 rounded-lg">
-            <h2 className="text-2xl font-bold mb-4">Add New Wine</h2>
-            <div className="space-y-4">
-              <input 
-                className='w-full px-4 py-3 bg-[#4A091A] text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5C0A21] focus:ring-opacity-50 placeholder-gray-400'
-                type="text" 
-                name="wine" 
-                value={newWine.wine} 
-                onChange={handleAddChange} 
-                placeholder="Wine Name" 
-                required 
-              />
-              <input 
-                className='w-full px-4 py-3 bg-[#4A091A] text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5C0A21] focus:ring-opacity-50 placeholder-gray-400'
-                type="text" 
-                name="wine_category" 
-                value={newWine.wine_category} 
-                onChange={handleAddChange} 
-                placeholder="Wine Category" 
-                required 
-              />
-              <input 
-                className='w-full px-4 py-3 bg-[#4A091A] text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5C0A21] focus:ring-opacity-50 placeholder-gray-400'
-                type="number" 
-                name="price" 
-                value={newWine.price} 
-                onChange={handleAddChange} 
-                placeholder="Price" 
-                required 
-              />
-              <input 
-                className='w-full px-4 py-3 bg-[#4A091A] text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5C0A21] focus:ring-opacity-50 placeholder-gray-400'
-                type="text" 
-                name="image" 
-                value={newWine.image} 
-                onChange={handleAddChange} 
-                placeholder="Image URL" 
-                required 
-              />
-              <input 
-                className='w-full px-4 py-3 bg-[#4A091A] text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5C0A21] focus:ring-opacity-50 placeholder-gray-400'
-                type="text" 
-                name="winery" 
-                value={newWine.winery} 
-                onChange={handleAddChange} 
-                placeholder="Winery" 
-                required 
-              />
-              <input 
-                className='w-full px-4 py-3 bg-[#4A091A] text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5C0A21] focus:ring-opacity-50 placeholder-gray-400'
-                type="number" 
-                name="average_rating" 
-                value={newWine.average_rating} 
-                onChange={handleAddChange} 
-                placeholder="Average Rating" 
-                required 
-              />
-              <input 
-                className='w-full px-4 py-3 bg-[#4A091A] text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5C0A21] focus:ring-opacity-50 placeholder-gray-400'
-                type="text" 
-                name="reviews" 
-                value={newWine.reviews} 
-                onChange={handleAddChange} 
-                placeholder="Reviews" 
-                required 
-              />
-              <input 
-                className='w-full px-4 py-3 bg-[#4A091A] text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5C0A21] focus:ring-opacity-50 placeholder-gray-400'
-                type="text" 
-                name="location" 
-                value={newWine.location} 
-                onChange={handleAddChange} 
-                placeholder="Location" 
-                required 
-              />
-            </div>
-            <button
-              type="submit"
-              className="w-full bg-[#5C0A21] text-white py-3 rounded-lg font-semibold mt-6 transition duration-300 ease-in-out hover:bg-[#7B0E2F] focus:outline-none focus:ring-2 focus:ring-[#5C0A21] focus:ring-opacity-50"
-            >
-              Add Wine
-            </button>
-          </form>
-        )}
       </div>
-    </div>
     </div>
   );
 }

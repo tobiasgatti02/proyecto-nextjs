@@ -42,7 +42,7 @@ export const authConfig: NextAuthConfig = {
         }
         if (isOnAdmin) {
           if (auth?.user?.role === 'admin') {
-            return true;
+            return NextResponse.redirect(baseUrl + '/admin');
           } else {
             return NextResponse.redirect(baseUrl + '/');
           }
