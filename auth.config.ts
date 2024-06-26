@@ -25,7 +25,7 @@ export const authConfig: NextAuthConfig = {
       const isOnAdmin = nextUrl.pathname.startsWith('/admin');
       const isOnCompras = nextUrl.pathname.startsWith('/compras');
       const isOnLogin = nextUrl.pathname.startsWith('/auth/login');
-      const isOnHome = nextUrl.pathname === '/';
+      const isOnHome = nextUrl.pathname.startsWith('/');
       const isOnCarrito = nextUrl.pathname.startsWith('/carrito');
       const isOnSuscripciones = nextUrl.pathname.startsWith('/suscripciones');
       const baseUrl = process.env.NEXTAUTH_URL;
@@ -34,15 +34,11 @@ export const authConfig: NextAuthConfig = {
       const isOnMaridaje = nextUrl.pathname.startsWith('/maridaje');
 
       if (isLoggedIn) {
-        if (isOnHome || isOnSuscripciones || isOnCarrito || isOnVinos || isOnMaridaje) {
+        if (isOnHome || isOnSuscripciones || isOnCarrito || isOnVinos || isOnMaridaje || isOnCompras) {
           return true;
         }
-        if (isOnLogin) {
+        if (isOnLogin || isOnRegister) {
           return NextResponse.redirect(baseUrl + '/');
-        }
-
-        if (isOnCompras) {
-          return true;
         }
         if (isOnAdmin) {
           if (auth?.user?.role === 'admin') {
