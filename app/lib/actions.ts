@@ -27,6 +27,22 @@ const client = new MercadoPagoConfig({
   accessToken: process.env.NEXT_PUBLIC_MP_ACCESS_TOKEN!,
 });
 
+
+export async function fetchVinoByID(wineId: number) {
+  try {
+    const query = `
+      SELECT * FROM vinos
+      WHERE id = $1
+    `;
+    const values = [wineId];
+    const result = await db.query(query, values);
+    return result.rows[0];
+  } catch (error: any) {
+    throw new Error("Error fetching wine by ID: " + error.message);
+  }
+}
+
+
 export async function deleteVino(wineId: number) {
   try {
     const query = `
