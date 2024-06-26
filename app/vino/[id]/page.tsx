@@ -29,6 +29,11 @@ const VinoScreen = () => {
 
   useEffect(() => {
     const fetchVino = async () => {
+      if (isNaN(Number(id))) {
+        router.push('/wineNotFound')
+        return
+      }
+
       const data = await getVino(Number(id))
       if (!data) {
         router.push('/wineNotFound')
