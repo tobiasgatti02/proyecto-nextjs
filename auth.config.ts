@@ -34,7 +34,7 @@ export const authConfig: NextAuthConfig = {
       const isOnMaridaje = nextUrl.pathname.startsWith('/maridaje');
 
       if (isLoggedIn) {
-        if (isOnHome || isOnSuscripciones || isOnCarrito) {
+        if (isOnHome || isOnSuscripciones || isOnCarrito || isOnVinos || isOnMaridaje) {
           return true;
         }
         if (isOnLogin) {
@@ -53,7 +53,7 @@ export const authConfig: NextAuthConfig = {
         }
       }
       if (!isLoggedIn) {
-        if (isOnLogin || isOnRegister || isOnHome || isOnMaridaje|| isOnVinos || isOnSuscripciones || isOnCompras || isOnCarrito) {
+        if (isOnLogin || isOnRegister || isOnHome || isOnMaridaje|| isOnVinos || isOnSuscripciones || isOnCompras || isOnCarrito ) {
           return true;
         }
 
