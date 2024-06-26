@@ -2,6 +2,7 @@ import type { NextAuthConfig } from 'next-auth';
 import { NextResponse } from 'next/server';
 import { JWT } from 'next-auth/jwt';
 import { db } from '@vercel/postgres'
+import { ArrowUp } from 'lucide-react';
 
 
 
@@ -25,7 +26,7 @@ export const authConfig: NextAuthConfig = {
       const isOnAdmin = nextUrl.pathname.startsWith('/admin');
       const isOnCompras = nextUrl.pathname.startsWith('/compras');
       const isOnLogin = nextUrl.pathname.startsWith('/auth/login');
-      const isOnHome = nextUrl.pathname.startsWith('/');
+      const isOnHome = nextUrl.pathname === '/';
       const isOnCarrito = nextUrl.pathname.startsWith('/carrito');
       const isOnSuscripciones = nextUrl.pathname.startsWith('/suscripciones');
       const baseUrl = process.env.NEXTAUTH_URL;
@@ -34,20 +35,27 @@ export const authConfig: NextAuthConfig = {
       const isOnMaridaje = nextUrl.pathname.startsWith('/maridaje');
 
       if (isLoggedIn) {
-        if (isOnHome || isOnSuscripciones || isOnCarrito || isOnVinos || isOnMaridaje || isOnCompras) {
+        if (isOnHome || isOnSuscripciones || isOnCarrito || isOnVinos || isOnMaridaje) {
           return true;
         }
-        if (isOnLogin || isOnRegister) {
+        if (isOnLogin) {
           return NextResponse.redirect(baseUrl + '/');
         }
-        if (isOnAdmin) {
-          if (auth?.user?.role === 'admin') {
-            return true;
-          } else {
-            return NextResponse.redirect(baseUrl + '/');
-          }
+
+        if (isOnCompras) {
+          return true;
         }
-      }
+        if (auth?.user.role === 'admin' && !isOnAdmin) {
+          return NextResponse.redirect(baseUrl + '/admin');
+        }
+        if (auth?.user.role === 'admin' && isOnAdmin) {
+          return true;
+        }
+
+        else{
+          return NextResponse.redirect(baseUrl + '/auth/login')
+        }
+    }
       if (!isLoggedIn) {
         if (isOnLogin || isOnRegister || isOnHome || isOnMaridaje|| isOnVinos || isOnSuscripciones || isOnCompras || isOnCarrito) {
           return true;
