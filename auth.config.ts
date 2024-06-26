@@ -1,10 +1,7 @@
 import type { NextAuthConfig } from 'next-auth';
 import { NextResponse } from 'next/server';
 import { JWT } from 'next-auth/jwt';
-import { db } from '@vercel/postgres'
-
-
-
+import { db } from '@vercel/postgres';
 
 export const authConfig: NextAuthConfig = {
   pages: {
@@ -28,44 +25,33 @@ export const authConfig: NextAuthConfig = {
       const isOnHome = nextUrl.pathname === '/';
       const isOnCarrito = nextUrl.pathname.startsWith('/carrito');
       const isOnSuscripciones = nextUrl.pathname.startsWith('/suscripciones');
-      const baseUrl = process.env.NEXTAUTH_URL;
       const isOnVinos = nextUrl.pathname.startsWith('/vino');
       const isOnRegister = nextUrl.pathname.startsWith('/auth/register');
       const isOnMaridaje = nextUrl.pathname.startsWith('/maridaje');
+      const baseUrl = process.env.NEXTAUTH_URL;
 
       if (isLoggedIn) {
-        if (isOnHome || isOnSuscripciones || isOnCarrito || isOnVinos || isOnMaridaje) {
-          return true;
-        }
-        if (isOnLogin) {
-          return NextResponse.redirect(baseUrl + '/');
-        }
-
-        if (isOnCompras) {
-          return true;
-        }
-        if (isOnAdmin) {
-          if (auth?.user?.role === 'admin') {
+        if (auth?.user?.role === 'admin') {
+          // Administradores solo pueden estar en /admin
+          if (isOnAdmin) {
             return true;
           } else {
+            return NextResponse.redirect(baseUrl + '/admin');
+          }
+        } else {
+          // Usuarios logueados no admin pueden navegar por todas partes excepto /admin
+          if (isOnLogin || isOnRegister || isOnAdmin) {
             return NextResponse.redirect(baseUrl + '/');
           }
-        }
-      }
-      if (!isLoggedIn) {
-        if (isOnLogin || isOnRegister || isOnHome || isOnMaridaje|| isOnVinos || isOnSuscripciones || isOnCompras || isOnCarrito ) {
           return true;
         }
-
-        return NextResponse.redirect('https://bodine.vercel.app/');
-
+      } else {
+        // Usuarios no logueados pueden navegar por todas partes excepto /admin
+        if (isOnAdmin) {
+          return NextResponse.redirect(baseUrl + '/auth/login');
+        }
+        return true;
       }
-
-      return NextResponse.next();
-
-
-
-
     },
     async jwt({ token, user, trigger, session }) {
       if (trigger === 'signIn') {
