@@ -1,10 +1,7 @@
 import type { NextAuthConfig } from 'next-auth';
 import { NextResponse } from 'next/server';
 import { JWT } from 'next-auth/jwt';
-import { db } from '@vercel/postgres'
-
-
-
+import { db } from '@vercel/postgres';
 
 export const authConfig: NextAuthConfig = {
   pages: {
@@ -25,50 +22,36 @@ export const authConfig: NextAuthConfig = {
       const isOnAdmin = nextUrl.pathname.startsWith('/admin');
       const isOnCompras = nextUrl.pathname.startsWith('/compras');
       const isOnLogin = nextUrl.pathname.startsWith('/auth/login');
-      const isOnHome = nextUrl.pathname.startsWith('/');
+      const isOnHome = nextUrl.pathname === '/';
       const isOnCarrito = nextUrl.pathname.startsWith('/carrito');
       const isOnSuscripciones = nextUrl.pathname.startsWith('/suscripciones');
-      const baseUrl = process.env.NEXTAUTH_URL;
       const isOnVinos = nextUrl.pathname.startsWith('/vino');
       const isOnRegister = nextUrl.pathname.startsWith('/auth/register');
       const isOnMaridaje = nextUrl.pathname.startsWith('/maridaje');
-      
+      const baseUrl = process.env.NEXTAUTH_URL;
 
       if (isLoggedIn) {
-        if (isOnHome || isOnSuscripciones || isOnCarrito || isOnVinos || isOnMaridaje || isOnCompras) {
-          return true;
-        }
-        if (isOnLogin || isOnRegister) {
-          return NextResponse.redirect(baseUrl + '/');
-        }
-        if (isOnAdmin) {
-          if (auth?.user?.role === 'admin') {
+        if (auth?.user?.role === 'admin') {
+          // Administradores solo pueden estar en /admin
+          if (isOnAdmin) {
             return true;
           } else {
+            return NextResponse.redirect(baseUrl + '/admin');
+          }
+        } else {
+          // Usuarios logueados no admin pueden navegar por todas partes excepto /admin
+          if (isOnLogin || isOnRegister || isOnAdmin) {
             return NextResponse.redirect(baseUrl + '/');
           }
+          return true;
         }
-      }
-      if (isLoggedIn && auth?.user?.role === 'admin') {
-        if (!isOnAdmin) {
-          return NextResponse.redirect(baseUrl + '/admin');
+      } else {
+        // Usuarios no logueados pueden navegar por todas partes excepto /admin
+        if (isOnAdmin) {
+          return NextResponse.redirect(baseUrl + '/auth/login');
         }
         return true;
       }
-      if (!isLoggedIn) {
-        if (isOnLogin || isOnRegister || isOnHome || isOnMaridaje|| isOnVinos || isOnSuscripciones || isOnCompras || isOnCarrito) {
-          return true;
-        }
-
-        return NextResponse.redirect(baseUrl + '/auth/login');
-
-      }
-
-      return NextResponse.next();
-
-
-
-
     },
     async jwt({ token, user, trigger, session }) {
       if (trigger === 'signIn') {
