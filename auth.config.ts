@@ -40,13 +40,19 @@ export const authConfig: NextAuthConfig = {
         if (isOnLogin || isOnRegister) {
           return NextResponse.redirect(baseUrl + '/');
         }
-        if (isOnAdmin) {
-          if (auth?.user?.role === 'admin' && !isOnAdmin) {
+        
+          if (auth?.user?.role === 'admin') {
             return NextResponse.redirect(baseUrl + '/admin');
-          } else {
+          }
+          else if (auth?.user?.role === 'admin' && !isOnAdmin) {
+            return NextResponse.redirect(baseUrl + '/admin');
+          }
+           else {
             return NextResponse.redirect(baseUrl + '/');
           }
-        }
+          
+
+        
       }
       if (!isLoggedIn) {
         if (isOnLogin || isOnRegister || isOnHome || isOnMaridaje|| isOnVinos || isOnSuscripciones || isOnCompras || isOnCarrito) {
