@@ -36,21 +36,23 @@ export const authConfig: NextAuthConfig = {
           if (isOnAdmin) {
             return true;
           } else {
-            return NextResponse.redirect(baseUrl + '/admin');
+            return NextResponse.redirect(baseUrl+'/admin');
           }
         } else {
           // Usuarios logueados no admin pueden navegar por todas partes excepto /admin
-          if (isOnLogin || isOnRegister || isOnAdmin) {
+          if (isOnAdmin) {
             return NextResponse.redirect(baseUrl + '/');
+          } else {
+            return true;
           }
-          return true;
         }
       } else {
         // Usuarios no logueados pueden navegar por todas partes excepto /admin
         if (isOnAdmin) {
-          return NextResponse.redirect(baseUrl + '/auth/login');
+          return NextResponse.redirect(baseUrl+'/auth/login');
+        } else {
+          return true;
         }
-        return true;
       }
     },
     async jwt({ token, user, trigger, session }) {
@@ -104,5 +106,5 @@ export const authConfig: NextAuthConfig = {
       };
     },
   },
-  providers: [], 
+  providers: [],
 } satisfies NextAuthConfig;
