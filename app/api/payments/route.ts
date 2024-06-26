@@ -1,8 +1,11 @@
 import { MercadoPagoConfig, Payment } from "mercadopago";
 import type { NextRequest } from "next/server";
 import { findOrderByMpId, insertDetailOrder, insertOrder } from "@/app/lib/actions";
+import { useContext } from "react";
+import { Store } from "@/app/utils/store";
 
 export async function POST(req: NextRequest) {
+  const storeData = useContext(Store)
   const body = await req.json();
   const client = new MercadoPagoConfig({
     accessToken: process.env.NEXT_PUBLIC_MP_ACCESS_TOKEN!,
@@ -23,5 +26,6 @@ export async function POST(req: NextRequest) {
       insertDetailOrder({ order_id: compra.order_id, wine_id: Number(item.id), quantity: item.quantity, price: item.unit_price });
     }
   }
+  storeData?.dispatch({ type: "CLEAR" });
   return Response.json({ success: true });
 }
