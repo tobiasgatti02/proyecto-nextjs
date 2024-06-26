@@ -2,7 +2,6 @@ import type { NextAuthConfig } from 'next-auth';
 import { NextResponse } from 'next/server';
 import { JWT } from 'next-auth/jwt';
 import { db } from '@vercel/postgres'
-import { ArrowUp } from 'lucide-react';
 
 
 
@@ -45,17 +44,14 @@ export const authConfig: NextAuthConfig = {
         if (isOnCompras) {
           return true;
         }
-        if (auth?.user.role === 'admin' && !isOnAdmin) {
-          return NextResponse.redirect(baseUrl + '/admin');
+        if (isOnAdmin) {
+          if (auth?.user?.role === 'admin') {
+            return true;
+          } else {
+            return NextResponse.redirect(baseUrl + '/');
+          }
         }
-        if (auth?.user.role === 'admin' && isOnAdmin) {
-          return true;
-        }
-
-        else{
-          return NextResponse.redirect(baseUrl + '/auth/login')
-        }
-    }
+      }
       if (!isLoggedIn) {
         if (isOnLogin || isOnRegister || isOnHome || isOnMaridaje|| isOnVinos || isOnSuscripciones || isOnCompras || isOnCarrito) {
           return true;
