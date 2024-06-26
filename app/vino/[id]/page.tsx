@@ -1,8 +1,7 @@
 'use client'
 import React, { useContext, useEffect, useState } from 'react'
-import { usePathname, useRouter } from 'next/navigation'
+import { useRouter, useParams } from 'next/navigation'
 import { getVino } from '@/app/lib/data'
-import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import { Card, CardBody, CardFooter, Image } from '@nextui-org/react'
 import { Vino } from '@/app/lib/definitions'
@@ -14,11 +13,11 @@ import { CardSkeleton } from '@/app/ui/components/skeletons'
 const VinoScreen = () => {
   const params = useParams()
   const id = params.id
+  const router = useRouter()
   const [vino, setVino] = useState<Vino | null>(null)
   const [cantidad, setCantidad] = useState<number>(1);
   const storeData = useContext(Store)
   const { state, dispatch } = storeData || {}
-
 
   const addToCartHandler = () => {
     if (state && dispatch && vino) {
@@ -32,14 +31,13 @@ const VinoScreen = () => {
     const fetchVino = async () => {
       const data = await getVino(Number(id))
       if (!data) {
-        window.alert('Vino no encontrado')
-        window.location.replace('/notFound')
+        router.push('/wineNotFound')
       } else {
         setVino(data)
       }
     }
     fetchVino()
-  }, [id])
+  }, [id, router])
 
   if (!vino) {
     return <div className='mt-36'><CardSkeleton cardWidth={'w-full'} /></div>
