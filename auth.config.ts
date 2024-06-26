@@ -2,6 +2,7 @@ import type { NextAuthConfig } from 'next-auth';
 import { NextResponse } from 'next/server';
 import { JWT } from 'next-auth/jwt';
 import { db } from '@vercel/postgres'
+import { user } from '@nextui-org/theme';
 
 
 
@@ -33,27 +34,29 @@ export const authConfig: NextAuthConfig = {
       const isOnRegister = nextUrl.pathname.startsWith('/auth/register');
       const isOnMaridaje = nextUrl.pathname.startsWith('/maridaje');
 
-      if (isLoggedIn) {
+      
+
+      if (isLoggedIn && auth?.user?.role === 'user') {
         if (isOnHome || isOnSuscripciones || isOnCarrito || isOnVinos || isOnMaridaje || isOnCompras) {
           return true;
         }
         if (isOnLogin || isOnRegister) {
           return NextResponse.redirect(baseUrl + '/');
         }
-        
-          if (auth?.user?.role === 'admin') {
-            return NextResponse.redirect(baseUrl + '/admin');
-          }
-          else if (auth?.user?.role === 'admin' && !isOnAdmin) {
-            return NextResponse.redirect(baseUrl + '/admin');
-          }
-           else {
+        if (isOnAdmin) {
             return NextResponse.redirect(baseUrl + '/');
-          }
-          
-
-        
+        }
       }
+
+      if (isLoggedIn && auth?.user?.role === 'admin') {
+        if (isOnLogin || isOnRegister || isOnHome || isOnSuscripciones || isOnCarrito || isOnVinos || isOnMaridaje || isOnCompras) {
+          return NextResponse.redirect(baseUrl + '/admin');
+        }
+        if (isOnAdmin) {
+          return true;
+        }
+      }
+
       if (!isLoggedIn) {
         if (isOnLogin || isOnRegister || isOnHome || isOnMaridaje|| isOnVinos || isOnSuscripciones || isOnCompras || isOnCarrito) {
           return true;
