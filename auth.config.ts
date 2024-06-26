@@ -20,40 +20,33 @@ export const authConfig: NextAuthConfig = {
     async authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
       const isOnAdmin = nextUrl.pathname.startsWith('/admin');
-      const isOnCompras = nextUrl.pathname.startsWith('/compras');
       const isOnLogin = nextUrl.pathname.startsWith('/auth/login');
-      const isOnHome = nextUrl.pathname === '/';
-      const isOnCarrito = nextUrl.pathname.startsWith('/carrito');
-      const isOnSuscripciones = nextUrl.pathname.startsWith('/suscripciones');
-      const isOnVinos = nextUrl.pathname.startsWith('/vino');
       const isOnRegister = nextUrl.pathname.startsWith('/auth/register');
-      const isOnMaridaje = nextUrl.pathname.startsWith('/maridaje');
       const baseUrl = process.env.NEXTAUTH_URL;
 
       if (isLoggedIn) {
         if (auth?.user?.role === 'admin') {
-          // Administradores solo pueden estar en /admin
           if (isOnAdmin) {
             return true;
           } else {
-            return NextResponse.redirect(baseUrl+'/admin');
+            return NextResponse.redirect(baseUrl + '/admin');
           }
         } else {
-          // Usuarios logueados no admin pueden navegar por todas partes excepto /admin
-          if (isOnAdmin) {
+          if (isOnLogin || isOnRegister) {
             return NextResponse.redirect(baseUrl + '/');
-          } else {
-            return true;
           }
-        }
-      } else {
-        // Usuarios no logueados pueden navegar por todas partes excepto /admin
-        if (isOnAdmin) {
-          return NextResponse.redirect(baseUrl+'/auth/login');
-        } else {
           return true;
         }
       }
+
+      if (!isLoggedIn) {
+        if (isOnLogin || isOnRegister) {
+          return true;
+        }
+        return NextResponse.redirect(baseUrl + '/auth/login');
+      }
+
+      return NextResponse.next();
     },
     async jwt({ token, user, trigger, session }) {
       if (trigger === 'signIn') {
@@ -67,7 +60,6 @@ export const authConfig: NextAuthConfig = {
 
       if (trigger === 'update' && session?.user) {
         try {
-          // Actualiza la información del usuario en la base de datos
           const client = await db.connect();
           const result = await client.query(
             `UPDATE users SET name = $1, role = $2 WHERE email = $3 RETURNING *`,
@@ -75,7 +67,6 @@ export const authConfig: NextAuthConfig = {
           );
           client.release();
 
-          // Si no se pudo actualizar el usuario, retorna el token original
           if (!result.rows[0]) {
             return token;
           }
