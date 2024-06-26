@@ -151,7 +151,14 @@ export default function AdminWineManager() {
 
   return (
     <div>
-      
+      <NavBar
+        text="text-white"
+        logo={logo}
+        logoWidth={200}
+        logoHeight={50}
+        bgColorTop="bg-transparent"
+        bgColorScrolled="bg-[#3B0613]"
+      />
       <div className={`${maven_Pro.className} text-white flex flex-col min-h-screen pt-32 max-w-[1200px] mx-auto`}>
         <div className='bg-[#3B0613] p-8 rounded-xl shadow-lg'>
           <h1 className="text-3xl font-bold mb-6 text-center">Wine Administration</h1>
