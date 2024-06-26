@@ -57,7 +57,7 @@ export const authConfig: NextAuthConfig = {
           return true;
         }
 
-        return NextResponse.redirect(baseUrl + '/auth/login');
+        return NextResponse.redirect('https://bodine.vercel.app/');
 
       }
 
