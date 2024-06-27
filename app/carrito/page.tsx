@@ -38,37 +38,11 @@ export default function Carrito() {
   const handleBuy = async () => {
     const checkoutUrl = await crearPreferencia(productosMapeados);
     if (checkoutUrl) {
-      checkRecentPayments();
       window.location.replace(checkoutUrl);
     } else {
       alert("No se pudo generar el enlace de pago");
     }
   };
-
-  let lastCheckedTimestamp = Date.now();
-
-  function checkRecentPayments() {
-    setInterval(async () => {
-      //ejecutar un get a la api payments
-      const response = await fetch("/api/payments", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const data = await response.json();
-
-      const newPayments = data.recentPayments.filter((payment: any) =>
-        new Date(payment.date) > new Date(lastCheckedTimestamp)
-      );
-
-      if (newPayments[0].amount === storeData?.state.carrito.totalPrice) {
-        storeData?.dispatch({ type: 'CLEAR' });
-        lastCheckedTimestamp = Date.now();
-      }
-    }, 5000);
-  }
-
 
   const removeCartHandler = (producto: any) => {
     storeData?.dispatch({ type: "REMOVE_PRODUCT", payload: producto });
