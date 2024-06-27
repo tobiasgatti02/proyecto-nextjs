@@ -29,10 +29,11 @@ export const authConfig: NextAuthConfig = {
       const isOnRegister = nextUrl.pathname.startsWith('/auth/register');
       const isOnMaridaje = nextUrl.pathname.startsWith('/maridaje');
       const baseUrl = process.env.NEXTAUTH_URL;
+      const isOnAdminUnavailableWines = nextUrl.pathname.startsWith('/admin/unavailableWines');
 
       if (isLoggedIn) {
         if (auth?.user?.role === 'admin') {
-          if (isOnAdmin) {
+          if (isOnAdmin  || isOnAdminUnavailableWines ) {
             return true;
           } else {
             return NextResponse.redirect(baseUrl + '/admin');
