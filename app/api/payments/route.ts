@@ -4,7 +4,7 @@ import { findOrderByMpId, insertDetailOrder, insertOrder } from "@/app/lib/actio
 import { useContext } from "react";
 import { Store } from "@/app/utils/store";
 
-let clients = [];
+let clients: { req: any, res: any }[] = [];
 
 export async function POST(req: NextRequest) {
   const storeData = useContext(Store)
@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
   return Response.json({ success: true });
 }
 
-export function GET(req, res) {
+export function GET(req: NextRequest & { on: Function }, res: any) {
   res.setHeader('Content-Type', 'text/event-stream');
   res.setHeader('Cache-Control', 'no-cache');
   res.setHeader('Connection', 'keep-alive');
