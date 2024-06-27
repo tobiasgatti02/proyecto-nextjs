@@ -1,13 +1,8 @@
 import { MercadoPagoConfig, Payment } from "mercadopago";
 import type { NextRequest } from "next/server";
 import { findOrderByMpId, insertDetailOrder, insertOrder } from "@/app/lib/actions";
-import { useContext } from "react";
-import { Store } from "@/app/utils/store";
-
-let clients: { req: any, res: any }[] = [];
 
 export async function POST(req: NextRequest) {
-  const storeData = useContext(Store)
   const body = await req.json();
   const client = new MercadoPagoConfig({
     accessToken: process.env.NEXT_PUBLIC_MP_ACCESS_TOKEN!,
@@ -28,20 +23,5 @@ export async function POST(req: NextRequest) {
       insertDetailOrder({ order_id: compra.order_id, wine_id: Number(item.id), quantity: item.quantity, price: item.unit_price });
     }
   }
-
-  clients.forEach(client => client.res.write(`data: ${JSON.stringify({ paymentId: pago.id, status: pago.status })}\n\n`));
-
   return Response.json({ success: true });
-}
-
-export function GET(req: NextRequest & { on: Function }, res: any) {
-  res.setHeader('Content-Type', 'text/event-stream');
-  res.setHeader('Cache-Control', 'no-cache');
-  res.setHeader('Connection', 'keep-alive');
-
-  clients.push({ req, res });
-
-  req.on('close', () => {
-    clients = clients.filter(client => client.res !== res);
-  });
 }
