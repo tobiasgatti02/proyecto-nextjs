@@ -50,10 +50,24 @@ const MaridajeComponent = () => {
     setLoading(true);
     setError('');
     try {
-      // Here you would typically make an API call to get the pairing
-      // For this example, we'll just use a placeholder response
-      const placeholderMaridaje = `Maridaje para ${inputVino}:\n\n**Platos principales:**\n• Carnes rojas a la parrilla\n• Estofados de carne\n\n**Quesos:**\n• Queso cheddar añejo\n• Queso gouda\n\n**Postres:**\n• Chocolate negro`;
-      setMaridaje(parseMaridaje(placeholderMaridaje));
+      const response = await fetch('/api/maridaje', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ nombreVino: inputVino }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al obtener el maridaje');
+      }
+
+      const data = await response.json();
+      if (data.error) {
+        throw new Error(data.error);
+      }
+
+      setMaridaje(parseMaridaje(data.maridaje));
     } catch (error) {
       console.error('Error getting maridaje:', error);
       setError('No se pudo generar recomendaciones para este vino.');

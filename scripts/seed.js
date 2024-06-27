@@ -118,7 +118,7 @@ async function seedOrders(client) {
     ORDER_DATE_TIME TIMESTAMP NOT NULL,
     VALUE DECIMAL(5,2) NOT NULL,
     STATE VARCHAR(50) NOT NULL,
-    MP_ID VARCHAR(50) NOT NULL,
+    MP_ID VARCHAR(50) NOT NULL
 );`
     console.log(`Created "ORDERS" table`);
     return createTable;
@@ -161,7 +161,11 @@ async function seedWines(client) {
         location VARCHAR(255) NOT NULL,
         image TEXT NOT NULL,
         wine_category  VARCHAR(50) NOT NULL,
-        price DECIMAL(5, 2) NOT NULL
+        price DECIMAL(5, 2) NOT NULL,
+        available BOOLEAN DEFAULT TRUE
+
+
+
       );
     `;
 

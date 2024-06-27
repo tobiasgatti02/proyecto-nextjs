@@ -32,14 +32,12 @@ export const authConfig: NextAuthConfig = {
 
       if (isLoggedIn) {
         if (auth?.user?.role === 'admin') {
-          // Administradores solo pueden estar en /admin
           if (isOnAdmin) {
             return true;
           } else {
             return NextResponse.redirect(baseUrl + '/admin');
           }
         } else {
-          // Usuarios logueados no admin pueden navegar por todas partes excepto /admin
           if (isOnLogin || isOnRegister || isOnAdmin) {
             return NextResponse.redirect(baseUrl + '/');
           }

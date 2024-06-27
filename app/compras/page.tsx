@@ -28,7 +28,8 @@ const Compras = () => {
     const getVinos = async () => {
       try {
         const fetchedVinos = await fetchVinos();
-        setVinos(fetchedVinos);
+        const disponibles = fetchedVinos.filter(vino => vino.available);
+        setVinos(disponibles);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching vinos:', error);

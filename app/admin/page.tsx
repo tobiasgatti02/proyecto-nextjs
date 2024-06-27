@@ -12,9 +12,12 @@ import Link from 'next/link';
 import { Store } from '@/app/utils/store';
 import { Vino } from '../lib/definitions';
 import { fetchVinoByID } from '../lib/actions';
+import { useRouter } from 'next/navigation';
+
 
 export default function AdminWineManager() {
   const logo = '/logo.png';
+  const router = useRouter();
   const [vinos, setVinos] = useState<Vino[]>([]);
   const [filteredVinos, setFilteredVinos] = useState<Vino[]>([]);
   const [filter, setFilter] = useState('todos');
@@ -41,7 +44,8 @@ export default function AdminWineManager() {
     winery: '',
     average_rating: 0,
     reviews: '',
-    location: ''
+    location: '',
+    available: true
   });
 
   useEffect(() => {
@@ -65,7 +69,8 @@ export default function AdminWineManager() {
   const fetchAllVinos = async () => {
     try {
       const fetchedVinos = await fetchVinos();
-      setVinos(fetchedVinos);
+      const disponibles = fetchedVinos.filter(vino => vino.available);
+      setVinos(disponibles);
     } catch (error) {
       console.error('Error fetching vinos:', error);
     }
@@ -141,7 +146,10 @@ export default function AdminWineManager() {
 
   const handleDelete = async (id: number) => {
     try {
-      await deleteVino(id);
+      
+      handleAvailableWine(id);
+      
+
       console.log('Wine deleted successfully!');
       fetchAllVinos();
     } catch (error) {
@@ -191,6 +199,20 @@ export default function AdminWineManager() {
     setEditingWine(prev => prev ? { ...prev, image: '' } : null);
   };
 
+   const handleAvailableWine = async (id: number) => {
+    try {
+      const vino = await fetchVinoByID(id);
+      vino.available = false;
+      router.refresh();
+      console.log('Vino before update:', vino);
+      await updateVino(id, vino);
+      console.log('Vino after update:', vino);
+      console.log('Wine availability updated successfully!');
+      fetchAllVinos();
+    } catch (error) {
+      console.error('Error updating wine availability:', error);
+    }
+  }
 
   const handleSearch = (term: string) => {
     setSearchTerm(term);
@@ -224,12 +246,19 @@ export default function AdminWineManager() {
             <GrupoBotones filter={filter} setFilter={handleFilterChange} />
           </div>
           {isAdmin && (
+            <div>
             <button
               onClick={() => { setShowAddForm(true); setShowEditForm(false); document.getElementById('add-form')?.scrollIntoView({ behavior: 'smooth' }); }}
               className="mb-4 bg-green-500 text-white px-4 py-2 rounded"
             >
               Add New Wine
             </button>
+             <Link href="/admin/unavailableWines">
+             <button className="bg-red-500 ml-2 text-white px-4 py-2 rounded">
+               View Unavailable Wines
+             </button>
+           </Link>
+           </div>
           )}
           <div className="mt-12 gap-3 grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 p-4 rounded-lg bg-[#4A091A]">
             {filteredVinos.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE).map((vino) => (

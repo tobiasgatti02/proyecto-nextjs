@@ -163,7 +163,7 @@ export async function updateVino(wineId: number, wineData: any) {
   try {
     const query = `
       UPDATE vinos
-      SET wine = $1, wine_category = $2, price = $3, image = $4, winery = $5, average_rating = $6, reviews = $7, location = $8
+      SET wine = $1, wine_category = $2, price = $3, image = $4, winery = $5, average_rating = $6, reviews = $7, location = $8, available = $10
       WHERE id = $9
     `;
     const values = [
@@ -176,6 +176,7 @@ export async function updateVino(wineId: number, wineData: any) {
       wineData.reviews,
       wineData.location,
       wineId,
+      wineData.available
     ];
     await db.query(query, values);
   } catch (error: any) {

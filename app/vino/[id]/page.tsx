@@ -35,7 +35,8 @@ const VinoScreen = () => {
       }
 
       const data = await getVino(Number(id))
-      if (!data) {
+
+      if (!data || data.available === false) {
         router.push('/wineNotFound')
       } else {
         setVino(data)

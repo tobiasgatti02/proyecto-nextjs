@@ -17,4 +17,5 @@ export type Vino = {
   wine_category: string;
   price: number;
   cantidad?: number;
+  available?: boolean;
 };

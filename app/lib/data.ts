@@ -8,7 +8,7 @@ import { Vino, User } from './definitions';
 
 export async function fetchVinos(): Promise<Vino[]> {
   const data = await sql<Vino[]>`
-    SELECT id, winery, wine, average_rating, reviews, location, image, wine_category, price
+    SELECT id, winery, wine, average_rating, reviews, location, image, wine_category, price, available
     FROM vinos
   `;
 
@@ -16,12 +16,14 @@ export async function fetchVinos(): Promise<Vino[]> {
     id: vino.id,
     winery: vino.winery,
     wine: vino.wine,
-    average_rating: vino.rating_average, 
-    reviews: vino.rating_reviews, 
+    average_rating: vino.average_rating, 
+    reviews: vino.reviews, 
     location: vino.location,
     image: vino.image,
     wine_category: vino.wine_category,
-    price: vino.price
+    price: vino.price,
+    available: vino.available
+
   }));
 
   return vinos;
