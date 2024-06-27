@@ -8,7 +8,7 @@ export default function Succeed() {
 
   useEffect(() => {
     state?.dispatch({ type: 'CLEAR' });
-  }, [state]);
+  }, []);
 
   return (
     <div className='h-screen flex flex-col items-center justify-center text-center p-4'>
