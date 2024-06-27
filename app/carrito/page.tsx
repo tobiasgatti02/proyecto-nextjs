@@ -21,6 +21,21 @@ export default function Carrito() {
     }
   }, [storeData]);
 
+  useEffect(() => {
+    const eventSource = new EventSource('/api/payments');
+    eventSource.onmessage = (event) => {
+      const { status } = JSON.parse(event.data);
+
+      if (status === 'approved') {
+        storeData?.dispatch({ type: 'CLEAR' });
+      }
+    };
+
+    return () => {
+      eventSource.close();
+    };
+  }, [storeData]);
+
   initMercadoPago(process.env.NEXT_PUBLIC_MP_PUBLIC_KEY!, { locale: "es-AR" });
 
   const mapearAMercadoPago = (productos: any) => {

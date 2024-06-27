@@ -4,6 +4,8 @@ import { findOrderByMpId, insertDetailOrder, insertOrder } from "@/app/lib/actio
 import { useContext } from "react";
 import { Store } from "@/app/utils/store";
 
+let clients = [];
+
 export async function POST(req: NextRequest) {
   const storeData = useContext(Store)
   const body = await req.json();
@@ -26,6 +28,20 @@ export async function POST(req: NextRequest) {
       insertDetailOrder({ order_id: compra.order_id, wine_id: Number(item.id), quantity: item.quantity, price: item.unit_price });
     }
   }
-  storeData?.dispatch({ type: "CLEAR" });
+
+  clients.forEach(client => client.res.write(`data: ${JSON.stringify({ paymentId: pago.id, status: pago.status })}\n\n`));
+
   return Response.json({ success: true });
+}
+
+export function GET(req, res) {
+  res.setHeader('Content-Type', 'text/event-stream');
+  res.setHeader('Cache-Control', 'no-cache');
+  res.setHeader('Connection', 'keep-alive');
+
+  clients.push({ req, res });
+
+  req.on('close', () => {
+    clients = clients.filter(client => client.res !== res);
+  });
 }
