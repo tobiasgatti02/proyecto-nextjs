@@ -123,7 +123,7 @@ export async function crearPreferencia(
       back_urls: {
         failure: "https://bodine.vercel.app/",
         pending: "https://bodine.vercel.app/",
-        success: "https://bodine.vercel.app/",
+        success: "https://bodine.vercel.app/carrito/succeed",
       },
       auto_return: "approved",
       items,
