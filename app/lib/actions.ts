@@ -120,6 +120,11 @@ export async function crearPreferencia(
 
   const preference = await new Preference(client).create({
     body: {
+      back_urls: {
+        failure: "https://bodine.vercel.app/",
+        pending: "https://bodine.vercel.app/",
+        success: "https://bodine.vercel.app/carrito/succeed",
+      },
       redirect_urls: {
         failure: "https://bodine.vercel.app/",
         pending: "https://bodine.vercel.app/",
